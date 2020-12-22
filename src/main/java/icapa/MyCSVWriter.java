@@ -35,7 +35,8 @@ public class MyCSVWriter extends JCasAnnotator_ImplBase {
         super.initialize(context);
         try {
             final File file = new File(_outputFile);
-            FileWriter fileWriter = new FileWriter(file, true);
+            //FileWriter fileWriter = new FileWriter(file, true);
+            FileWriter fileWriter = new FileWriter(file);
             writer = new CSVWriter(fileWriter);
         } catch (IOException e) {
             e.printStackTrace();

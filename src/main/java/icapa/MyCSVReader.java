@@ -3,6 +3,7 @@ package icapa;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
+import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
@@ -16,25 +17,26 @@ import org.apache.uima.util.Progress;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class MyCSVReader extends JCasCollectionReader_ImplBase {
+    public static String[] currentLine;
     static private final Logger LOGGER = Logger.getLogger( "CSVReader" );
 
     static public final String PARAM_INPUT_FILE = "InputFile";
     @ConfigurationParameter(
-            name = PARAM_INPUT_FILE,
-            description = "Input file",
-            defaultValue = "*",
-            mandatory = false
+        name = PARAM_INPUT_FILE,
+        description = "Input file",
+        defaultValue = "*",
+        mandatory = false
     )
     private String _inputFile;
 
     static public final String PARAM_ROW_START = "RowStart";
     @ConfigurationParameter(
-            name = PARAM_ROW_START,
-            description = "Row start",
-            mandatory = false
+        name = PARAM_ROW_START,
+        description = "Row start. Inclusive and starts at 0.",
+        mandatory = false,
+        defaultValue = "0"
     )
     private int _rowStart;
 
@@ -42,17 +44,19 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
 
     static public final String PARAM_ROW_END = "RowEnd";
     @ConfigurationParameter(
-            name = PARAM_ROW_END,
-            description = "Row end",
-            mandatory = false
+        name = PARAM_ROW_END,
+        description = "Row end. Inclusive",
+        mandatory = false,
+        defaultValue = "-1" // If -1, will read until the end
     )
     private int _rowEnd;
 
     static public final String PARAM_NOTE_COL_NAME = "NoteColumnName";
     @ConfigurationParameter(
-            name = PARAM_NOTE_COL_NAME,
-            description = "Note Column name",
-            mandatory = false
+        name = PARAM_NOTE_COL_NAME,
+        description = "Note Column name",
+        mandatory = false,
+        defaultValue = "note"
     )
     private String _noteColName;
 
@@ -93,16 +97,21 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
     }
 
     public void getNext(JCas jCas) throws IOException, CollectionException {
-        IdentifiedAnnotation a = new IdentifiedAnnotation(jCas);
-        a.getId();
+        //IdentifiedAnnotation a = new IdentifiedAnnotation(jCas);
+        //a.getId();
         // Set document text
         LOGGER.info("getnext........................................");
         try {
             String[] line = _csvReader.readNext();
+            currentLine = line;
             if (line != null) {
                 String text = line[_noteColIndex];
                 //LOGGER.info(text);
                 jCas.setDocumentText(text);
+                DocumentID documentId = new DocumentID(jCas);
+                documentId.addToIndexes();
+                ++_docsProcessed;
+                documentId.setDocumentID(String.valueOf(_docsProcessed));
             } else {
                 jCas.setDocumentText("");
             }
@@ -114,16 +123,26 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
 
     public boolean hasNext() throws IOException, CollectionException {
         LOGGER.info("hasnext........................................");
-        LOGGER.info(_currentRow);
-        LOGGER.info(_rowEnd);
-        boolean result = _currentRow <= _rowEnd;
-        LOGGER.info(result);
-        ++_docsProcessed;
+        String[] row = _csvReader.peek();
+        // Has next if ANY of these conditions are true:
+        // * User entered a valid (>= 0) RowEnd and you have not read lines up to that point AND there are still rows left to read
+        // * User didn't enter a valid RowEnd AND there are still rows left to read (here we are defaulting to reading all the lines)
+        boolean result = (_currentRow <= _rowEnd || _rowEnd < 0) && row != null;
         LOGGER.info("docs processed: " + _docsProcessed);
         return result;
     }
 
     public Progress[] getProgress() {
         return new Progress[0];
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        try {
+            _csvReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

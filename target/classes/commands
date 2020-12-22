@@ -8,3 +8,6 @@ https://stackoverflow.com/questions/18413014/run-a-jar-file-from-the-command-lin
 bin/spark-submit --class icapa.Main --master local[2] .\custom-components-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 ## Fix for temp dir delete issue: https://stackoverflow.com/questions/41825871/exception-while-deleting-spark-temp-dir-in-windows-7-64-bit
+
+## Setup classpath with runPiperFile.bat dependencies
+* Right-click -> open module settings -> + -> Add Jars or dependecies

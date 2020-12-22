@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI
+	xmlns:util="http:///org/apache/ctakes/typesystem/type/util.ecore"
+	xmlns:tcas="http:///uima/tcas.ecore"
+	xmlns:xmi="http://www.omg.org/XMI"
+	xmlns:cas="http:///uima/cas.ecore"
+	xmlns:type10="http:///org/cleartk/syntax/constituent/type.ecore"
+	xmlns:ne="http:///org/cleartk/type/ne.ecore"
+	xmlns:textsem="http:///org/apache/ctakes/typesystem/type/textsem.ecore"
+	xmlns:types2="http:///org/apache/ctakes/assertion/zoner/types.ecore"
+	xmlns:type6="http:///org/apache/ctakes/smokingstatus/i2b2/type.ecore"
+	xmlns:refsem="http:///org/apache/ctakes/typesystem/type/refsem.ecore"
+	xmlns:type11="http:///org/cleartk/syntax/dependency/type.ecore"
+	xmlns:type="http:///de/tudarmstadt/ukp/dkpro/core/api/metadata/type.ecore"
+	xmlns:type14="http:///org/cleartk/util/type.ecore"
+	xmlns:assertion="http:///org/apache/ctakes/typesystem/type/temporary/assertion.ecore"
+	xmlns:type8="http:///org/cleartk/score/type.ecore"
+	xmlns:syntax="http:///org/apache/ctakes/typesystem/type/syntax.ecore"
+	xmlns:type9="http:///org/cleartk/srl/type.ecore"
+	xmlns:type2="http:///org/apache/ctakes/constituency/parser/uima/type.ecore"
+	xmlns:types="http:///org/apache/ctakes/assertion/medfacts/types.ecore"
+	xmlns:type7="http:///org/apache/ctakes/smokingstatus/type.ecore"
+	xmlns:relation="http:///org/apache/ctakes/typesystem/type/relation.ecore"
+	xmlns:type12="http:///org/cleartk/timeml/type.ecore"
+	xmlns:type5="http:///org/apache/ctakes/sideeffect/type.ecore"
+	xmlns:type15="http:///org/cleartk/ne/type.ecore"
+	xmlns:type13="http:///org/cleartk/token/type.ecore"
+	xmlns:structured="http:///org/apache/ctakes/typesystem/type/structured.ecore"
+	xmlns:textspan="http:///org/apache/ctakes/typesystem/type/textspan.ecore"
+	xmlns:libsvm="http:///org/apache/ctakes/smokingstatus/type/libsvm.ecore"
+	xmlns:type3="http:///org/apache/ctakes/coreference/type.ecore"
+	xmlns:type4="http:///org/apache/ctakes/drugner/type.ecore" xmi:version="2.0">
+	<cas:NULL xmi:id="0"/>
+	<tcas:DocumentAnnotation xmi:id="8" sofa="1" begin="0" end="56" language="x-unspecified"/>
+	<structured:DocumentID xmi:id="13" documentID="patient-1-1"/>
+	<structured:DocumentIdPrefix xmi:id="15" documentIdPrefix="100"/>
+	<structured:DocumentPath xmi:id="17" documentPath="C:\root\vdt\icapa\nlp\apache-ctakes-4.0.0\testdata\notes\100\patient-1-1.txt"/>
+	<textspan:Segment xmi:id="19" sofa="1" begin="0" end="56" id="SIMPLE_SEGMENT"/>
+	<textspan:Sentence xmi:id="25" sofa="1" begin="0" end="56" sentenceNumber="0"/>
+	<syntax:WordToken xmi:id="31" sofa="1" begin="0" end="3" tokenNumber="0" partOfSpeech="DT" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="43" sofa="1" begin="4" end="11" tokenNumber="1" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="55" sofa="1" begin="12" end="16" tokenNumber="2" partOfSpeech="VBZ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="67" sofa="1" begin="17" end="21" tokenNumber="3" partOfSpeech="PRP" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="79" sofa="1" begin="22" end="26" tokenNumber="4" partOfSpeech="VBD" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="100" sofa="1" begin="31" end="33" tokenNumber="6" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="112" sofa="1" begin="34" end="41" tokenNumber="7" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="124" sofa="1" begin="42" end="45" tokenNumber="8" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="136" sofa="1" begin="46" end="50" tokenNumber="9" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="148" sofa="1" begin="51" end="55" tokenNumber="10" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:NumToken xmi:id="91" sofa="1" begin="27" end="30" tokenNumber="5" partOfSpeech="CD" numType="1"/>
+	<syntax:PunctuationToken xmi:id="160" sofa="1" begin="55" end="56" tokenNumber="11" partOfSpeech="."/>
+	<textsem:MeasurementAnnotation xmi:id="168" sofa="1" begin="27" end="33" id="0" typeID="0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" generic="false" historyOf="0"/>
+	<syntax:Chunk xmi:id="186" sofa="1" begin="0" end="11" chunkType="NP"/>
+	<syntax:Chunk xmi:id="191" sofa="1" begin="12" end="16" chunkType="VP"/>
+	<syntax:Chunk xmi:id="196" sofa="1" begin="17" end="21" chunkType="NP"/>
+	<syntax:Chunk xmi:id="201" sofa="1" begin="22" end="26" chunkType="VP"/>
+	<syntax:Chunk xmi:id="206" sofa="1" begin="27" end="41" chunkType="NP"/>
+	<syntax:Chunk xmi:id="211" sofa="1" begin="34" end="55" chunkType="NP"/>
+	<syntax:Chunk xmi:id="216" sofa="1" begin="42" end="45" chunkType="PP"/>
+	<syntax:Chunk xmi:id="221" sofa="1" begin="46" end="55" chunkType="NP"/>
+	<textsem:SignSymptomMention xmi:id="239" sofa="1" begin="51" end="55" id="0" ontologyConceptArr="226" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<syntax:ConllDependencyNode xmi:id="269" sofa="1" begin="0" end="56" id="0"/>
+	<syntax:ConllDependencyNode xmi:id="283" sofa="1" begin="0" end="3" id="1" form="The" lemma="the" cpostag="DT" postag="DT" feats="_" head="297" deprel="det" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="297" sofa="1" begin="4" end="11" id="2" form="patient" lemma="patient" cpostag="NN" postag="NN" feats="_" head="311" deprel="nsubj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="311" sofa="1" begin="12" end="16" id="3" form="says" lemma="say" cpostag="VBZ" postag="VBZ" feats="_" head="269" deprel="root" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="325" sofa="1" begin="17" end="21" id="4" form="they" lemma="they" cpostag="PRP" postag="PRP" feats="_" head="339" deprel="nsubj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="339" sofa="1" begin="22" end="26" id="5" form="took" lemma="take" cpostag="VBD" postag="VBD" feats="_" head="311" deprel="ccomp" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="353" sofa="1" begin="27" end="30" id="6" form="325" lemma="0" cpostag="CD" postag="CD" feats="_" head="367" deprel="num" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="367" sofa="1" begin="31" end="33" id="7" form="mg" lemma="mg" cpostag="NNS" postag="NNS" feats="_" head="339" deprel="dobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="381" sofa="1" begin="34" end="41" id="8" form="aspirin" lemma="aspirin" cpostag="NN" postag="NN" feats="_" head="339" deprel="npadvmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="395" sofa="1" begin="42" end="45" id="9" form="for" lemma="for" cpostag="IN" postag="IN" feats="_" head="339" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="409" sofa="1" begin="46" end="50" id="10" form="knee" lemma="knee" cpostag="NN" postag="NN" feats="_" head="423" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="423" sofa="1" begin="51" end="55" id="11" form="pain" lemma="pain" cpostag="NN" postag="NN" feats="_" head="395" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="437" sofa="1" begin="55" end="56" id="12" form="." lemma="." cpostag="." postag="." feats="_" head="311" deprel="punct" pdeprel="_"/>
+	<textsem:Predicate xmi:id="451" sofa="1" begin="12" end="16" relations="501 511" frameSet="say.01"/>
+	<textsem:Predicate xmi:id="458" sofa="1" begin="22" end="26" relations="528 538 548 558" frameSet="take.01"/>
+	<textsem:SemanticArgument xmi:id="465" sofa="1" begin="4" end="11" relation="501" label="A0"/>
+	<textsem:SemanticArgument xmi:id="471" sofa="1" begin="17" end="21" relation="528" label="A0"/>
+	<textsem:SemanticArgument xmi:id="477" sofa="1" begin="22" end="26" relation="511" label="A1"/>
+	<textsem:SemanticArgument xmi:id="483" sofa="1" begin="31" end="33" relation="538" label="A1"/>
+	<textsem:SemanticArgument xmi:id="489" sofa="1" begin="34" end="41" relation="548" label="AM-TMP"/>
+	<textsem:SemanticArgument xmi:id="495" sofa="1" begin="42" end="45" relation="558" label="AM-PRP"/>
+	<textsem:SemanticRoleRelation xmi:id="501" id="0" category="A0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="451" argument="465"/>
+	<textsem:SemanticRoleRelation xmi:id="511" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="451" argument="477"/>
+	<textsem:SemanticRoleRelation xmi:id="528" id="0" category="A0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="458" argument="471"/>
+	<textsem:SemanticRoleRelation xmi:id="538" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="458" argument="483"/>
+	<textsem:SemanticRoleRelation xmi:id="548" id="0" category="AM-TMP" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="458" argument="489"/>
+	<textsem:SemanticRoleRelation xmi:id="558" id="0" category="AM-PRP" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="458" argument="495"/>
+	<cas:NonEmptyFSList xmi:id="521" head="501" tail="524"/>
+	<cas:NonEmptyFSList xmi:id="524" head="511" tail="527"/>
+	<cas:NonEmptyFSList xmi:id="568" head="528" tail="571"/>
+	<cas:NonEmptyFSList xmi:id="571" head="538" tail="574"/>
+	<cas:NonEmptyFSList xmi:id="574" head="548" tail="577"/>
+	<cas:NonEmptyFSList xmi:id="577" head="558" tail="580"/>
+	<cas:Sofa xmi:id="1" sofaNum="1" sofaID="_InitialView" mimeType="text" sofaString="The patient says they took 325 mg aspirin for knee pain."/>
+	<refsem:UmlsConcept xmi:id="226" codingScheme="ICD9CM" code="338-338.99" score="0.0" disambiguated="false" cui="C0030193" tui="T184" preferredText="Pain, unspecified"/>
+	<cas:EmptyFSList xmi:id="527"/>
+	<cas:EmptyFSList xmi:id="580"/>
+	<cas:View sofa="1" members="8 13 15 17 19 25 31 43 55 67 79 100 112 124 136 148 91 160 168 186 191 196 201 206 211 216 221 239 269 283 297 311 325 339 353 367 381 395 409 423 437 451 458 465 471 477 483 489 495 501 511 528 538 548 558 521 524 568 571 574 577"/>
+</xmi:XMI>

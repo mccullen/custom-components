@@ -31,7 +31,22 @@ public class Runner implements Serializable {
 
     public void start() {
         setConfig();
-        runBuilder();
+        //runBuilder();
+        temp();
+    }
+
+    private void temp() {
+        try {
+            PiperFileReader piperReader = new PiperFileReader();
+            PipelineBuilder builder = piperReader.getBuilder();
+            String[] args = { "--user", _config.getUmlsUsername(), "--pass", _config.getUmlsPassword(), "-p", _config.getPiperFile()};
+            CliOptionals options = CliFactory.parseArguments(CliOptionals.class, args);
+            piperReader.setCliOptionals(options);
+            piperReader.loadPipelineFile(_config.getPiperFile());
+            builder.run();
+        } catch (Exception e) {
+            System.out.println("ERROR");
+        }
     }
 
     private void setConfig() {
@@ -75,8 +90,6 @@ public class Runner implements Serializable {
         //SparkSession ss = SparkSession.builder().getOrCreate();
         //JavaSparkContext sc = JavaSparkContext.fromSparkContext(ss.sparkContext());
 
-        String inputFile = _config.getInputFile();
-        _config.setInputFile(inputFile);
         int nLines = getNLines();
         LOGGER.info(nLines);
         List<Integer> rowNumbers = IntStream.range(1, nLines).boxed().collect(Collectors.toList());
