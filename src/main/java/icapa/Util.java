@@ -41,7 +41,7 @@ public class Util {
             Const.CONFIDENCE_HEADER,
             Const.CUI_HEADER,
             Const.GENERIC_HEADER,
-            Const.NEGATED_HEADER,
+            Const.POLARITY_HEADER,
             Const.PART_OF_SPEECH_HEADER,
             Const.PREFERRED_TEXT_HEADER,
             Const.REFSEM_HEADER,
@@ -53,8 +53,8 @@ public class Util {
             Const.TUI_HEADER,
             Const.UNCERTAINTY_HEADER,
             Const.DOCUMENT_ID,
-            Const.POS_END_HEADER,
-            Const.POS_START_HEADER
+            Const.END_HEADER,
+            Const.BEGIN_HEADER
         };
     }
 
