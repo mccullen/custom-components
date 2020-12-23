@@ -63,11 +63,11 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
     private CSVReader _csvReader;
     private int _docsProcessed = 0;
     private int _noteColIndex = 0;
+    private CollectionReader _reader;
 
     public MyCSVReader() {
         LOGGER.info("Ctor");
         LOGGER.info(_inputFile);
-
     }
 
     /**
@@ -76,6 +76,7 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
+        _reader = new DelimiterFileCollectionReader();
         LOGGER.info("initializeing");
         LOGGER.info(_inputFile);
         _currentRow = _rowStart;
