@@ -19,7 +19,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class MyCSVReader extends JCasCollectionReader_ImplBase {
-    public static String[] currentLine;
     static private final Logger LOGGER = Logger.getLogger( "CSVReader" );
 
     static public final String PARAM_INPUT_FILE = "InputFile";
@@ -60,9 +59,6 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
     )
     private String _noteColName;
 
-    private CSVReader _csvReader;
-    private int _docsProcessed = 0;
-    private int _noteColIndex = 0;
     private CollectionReader _reader;
 
     public MyCSVReader() {
@@ -76,61 +72,22 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        _reader = new DelimiterFileCollectionReader();
         LOGGER.info("initializeing");
         LOGGER.info(_inputFile);
-        _currentRow = _rowStart;
         try {
-            _csvReader = new CSVReaderBuilder(new FileReader(_inputFile)).build();
-            String[] headers = _csvReader.readNext();
-            // Set _noteColIndex to the index of the specified header
-            while (_noteColIndex < headers.length && !headers[_noteColIndex].equals(_noteColName)) {
-                ++_noteColIndex;
-            }
-            _csvReader.skip(_rowStart);
+            _reader = DelimiterFileCollectionReader.from(new FileReader(_inputFile), _rowStart, _rowEnd, _noteColName);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CsvValidationException e) {
             e.printStackTrace();
         }
     }
 
     public void getNext(JCas jCas) throws IOException, CollectionException {
-        //IdentifiedAnnotation a = new IdentifiedAnnotation(jCas);
-        //a.getId();
-        // Set document text
-        LOGGER.info("getnext........................................");
-        try {
-            String[] line = _csvReader.readNext();
-            currentLine = line;
-            if (line != null) {
-                String text = line[_noteColIndex];
-                //LOGGER.info(text);
-                jCas.setDocumentText(text);
-                DocumentID documentId = new DocumentID(jCas);
-                ++_docsProcessed;
-                documentId.setDocumentID(String.valueOf(_docsProcessed));
-                documentId.addToIndexes();
-            } else {
-                jCas.setDocumentText("");
-            }
-        } catch (CsvValidationException e) {
-            e.printStackTrace();
-        }
-        ++_currentRow;
+        _reader.readNext(jCas);
     }
 
     public boolean hasNext() throws IOException, CollectionException {
         LOGGER.info("hasnext........................................");
-        String[] row = _csvReader.peek();
-        // Has next if ANY of these conditions are true:
-        // * User entered a valid (>= 0) RowEnd and you have not read lines up to that point AND there are still rows left to read
-        // * User didn't enter a valid RowEnd AND there are still rows left to read (here we are defaulting to reading all the lines)
-        boolean result = (_currentRow <= _rowEnd || _rowEnd < 0) && row != null;
-        LOGGER.info("docs processed: " + _docsProcessed);
-        return result;
+        return _reader.hasNext();
     }
 
     public Progress[] getProgress() {
@@ -140,10 +97,6 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
     @Override
     public void destroy() {
         super.destroy();
-        try {
-            _csvReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        _reader.destroy();
     }
 }
