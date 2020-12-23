@@ -13,6 +13,6 @@ add icapa.MyAnnotator
 // WRITERS
 //add icapa.MyCSVWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/result.csv
 add icapa.OntologyCsvWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/ontology-concepts.csv
-add FileTreeXmiWriter OutputDirectory="C:/root/tmp/mimiciii/ctakes-out/"
+//add FileTreeXmiWriter OutputDirectory="C:/root/tmp/mimiciii/ctakes-out/"
 
 // RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\apache-ctakes-4.0.0\custom-components\mypiper.piper --user jmccullen  --pass jrmWW133$

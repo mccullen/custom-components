@@ -109,9 +109,9 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
                 //LOGGER.info(text);
                 jCas.setDocumentText(text);
                 DocumentID documentId = new DocumentID(jCas);
-                documentId.addToIndexes();
                 ++_docsProcessed;
                 documentId.setDocumentID(String.valueOf(_docsProcessed));
+                documentId.addToIndexes();
             } else {
                 jCas.setDocumentText("");
             }

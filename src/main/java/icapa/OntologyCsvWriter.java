@@ -22,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
 public class OntologyCsvWriter extends JCasAnnotator_ImplBase {
     static public final String PARAM_OUTPUT_FILE = "OutputFile";
@@ -32,7 +33,9 @@ public class OntologyCsvWriter extends JCasAnnotator_ImplBase {
         mandatory = true
     )
     private String _outputFile;
+
     private ICSVWriter _writer;
+    private Map<String, Integer> _headerToIndex;
 
     public OntologyCsvWriter() {
     }
@@ -44,7 +47,8 @@ public class OntologyCsvWriter extends JCasAnnotator_ImplBase {
             File file = new File(_outputFile);
             FileWriter fileWriter = new FileWriter(file);
             _writer = new CSVWriter(fileWriter);
-            String[] headers = {"begin", "end", "code", "address", "documentId"};
+            String[] headers = Util.getOntologyConceptHeaders();
+            _headerToIndex = Util.getKeyToIndex(headers);
             _writer.writeNext(headers);
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,23 +60,44 @@ public class OntologyCsvWriter extends JCasAnnotator_ImplBase {
         String documentId = getDocumentId(jCas);
         Collection<IdentifiedAnnotation> identifiedAnnotations = JCasUtil.select(jCas, IdentifiedAnnotation.class);
         for (IdentifiedAnnotation identifiedAnnotation : identifiedAnnotations) {
-            int address = identifiedAnnotation.getAddress(); // The id of the annotation (xmi:id in the xmi file)
+
+            String address = String.valueOf(identifiedAnnotation.getAddress()); // The id of the annotation (xmi:id in the xmi file)
             String subject = identifiedAnnotation.getSubject();
             String begin = String.valueOf(identifiedAnnotation.getBegin());
             String end = String.valueOf(identifiedAnnotation.getEnd());
-            System.out.println("ADDRESS: " + address + " BEGIN: " + begin + " END: " + end);
+            String conditional = String.valueOf(identifiedAnnotation.getConditional());
+            String confidence = String.valueOf(identifiedAnnotation.getConfidence());
+            String generic = String.valueOf(identifiedAnnotation.getGeneric());
+
             FSArray ontologyConceptArr = identifiedAnnotation.getOntologyConceptArr();
             if (ontologyConceptArr != null) {
+                // Only add things w/ ontology concept
                 FeatureStructure[] ontologyFeatureStructures = ontologyConceptArr.toArray();
                 Arrays.stream(ontologyFeatureStructures).forEach(ontologyFeatureStructure -> {
+                    // Get ontology concepts
                     String code = getFeatureString(ontologyFeatureStructure, "code");
-                    String[] row = {begin, end, code, String.valueOf(address), documentId};
+
+                    // Add everything to row and write it out
+                    String[] row = new String[_headerToIndex.size()];
+                    putInRow(row, Const.POS_START_HEADER, begin);
+                    putInRow(row, Const.POS_END_HEADER, end);
+                    putInRow(row, Const.ADDRESS_HEADER, address);
+                    putInRow(row, Const.CODE_HEADER, code);
+                    putInRow(row, Const.CONDITIONAL_HEADER, conditional);
+                    putInRow(row, Const.SUBJECT_HEADER, subject);
+                    putInRow(row, Const.CONFIDENCE_HEADER, confidence);
+                    putInRow(row, Const.GENERIC_HEADER, generic);
+
                     _writer.writeNext(row, false);
                     String[] line = MyCSVReader.currentLine;
                     System.out.println(line);
                 });
             }
         }
+    }
+
+    private void putInRow(String[] row, String header, String value) {
+        row[_headerToIndex.get(header)] = value;
     }
 
     private String getDocumentId(JCas jCas) {

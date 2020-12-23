@@ -11,3 +11,13 @@ bin/spark-submit --class icapa.Main --master local[2] .\custom-components-1.0-SN
 
 ## Setup classpath with runPiperFile.bat dependencies
 * Right-click -> open module settings -> + -> Add Jars or dependecies
+
+
+
+$ ./usr/bin/spark-submit \
+--class org.poc.ctakes.spark.CtakesSparkMain \
+--master yarn --deploy-mode cluster \
+--conf spark.executor.extraClassPath=/tmp/ctakesdependencies/  \
+--conf spark.driver.extraClassPath=/tmp/ctakesdependencies/ \
+--conf spark.driver.memory=5g --executor-memory=10g \
+spark-ctakes-0.1-shaded.jar
