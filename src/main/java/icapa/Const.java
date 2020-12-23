@@ -20,5 +20,5 @@ public class Const {
     public static final String TUI_HEADER = "tui";
     public static final String UNCERTAINTY_HEADER = "uncertainty";
     public static final String TRUE_TEXT_HEADER = "trueText";
-    public static final String PART_OF_SPEECH_HEADER = "partOfSpeech";
+    public static final String PARTS_OF_SPEECH_HEADER = "partsOfSpeech";
 }

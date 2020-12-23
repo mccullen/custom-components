@@ -2,6 +2,8 @@ package icapa;
 
 import org.apache.ctakes.core.cc.XMISerializer;
 import org.apache.uima.cas.CAS;
+import org.apache.uima.cas.Feature;
+import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.xml.sax.SAXException;
 
@@ -42,7 +44,7 @@ public class Util {
             Const.CUI_HEADER,
             Const.GENERIC_HEADER,
             Const.POLARITY_HEADER,
-            Const.PART_OF_SPEECH_HEADER,
+            Const.PARTS_OF_SPEECH_HEADER,
             Const.PREFERRED_TEXT_HEADER,
             Const.REFSEM_HEADER,
             Const.SCHEME_HEADER,
@@ -61,5 +63,29 @@ public class Util {
     public static Map<String, Integer> getOntologyHeaderToIndex() {
         String[] headers = Util.getOntologyConceptHeaders();
         return getKeyToIndex(headers);
+    }
+
+    public static String getFeatureString(FeatureStructure fs, String featureName) {
+        Feature feature = fs.getType().getFeatureByBaseName(featureName);
+        String featureString = fs.getStringValue(feature);
+        return featureString;
+    }
+
+    public static double getFeatureDouble(FeatureStructure fs, String featureName) {
+        Feature feature = fs.getType().getFeatureByBaseName(featureName);
+        double featureString = fs.getDoubleValue(feature);
+        return featureString;
+    }
+
+    public static int getFeatureInt(FeatureStructure fs, String featureName) {
+        Feature feature = fs.getType().getFeatureByBaseName(featureName);
+        int featureString = fs.getIntValue(feature);
+        return featureString;
+    }
+
+    public static boolean getFeatureBoolean(FeatureStructure fs, String featureName) {
+        Feature feature = fs.getType().getFeatureByBaseName(featureName);
+        boolean featureString = fs.getBooleanValue(feature);
+        return featureString;
     }
 }
