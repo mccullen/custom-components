@@ -1,4 +1,4 @@
-package icapa;
+package icapa.models;
 
 import java.io.Serializable;
 

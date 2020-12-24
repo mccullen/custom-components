@@ -1,20 +1,17 @@
-package icapa;
+package icapa.services;
 
-import com.fasterxml.jackson.module.scala.util.StringW;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvValidationException;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.log4j.Logger;
 import org.apache.uima.jcas.JCas;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
-public class DelimiterFileCollectionReader implements CollectionReader {
+public class DelimiterCollectionReader implements CollectionReader {
     public static String[] currentLine;
-    static private final Logger LOGGER = Logger.getLogger(DelimiterFileCollectionReader.class.getName());
+    static private final Logger LOGGER = Logger.getLogger(DelimiterCollectionReader.class.getName());
     private Reader _reader;
     private int _rowStart = 0;
     private int _rowEnd = 0;
@@ -24,16 +21,17 @@ public class DelimiterFileCollectionReader implements CollectionReader {
     private String _noteColName;
     private int _docsProcessed = 0;
 
-    public DelimiterFileCollectionReader() {
+    public DelimiterCollectionReader() {
     }
 
-    public static DelimiterFileCollectionReader from(Reader reader, int rowStart, int rowEnd, String noteColName) {
-        DelimiterFileCollectionReader result = new DelimiterFileCollectionReader();
+    public static DelimiterCollectionReader from(Reader reader, int rowStart, int rowEnd, String noteColName) {
+        DelimiterCollectionReader result = new DelimiterCollectionReader();
         result._reader = reader;
         result._rowStart = rowStart;
         result._currentRow = rowStart;
         result._rowEnd = rowEnd;
         result._noteColName = noteColName;
+        // TODO: Remove hard dependency on CSVReader. Create a wrapper class/interface
         result._csvReader = new CSVReaderBuilder(reader).build();
         // Skip to the right row
         String[] headers = new String[0];

@@ -1,17 +1,16 @@
-package icapa;
+package icapa.services;
 
 import com.opencsv.CSVWriter;
+import icapa.Const;
+import icapa.Util;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.ctakes.typesystem.type.syntax.ConllDependencyNode;
-import org.apache.ctakes.typesystem.type.syntax.O;
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
 import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
@@ -20,11 +19,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OntologyDelimiterCasConsumer implements CasConsumer {
+public class OntologyCasConsumer implements CasConsumer {
     private CSVWriter _writer;
     private Map<String, Integer> _headerToIndex;
-    public static OntologyDelimiterCasConsumer from(Writer writer) {
-        OntologyDelimiterCasConsumer result = new OntologyDelimiterCasConsumer();
+    public static OntologyCasConsumer from(Writer writer) {
+        OntologyCasConsumer result = new OntologyCasConsumer();
         try {
             result._writer = new CSVWriter(writer);
             String[] headers = Util.getOntologyConceptHeaders();
@@ -125,7 +124,7 @@ public class OntologyDelimiterCasConsumer implements CasConsumer {
         row[_headerToIndex.get(header)] = value;
     }
     @Override
-    public void destroy() {
+    public void close() {
         try {
             _writer.close();
         } catch (IOException e) {

@@ -1,12 +1,11 @@
-package icapa;
+package icapa.cc;
 
 import com.opencsv.CSVWriter;
-import org.apache.ctakes.core.cc.XMISerializer;
+import icapa.Util;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
-import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
@@ -14,10 +13,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.xml.sax.SAXException;
 
 import java.io.*;
-import java.nio.charset.Charset;
 
-public class MyCSVWriter extends JCasAnnotator_ImplBase {
-    static private final Logger LOGGER = Logger.getLogger( "CSVWriter" );
+public class XmiLineWriter extends JCasAnnotator_ImplBase {
+    static private final Logger LOGGER = Logger.getLogger(XmiLineWriter.class.getName());
 
     static public final String PARAM_OUTPUT_FILE = "OutputFile";
     @ConfigurationParameter(

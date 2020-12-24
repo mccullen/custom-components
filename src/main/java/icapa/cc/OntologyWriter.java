@@ -1,30 +1,19 @@
-package icapa;
+package icapa.cc;
 
-import com.opencsv.CSVWriter;
-import com.opencsv.ICSVWriter;
-import org.apache.ctakes.typesystem.type.structured.DocumentID;
-import org.apache.ctakes.typesystem.type.syntax.ConllDependencyNode;
-import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
+import icapa.services.CasConsumer;
+import icapa.services.OntologyCasConsumer;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
-import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-public class OntologyCsvWriter extends JCasAnnotator_ImplBase {
+public class OntologyWriter extends JCasAnnotator_ImplBase {
     static public final String PARAM_OUTPUT_FILE = "OutputFile";
     @ConfigurationParameter(
         name = PARAM_OUTPUT_FILE,
@@ -36,7 +25,7 @@ public class OntologyCsvWriter extends JCasAnnotator_ImplBase {
 
     private CasConsumer _writer;
 
-    public OntologyCsvWriter() {
+    public OntologyWriter() {
     }
 
     @Override
@@ -45,7 +34,7 @@ public class OntologyCsvWriter extends JCasAnnotator_ImplBase {
         try {
             File file = new File(_outputFile);
             FileWriter fileWriter = new FileWriter(file);
-            _writer = OntologyDelimiterCasConsumer.from(fileWriter);
+            _writer = OntologyCasConsumer.from(fileWriter);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,6 +48,10 @@ public class OntologyCsvWriter extends JCasAnnotator_ImplBase {
     @Override
     public void destroy() {
         super.destroy();
-        _writer.destroy();
+        try {
+            _writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

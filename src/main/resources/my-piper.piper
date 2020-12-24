@@ -2,17 +2,17 @@
 // This file contains commands and parameters to run the ctakes-examples "Hello World" pipeline
 
 // READERS
-reader icapa.MyCSVReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv
-//reader icapa.MyCSVReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.large.csv NoteColumnName=Note
+reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv
+//reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.large.csv NoteColumnName=Note
 
 // Default Clinical Pipeline
 load C:\root\vdt\icapa\nlp\apache-ctakes-4.0.0\resources\org\apache\ctakes\clinical\pipeline\DefaultFastPipeline.piper
 
-add icapa.MyAnnotator
+add icapa.ae.MyAnnotator
 
 // WRITERS
-//add icapa.MyCSVWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/result.csv
-add icapa.OntologyCsvWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/ontology-concepts.csv
+//add icapa.cc.XmiLineWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/result.csv
+add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/ontology-concepts.csv
 //add FileTreeXmiWriter OutputDirectory="C:/root/tmp/mimiciii/ctakes-out/"
 
 // RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\apache-ctakes-4.0.0\custom-components\mypiper.piper --user jmccullen  --pass jrmWW133$

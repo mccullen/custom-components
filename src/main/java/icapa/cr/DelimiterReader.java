@@ -1,10 +1,7 @@
-package icapa;
+package icapa.cr;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvValidationException;
-import org.apache.ctakes.typesystem.type.structured.DocumentID;
-import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
+import icapa.services.CollectionReader;
+import icapa.services.DelimiterCollectionReader;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
@@ -18,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class MyCSVReader extends JCasCollectionReader_ImplBase {
+public class DelimiterReader extends JCasCollectionReader_ImplBase {
     static private final Logger LOGGER = Logger.getLogger( "CSVReader" );
 
     static public final String PARAM_INPUT_FILE = "InputFile";
@@ -61,7 +58,7 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
 
     private CollectionReader _reader;
 
-    public MyCSVReader() {
+    public DelimiterReader() {
         LOGGER.info("Ctor");
         LOGGER.info(_inputFile);
     }
@@ -75,7 +72,7 @@ public class MyCSVReader extends JCasCollectionReader_ImplBase {
         LOGGER.info("initializeing");
         LOGGER.info(_inputFile);
         try {
-            _reader = DelimiterFileCollectionReader.from(new FileReader(_inputFile), _rowStart, _rowEnd, _noteColName);
+            _reader = DelimiterCollectionReader.from(new FileReader(_inputFile), _rowStart, _rowEnd, _noteColName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
