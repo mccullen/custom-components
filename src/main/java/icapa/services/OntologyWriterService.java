@@ -6,6 +6,7 @@ import icapa.Util;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.ctakes.typesystem.type.syntax.ConllDependencyNode;
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
+import org.apache.uima.UimaContext;
 import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -19,11 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OntologyCasConsumer implements CasConsumer {
+public class OntologyWriterService implements AnalysisEngine {
     private CSVWriter _writer;
     private Map<String, Integer> _headerToIndex;
-    public static OntologyCasConsumer from(Writer writer) {
-        OntologyCasConsumer result = new OntologyCasConsumer();
+    public static OntologyWriterService from(Writer writer) {
+        OntologyWriterService result = new OntologyWriterService();
         try {
             result._writer = new CSVWriter(writer);
             String[] headers = Util.getOntologyConceptHeaders();
@@ -34,6 +35,11 @@ public class OntologyCasConsumer implements CasConsumer {
         }
         return result;
     }
+
+    @Override
+    public void initialize(UimaContext context) {
+    }
+
     @Override
     public void process(JCas jCas) {
         // TODO: Create a model object to hold all the features in a row to make this a lot cleaner

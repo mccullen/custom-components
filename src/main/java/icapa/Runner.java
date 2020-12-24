@@ -29,8 +29,8 @@ public class Runner implements Serializable {
 
     public void start() {
         setConfig();
-        //runBuilder();
-        temp();
+        runBuilder();
+        //temp();
     }
 
     private void temp() {
@@ -124,8 +124,9 @@ public class Runner implements Serializable {
             CliOptionals options = CliFactory.parseArguments(CliOptionals.class, args);
             piperReader.setCliOptionals(options);
             piperReader.loadPipelineFile(_config.getPiperFile());
-            //piperReader.parsePipelineLine("add icapa.cc.MyCSVWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/" + String.valueOf(rowStart) + ".csv");
-            piperReader.parsePipelineLine("add icapa.cc.OntologyCsvWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/test.csv");
+            piperReader.parsePipelineLine("add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/" + String.valueOf(rowStart) + ".csv");
+            // TODO: Uncomment if you want to try to write everything to same file. I have not had success with this yet
+            //piperReader.parsePipelineLine("add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/test.csv");
             builder.run();
             System.out.println("****************** DONE *********************************");
         });

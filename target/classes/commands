@@ -1,3 +1,5 @@
+
+## How to run jar file. Set cp to current directory, ctakes lib, ctakes desc, and ctakes resources
 java -cp "./*;C:/root/vdt/icapa/nlp/apache-ctakes-4.0.0/lib/*;C:/root/vdt/icapa/nlp/apache-ctakes-4.0.0/desc;C:/root/vdt/icapa/nlp/apache-ctakes-4.0.0/resources" icapa.Main
 
 

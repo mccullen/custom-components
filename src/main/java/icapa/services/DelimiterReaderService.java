@@ -9,9 +9,9 @@ import org.apache.uima.jcas.JCas;
 import java.io.IOException;
 import java.io.Reader;
 
-public class DelimiterCollectionReader implements CollectionReader {
+public class DelimiterReaderService implements CollectionReader {
     public static String[] currentLine;
-    static private final Logger LOGGER = Logger.getLogger(DelimiterCollectionReader.class.getName());
+    static private final Logger LOGGER = Logger.getLogger(DelimiterReaderService.class.getName());
     private Reader _reader;
     private int _rowStart = 0;
     private int _rowEnd = 0;
@@ -21,11 +21,11 @@ public class DelimiterCollectionReader implements CollectionReader {
     private String _noteColName;
     private int _docsProcessed = 0;
 
-    public DelimiterCollectionReader() {
+    public DelimiterReaderService() {
     }
 
-    public static DelimiterCollectionReader from(Reader reader, int rowStart, int rowEnd, String noteColName) {
-        DelimiterCollectionReader result = new DelimiterCollectionReader();
+    public static DelimiterReaderService from(Reader reader, int rowStart, int rowEnd, String noteColName) {
+        DelimiterReaderService result = new DelimiterReaderService();
         result._reader = reader;
         result._rowStart = rowStart;
         result._currentRow = rowStart;

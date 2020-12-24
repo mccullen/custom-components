@@ -1,13 +1,8 @@
 package icapa.cc;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
-import icapa.services.CasConsumer;
-import icapa.services.OntologyCasConsumer;
-import javassist.bytecode.ByteArray;
+import icapa.services.AnalysisEngine;
+import icapa.services.OntologyWriterService;
+import icapa.services.S3OntologyWriterService;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
@@ -36,9 +31,7 @@ public class S3OntologyWriter extends JCasAnnotator_ImplBase {
     )
     private String _key;
 
-    private CasConsumer _writer;
-    private BufferedOutputStream _bufferedOutputStream;
-    private ByteArrayOutputStream _byteArrayOutputStream;
+    private AnalysisEngine _writer;
 
     public S3OntologyWriter() {
     }
@@ -46,21 +39,17 @@ public class S3OntologyWriter extends JCasAnnotator_ImplBase {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        setDependencies();
+        setWriter();
+        _writer.initialize(context);
     }
 
-    private void setDependencies() {
-        AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
-        //InputStream inputStream = s3Object.getObjectContent();
-        if (s3Client.doesObjectExist(_bucket, _key)) {
-            S3Object s3Object = s3Client.getObject(_bucket, _key);
-            _byteArrayOutputStream = new ByteArrayOutputStream();
-            _bufferedOutputStream = new BufferedOutputStream(_byteArrayOutputStream);
-            Writer writer = new OutputStreamWriter(_bufferedOutputStream);
-            _writer = OntologyCasConsumer.from(writer);
-        } else {
-            Bucket bucket = s3Client.createBucket(_bucket);
-        }
+    private void setWriter() {
+        // Create an ontology concept writer that writes to a byte stream
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
+        Writer output = new OutputStreamWriter(bufferedOutputStream);
+        AnalysisEngine writer = OntologyWriterService.from(output);
+        _writer = S3OntologyWriterService.from(writer, _bucket, _key);
     }
 
     @Override
@@ -76,10 +65,5 @@ public class S3OntologyWriter extends JCasAnnotator_ImplBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
-        byte[] bytes = _byteArrayOutputStream.toByteArray();
-        InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(bytes));
-        ObjectMetadata metadata = new ObjectMetadata();
-        s3Client.putObject(_bucket, _key, inputStream, metadata);
     }
 }

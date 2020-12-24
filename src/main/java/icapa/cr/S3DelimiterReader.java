@@ -1,12 +1,10 @@
 package icapa.cr;
 
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import icapa.services.CollectionReader;
-import icapa.services.DelimiterCollectionReader;
+import icapa.services.DelimiterReaderService;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
 import org.apache.uima.fit.component.JCasCollectionReader_ImplBase;
@@ -76,7 +74,7 @@ public class S3DelimiterReader extends JCasCollectionReader_ImplBase {
         S3Object s3Object = s3Client.getObject(_bucket, _key);
         InputStream inputStream = s3Object.getObjectContent();
         Reader reader = new InputStreamReader(inputStream);
-        _reader = DelimiterCollectionReader.from(reader, _rowStart, _rowEnd, _noteColName);
+        _reader = DelimiterReaderService.from(reader, _rowStart, _rowEnd, _noteColName);
     }
 
     @Override

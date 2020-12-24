@@ -10,6 +10,5 @@ public class Main {
     public static void main(String[] args) throws IOException, CsvValidationException {
         Runner runner = new Runner();
         runner.start();
-        System.out.println(Main.class.getName());
     }
 }

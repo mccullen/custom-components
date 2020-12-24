@@ -1,7 +1,7 @@
 package icapa.cc;
 
-import icapa.services.CasConsumer;
-import icapa.services.OntologyCasConsumer;
+import icapa.services.AnalysisEngine;
+import icapa.services.OntologyWriterService;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
@@ -23,7 +23,7 @@ public class OntologyWriter extends JCasAnnotator_ImplBase {
     )
     private String _outputFile;
 
-    private CasConsumer _writer;
+    private AnalysisEngine _writer;
 
     public OntologyWriter() {
     }
@@ -31,10 +31,15 @@ public class OntologyWriter extends JCasAnnotator_ImplBase {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
+        setWriter();
+        _writer.initialize(context);
+    }
+
+    private void setWriter() {
         try {
             File file = new File(_outputFile);
             FileWriter fileWriter = new FileWriter(file);
-            _writer = OntologyCasConsumer.from(fileWriter);
+            _writer = OntologyWriterService.from(fileWriter);
         } catch (Exception e) {
             e.printStackTrace();
         }

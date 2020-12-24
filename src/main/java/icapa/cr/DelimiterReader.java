@@ -1,7 +1,7 @@
 package icapa.cr;
 
 import icapa.services.CollectionReader;
-import icapa.services.DelimiterCollectionReader;
+import icapa.services.DelimiterReaderService;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
@@ -72,7 +72,7 @@ public class DelimiterReader extends JCasCollectionReader_ImplBase {
         LOGGER.info("initializeing");
         LOGGER.info(_inputFile);
         try {
-            _reader = DelimiterCollectionReader.from(new FileReader(_inputFile), _rowStart, _rowEnd, _noteColName);
+            _reader = DelimiterReaderService.from(new FileReader(_inputFile), _rowStart, _rowEnd, _noteColName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
