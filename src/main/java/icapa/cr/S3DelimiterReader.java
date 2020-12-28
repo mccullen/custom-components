@@ -3,6 +3,7 @@ package icapa.cr;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
+import icapa.models.DelimiterReaderParams;
 import icapa.services.CollectionReader;
 import icapa.services.DelimiterReaderService;
 import org.apache.uima.UimaContext;
@@ -65,6 +66,15 @@ public class S3DelimiterReader extends JCasCollectionReader_ImplBase {
     )
     private String _noteColName;
 
+    static public final String PARAM_DOCUMENT_ID_COL_NAME = "DocumentIdColumnName";
+    @ConfigurationParameter(
+        name = PARAM_DOCUMENT_ID_COL_NAME,
+        description = "Document Id column name",
+        mandatory = false,
+        defaultValue = "documentId"
+    )
+    private String _documentIdColName;
+
     private CollectionReader _reader;
 
     @Override
@@ -74,7 +84,13 @@ public class S3DelimiterReader extends JCasCollectionReader_ImplBase {
         S3Object s3Object = s3Client.getObject(_bucket, _key);
         InputStream inputStream = s3Object.getObjectContent();
         Reader reader = new InputStreamReader(inputStream);
-        _reader = DelimiterReaderService.from(reader, _rowStart, _rowEnd, _noteColName);
+        DelimiterReaderParams params = new DelimiterReaderParams();
+        params.setReader(reader);
+        params.setRowStart(_rowStart);
+        params.setRowEnd(_rowEnd);
+        params.setNoteColumnName(_noteColName);
+        params.setDocumentIdColumnName(_documentIdColName);
+        _reader = DelimiterReaderService.from(params);
     }
 
     @Override

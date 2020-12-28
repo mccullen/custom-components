@@ -1,5 +1,6 @@
 package icapa.cr;
 
+import icapa.models.DelimiterReaderParams;
 import icapa.services.CollectionReader;
 import icapa.services.DelimiterReaderService;
 import org.apache.log4j.Logger;
@@ -56,6 +57,15 @@ public class DelimiterReader extends JCasCollectionReader_ImplBase {
     )
     private String _noteColName;
 
+    static public final String PARAM_DOCUMENT_ID_COL_NAME = "DocumentIdColumnName";
+    @ConfigurationParameter(
+        name = PARAM_DOCUMENT_ID_COL_NAME,
+        description = "Document Id column name",
+        mandatory = false,
+        defaultValue = "documentId"
+    )
+    private String _documentIdColName;
+
     private CollectionReader _reader;
 
     public DelimiterReader() {
@@ -72,7 +82,13 @@ public class DelimiterReader extends JCasCollectionReader_ImplBase {
         LOGGER.info("initializeing");
         LOGGER.info(_inputFile);
         try {
-            _reader = DelimiterReaderService.from(new FileReader(_inputFile), _rowStart, _rowEnd, _noteColName);
+            DelimiterReaderParams params = new DelimiterReaderParams();
+            params.setReader(new FileReader(_inputFile));
+            params.setRowStart(_rowStart);
+            params.setRowEnd(_rowEnd);
+            params.setNoteColumnName(_noteColName);
+            params.setDocumentIdColumnName(_documentIdColName);
+            _reader = DelimiterReaderService.from(params);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

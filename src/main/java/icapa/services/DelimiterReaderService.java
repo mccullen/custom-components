@@ -2,12 +2,16 @@ package icapa.services;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import icapa.Util;
+import icapa.models.DelimiterReaderParams;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.log4j.Logger;
 import org.apache.uima.jcas.JCas;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DelimiterReaderService implements CollectionReader {
     public static String[] currentLine;
@@ -17,30 +21,31 @@ public class DelimiterReaderService implements CollectionReader {
     private int _rowEnd = 0;
     private int _currentRow;
     private CSVReader _csvReader;
-    private int _noteColIndex;
+    private Integer _noteColIndex;
+    private Integer _documentIdIndex;
     private String _noteColName;
     private int _docsProcessed = 0;
+    private Map<String, Integer> _headerToIndex = new HashMap<>();
 
     public DelimiterReaderService() {
     }
 
-    public static DelimiterReaderService from(Reader reader, int rowStart, int rowEnd, String noteColName) {
+    public static DelimiterReaderService from(DelimiterReaderParams params) {
         DelimiterReaderService result = new DelimiterReaderService();
-        result._reader = reader;
-        result._rowStart = rowStart;
-        result._currentRow = rowStart;
-        result._rowEnd = rowEnd;
-        result._noteColName = noteColName;
+        result._reader = params.getReader();
+        result._rowStart = params.getRowStart();
+        result._currentRow = result._rowStart;
+        result._rowEnd = params.getRowEnd();
         // TODO: Remove hard dependency on CSVReader. Create a wrapper class/interface
-        result._csvReader = new CSVReaderBuilder(reader).build();
+        result._csvReader = new CSVReaderBuilder(result._reader).build();
         // Skip to the right row
         String[] headers = new String[0];
         try {
             headers = result._csvReader.readNext();
+            result._headerToIndex = Util.getKeyToIndex(headers);
             // Set _noteColIndex to the index of the specified header
-            while (result._noteColIndex < headers.length && !headers[result._noteColIndex].equals(result._noteColName)) {
-                ++result._noteColIndex;
-            }
+            result._noteColIndex = result._headerToIndex.get(params.getNoteColumnName());
+            result._documentIdIndex = result._headerToIndex.get(params.getDocumentIdColumnName());
             result._csvReader.skip(result._rowStart);
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,7 +64,13 @@ public class DelimiterReaderService implements CollectionReader {
                 jCas.setDocumentText(text);
                 DocumentID documentId = new DocumentID(jCas);
                 ++_docsProcessed;
-                documentId.setDocumentID(String.valueOf(_docsProcessed));
+                if (_documentIdIndex == null) {
+                    // Index not provided so just use the current document number
+                    documentId.setDocumentID(String.valueOf(_docsProcessed));
+                } else {
+                    String id = line[_documentIdIndex];
+                    documentId.setDocumentID(id);
+                }
                 documentId.addToIndexes();
             } else {
                 jCas.setDocumentText("");

@@ -2,7 +2,7 @@
 // This file contains commands and parameters to run the ctakes-examples "Hello World" pipeline
 
 // READERS
-reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top34.csv
+reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv
 //reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.large.csv NoteColumnName=Note
 
 // Default Clinical Pipeline

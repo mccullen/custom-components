@@ -47,11 +47,13 @@ public class Runner implements Serializable {
         try {
             PiperFileReader piperReader = new PiperFileReader();
             PipelineBuilder builder = piperReader.getBuilder();
-            String[] args = { "--user", _config.getUmlsUsername(), "--pass", _config.getUmlsPassword(), "-p", _config.getPiperFile()};
+            // TODO: Do you need to set piper twice here?
+            String defaultPipeline = "C:/root/vdt/icapa/nlp/custom-components/src/main/resources/default-pipeline.piper";
+            String[] args = { "--user", _config.getUmlsUsername(), "--pass", _config.getUmlsPassword(), "-p", defaultPipeline};
             CliOptionals options = CliFactory.parseArguments(CliOptionals.class, args);
             piperReader.setCliOptionals(options);
             //piperReader.loadPipelineFile(_config.getPiperFile());
-            piperReader.loadPipelineFile("C:/root/vdt/icapa/nlp/custom-components/src/main/resources/my-piper.piper");
+            piperReader.loadPipelineFile(defaultPipeline);
             builder.run();
         } catch (Exception e) {
             System.out.println("ERROR");
@@ -91,7 +93,7 @@ public class Runner implements Serializable {
     }
 
     private void runSpark() {
-        SparkConf conf = new SparkConf().setAppName("app").setMaster("local[4]");
+        SparkConf conf = new SparkConf().setAppName("app").setMaster("local[1]");
         SparkSession ss = SparkSession.builder().config(conf).getOrCreate();
         JavaSparkContext sc = JavaSparkContext.fromSparkContext(ss.sparkContext());
 
