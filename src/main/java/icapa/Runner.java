@@ -29,18 +29,29 @@ public class Runner implements Serializable {
 
     public void start() {
         setConfig();
-        runBuilder();
-        //temp();
+        long durationInMiliseconds = Util.getRuntimeInMiliseconds(() -> {
+            run();
+        });
+        System.out.println(durationInMiliseconds);
     }
 
-    private void temp() {
+    public void sparkStart() {
+        setConfig();
+        long durationInMiliseconds = Util.getRuntimeInMiliseconds(() -> {
+            runSpark();
+        });
+        System.out.println(durationInMiliseconds);
+    }
+
+    private void run() {
         try {
             PiperFileReader piperReader = new PiperFileReader();
             PipelineBuilder builder = piperReader.getBuilder();
             String[] args = { "--user", _config.getUmlsUsername(), "--pass", _config.getUmlsPassword(), "-p", _config.getPiperFile()};
             CliOptionals options = CliFactory.parseArguments(CliOptionals.class, args);
             piperReader.setCliOptionals(options);
-            piperReader.loadPipelineFile(_config.getPiperFile());
+            //piperReader.loadPipelineFile(_config.getPiperFile());
+            piperReader.loadPipelineFile("C:/root/vdt/icapa/nlp/custom-components/src/main/resources/my-piper.piper");
             builder.run();
         } catch (Exception e) {
             System.out.println("ERROR");
@@ -79,8 +90,8 @@ public class Runner implements Serializable {
         }
     }
 
-    private void runBuilder() {
-        SparkConf conf = new SparkConf().setAppName("app").setMaster("local[1]");
+    private void runSpark() {
+        SparkConf conf = new SparkConf().setAppName("app").setMaster("local[4]");
         SparkSession ss = SparkSession.builder().config(conf).getOrCreate();
         JavaSparkContext sc = JavaSparkContext.fromSparkContext(ss.sparkContext());
 
@@ -92,7 +103,6 @@ public class Runner implements Serializable {
         LOGGER.info(nLines);
         List<Integer> rowNumbers = IntStream.range(1, nLines).boxed().collect(Collectors.toList());
         JavaRDD<Integer> rdds = sc.parallelize(rowNumbers);
-        long startTime = System.nanoTime();
         rdds.foreachPartition(p -> {
             ++n;
             System.out.println("N:::::::::::::" + n);
@@ -130,12 +140,8 @@ public class Runner implements Serializable {
             builder.run();
             System.out.println("****************** DONE *********************************");
         });
-        rdds.collect();
         sc.close();
         ss.stop();
-        long endTime = System.nanoTime();
-        long durationInMilliseconds = (endTime - startTime)/1000000;
-        System.out.println(durationInMilliseconds);
     }
 
     private String getParamString(String name, String value) {

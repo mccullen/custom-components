@@ -88,4 +88,12 @@ public class Util {
         boolean featureString = fs.getBooleanValue(feature);
         return featureString;
     }
+
+    public static long getRuntimeInMiliseconds(Runnable runnable) {
+        long startTime = System.nanoTime();
+        runnable.run();
+        long endTime = System.nanoTime();
+        long durationInMilliseconds = (endTime - startTime)/1000000;
+        return durationInMilliseconds;
+    }
 }
