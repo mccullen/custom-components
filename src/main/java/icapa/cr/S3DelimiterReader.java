@@ -3,12 +3,10 @@ package icapa.cr;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
-import icapa.models.DelimiterReaderParams;
 import icapa.services.CollectionReader;
 import icapa.services.DelimiterReaderService;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
-import org.apache.uima.fit.component.JCasCollectionReader_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -19,8 +17,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-public class S3DelimiterReader extends JCasCollectionReader_ImplBase {
+public class S3DelimiterReader extends AbstractDelimiterReader {
 
+    // Configuration Parameters
     static public final String PARAM_BUCKET = "Bucket";
     @ConfigurationParameter(
         name = PARAM_BUCKET,
@@ -39,42 +38,7 @@ public class S3DelimiterReader extends JCasCollectionReader_ImplBase {
     )
     private String _key;
 
-    static public final String PARAM_ROW_START = "RowStart";
-    @ConfigurationParameter(
-        name = PARAM_ROW_START,
-        description = "Row start. Inclusive and starts at 0.",
-        mandatory = false,
-        defaultValue = "0"
-    )
-    private int _rowStart;
-
-    static public final String PARAM_ROW_END = "RowEnd";
-    @ConfigurationParameter(
-        name = PARAM_ROW_END,
-        description = "Row end. Inclusive",
-        mandatory = false,
-        defaultValue = "-1" // If -1, will read until the end
-    )
-    private int _rowEnd;
-
-    static public final String PARAM_NOTE_COL_NAME = "NoteColumnName";
-    @ConfigurationParameter(
-        name = PARAM_NOTE_COL_NAME,
-        description = "Note Column name",
-        mandatory = false,
-        defaultValue = "note"
-    )
-    private String _noteColName;
-
-    static public final String PARAM_DOCUMENT_ID_COL_NAME = "DocumentIdColumnName";
-    @ConfigurationParameter(
-        name = PARAM_DOCUMENT_ID_COL_NAME,
-        description = "Document Id column name",
-        mandatory = false,
-        defaultValue = "documentId"
-    )
-    private String _documentIdColName;
-
+    // Private fields
     private CollectionReader _reader;
 
     @Override
@@ -84,13 +48,8 @@ public class S3DelimiterReader extends JCasCollectionReader_ImplBase {
         S3Object s3Object = s3Client.getObject(_bucket, _key);
         InputStream inputStream = s3Object.getObjectContent();
         Reader reader = new InputStreamReader(inputStream);
-        DelimiterReaderParams params = new DelimiterReaderParams();
-        params.setReader(reader);
-        params.setRowStart(_rowStart);
-        params.setRowEnd(_rowEnd);
-        params.setNoteColumnName(_noteColName);
-        params.setDocumentIdColumnName(_documentIdColName);
-        _reader = DelimiterReaderService.from(params);
+        getParams().setReader(reader);
+        _reader = DelimiterReaderService.from(getParams());
     }
 
     @Override

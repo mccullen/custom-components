@@ -1,5 +1,6 @@
 package icapa.services;
 
+import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import icapa.Util;
@@ -23,7 +24,6 @@ public class DelimiterReaderService implements CollectionReader {
     private CSVReader _csvReader;
     private Integer _noteColIndex;
     private Integer _documentIdIndex;
-    private String _noteColName;
     private int _docsProcessed = 0;
     private Map<String, Integer> _headerToIndex = new HashMap<>();
 
@@ -37,7 +37,9 @@ public class DelimiterReaderService implements CollectionReader {
         result._currentRow = result._rowStart;
         result._rowEnd = params.getRowEnd();
         // TODO: Remove hard dependency on CSVReader. Create a wrapper class/interface
-        result._csvReader = new CSVReaderBuilder(result._reader).build();
+        result._csvReader = new CSVReaderBuilder(result._reader)
+            .withCSVParser(new CSVParserBuilder().withSeparator(params.getDelimiter()).build())
+            .build();
         // Skip to the right row
         String[] headers = new String[0];
         try {

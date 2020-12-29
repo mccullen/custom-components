@@ -8,6 +8,15 @@ public class DelimiterReaderParams {
     private int rowEnd;
     private String noteColumnName;
     private String documentIdColumnName;
+    private char delimiter;
+
+    public char getDelimiter() {
+        return delimiter;
+    }
+
+    public void setDelimiter(char delimiter) {
+        this.delimiter = delimiter;
+    }
 
     public Reader getReader() {
         return reader;
