@@ -3,6 +3,7 @@ package icapa.services;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import icapa.models.S3OntologyWriterParams;
 import org.apache.uima.UimaContext;
 import org.apache.uima.jcas.JCas;
 
@@ -17,14 +18,14 @@ public class S3OntologyWriterService implements AnalysisEngine {
     private AnalysisEngine _analysisEngine;
     private String _bucket;
     private String _key;
-    private BufferedOutputStream _bufferedOutputStream;
     private ByteArrayOutputStream _byteArrayOutputStream;
 
-    public static S3OntologyWriterService from(AnalysisEngine analysisEngine, String bucket, String key) {
+    public static S3OntologyWriterService from(S3OntologyWriterParams params) {
         S3OntologyWriterService result = new S3OntologyWriterService();
-        result._analysisEngine = analysisEngine;
-        result._bucket = bucket;
-        result._key = key;
+        result._analysisEngine = params.getAnalysisEngine();
+        result._bucket = params.getBucket();
+        result._key = params.getKey();
+        result._byteArrayOutputStream = params.getByteArrayOutputStream();
         return result;
     }
 

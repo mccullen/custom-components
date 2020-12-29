@@ -1,8 +1,11 @@
 package icapa.services;
 
 import com.opencsv.CSVWriter;
+import com.opencsv.CSVWriterBuilder;
+import com.opencsv.ICSVWriter;
 import icapa.Const;
 import icapa.Util;
+import icapa.models.OntologyWriterParams;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.ctakes.typesystem.type.syntax.ConllDependencyNode;
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
@@ -21,12 +24,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OntologyWriterService implements AnalysisEngine {
-    private CSVWriter _writer;
+    private ICSVWriter _writer;
     private Map<String, Integer> _headerToIndex;
-    public static OntologyWriterService from(Writer writer) {
+    public static OntologyWriterService from(OntologyWriterParams params) {
         OntologyWriterService result = new OntologyWriterService();
         try {
-            result._writer = new CSVWriter(writer);
+            //result._writer = new CSVWriter(params.getWriter());
+            result._writer = new CSVWriterBuilder(params.getWriter()).withSeparator(params.getDelimiter()).build();
             String[] headers = Util.getOntologyConceptHeaders();
             result._headerToIndex = Util.getKeyToIndex(headers);
             result._writer.writeNext(headers, false);

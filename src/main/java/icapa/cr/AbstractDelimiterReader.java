@@ -49,7 +49,9 @@ public abstract class AbstractDelimiterReader extends JCasCollectionReader_ImplB
     static public final String PARAM_DELIMITER = "Delimiter";
     @ConfigurationParameter(
         name = PARAM_DELIMITER,
-        description = "Delimiter",
+        description = "Delimiter. Note that this can be a UTF-16 unicode character. Just specify the UTF-16 hex. " +
+                      "For example, if you want to use a character that you will not have to escape since it can't " +
+                      "be typed, you could use \\u0001 (start of heading)",
         mandatory = false,
         defaultValue = ","
     )

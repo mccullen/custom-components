@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class OntologyWriter extends JCasAnnotator_ImplBase {
+public class OntologyWriter extends AbstractOntologyWriter {
     static public final String PARAM_OUTPUT_FILE = "OutputFile";
     @ConfigurationParameter(
         name = PARAM_OUTPUT_FILE,
@@ -39,7 +39,8 @@ public class OntologyWriter extends JCasAnnotator_ImplBase {
         try {
             File file = new File(_outputFile);
             FileWriter fileWriter = new FileWriter(file);
-            _writer = OntologyWriterService.from(fileWriter);
+            getParams().setWriter(fileWriter);
+            _writer = OntologyWriterService.from(getParams());
         } catch (Exception e) {
             e.printStackTrace();
         }
