@@ -1,6 +1,5 @@
 package icapa.services;
 
-import com.opencsv.CSVWriter;
 import com.opencsv.CSVWriterBuilder;
 import com.opencsv.ICSVWriter;
 import icapa.Const;
@@ -16,7 +15,6 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
