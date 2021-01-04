@@ -15,7 +15,7 @@ public abstract class AbstractOntologyWriter extends JCasAnnotator_ImplBase {
     @ConfigurationParameter(
         name = PARAM_DELIMITER,
         description = "Delimiter",
-        defaultValue = "*",
+        defaultValue = ",",
         mandatory = true
     )
     private char _delimiter;

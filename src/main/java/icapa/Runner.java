@@ -47,13 +47,8 @@ public class Runner implements Serializable {
         try {
             PiperFileReader piperReader = new PiperFileReader();
             PipelineBuilder builder = piperReader.getBuilder();
-            // TODO: Do you need to set piper twice here?
-            String defaultPipeline = "C:/root/vdt/icapa/nlp/custom-components/src/main/resources/default-pipeline.piper";
-            String[] args = { "--user", _config.getUmlsUsername(), "--pass", _config.getUmlsPassword(), "-p", defaultPipeline};
-            CliOptionals options = CliFactory.parseArguments(CliOptionals.class, args);
-            piperReader.setCliOptionals(options);
-            //piperReader.loadPipelineFile(_config.getPiperFile());
-            piperReader.loadPipelineFile(defaultPipeline);
+            setCliOptions(piperReader);
+            piperReader.loadPipelineFile(_config.getPiperFile());
             builder.run();
         } catch (Exception e) {
             System.out.println("ERROR");
@@ -87,13 +82,14 @@ public class Runner implements Serializable {
             _config.setUmlsUsername(prop.getProperty(icapa.models.ConfigurationSettings.UMLS_USERNAME_PROP));
             _config.setUmlsPassword(prop.getProperty(icapa.models.ConfigurationSettings.UMLS_PASSWORD_PROP));
             _config.setPiperFile(prop.getProperty(ConfigurationSettings.PIPER_FILE_PROP));
+            _config.setLookupXml(prop.getProperty(ConfigurationSettings.LOOKUP_XML_PROP));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void runSpark() {
-        SparkConf conf = new SparkConf().setAppName("app").setMaster("local[1]");
+        SparkConf conf = new SparkConf().setAppName("app").setMaster("local[4]");
         SparkSession ss = SparkSession.builder().config(conf).getOrCreate();
         JavaSparkContext sc = JavaSparkContext.fromSparkContext(ss.sparkContext());
 
@@ -103,7 +99,8 @@ public class Runner implements Serializable {
 
         int nLines = getNLines();
         LOGGER.info(nLines);
-        List<Integer> rowNumbers = IntStream.range(1, nLines).boxed().collect(Collectors.toList());
+        int lastRowNumber = nLines - 2; // subtract 1 for header row and 1 so your first row is 0 rather than 1
+        List<Integer> rowNumbers = IntStream.range(0, lastRowNumber + 1).boxed().collect(Collectors.toList());
         JavaRDD<Integer> rdds = sc.parallelize(rowNumbers);
         rdds.foreachPartition(p -> {
             ++n;
@@ -132,18 +129,29 @@ public class Runner implements Serializable {
                 getParamString(DelimiterReader.PARAM_ROW_END, String.valueOf(rowEnd)) + " " +
                 getParamString(DelimiterReader.PARAM_NOTE_COL_NAME, _config.getNoteColumnName());
             piperReader.parsePipelineLine(readerLine);
-            String[] args = { "--user", _config.getUmlsUsername(), "--pass", _config.getUmlsPassword(), "-p", _config.getPiperFile()};
-            CliOptionals options = CliFactory.parseArguments(CliOptionals.class, args);
-            piperReader.setCliOptionals(options);
+            setCliOptions(piperReader);
             piperReader.loadPipelineFile(_config.getPiperFile());
             piperReader.parsePipelineLine("add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/" + String.valueOf(rowStart) + ".csv");
             // TODO: Uncomment if you want to try to write everything to same file. I have not had success with this yet
+            // Currently, the OntologyWriter will write the header for each thread but otherwise works fine.
+            // S3 doesn't allow appending so this is a low priority.
             //piperReader.parsePipelineLine("add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/test.csv");
             builder.run();
             System.out.println("****************** DONE *********************************");
         });
         sc.close();
         ss.stop();
+    }
+
+    private void setCliOptions(PiperFileReader piperReader) {
+        String[] args = {
+            "--user", _config.getUmlsUsername(),
+            "--pass", _config.getUmlsPassword(),
+            "-p", _config.getPiperFile(),
+            "-l", _config.getLookupXml()
+        };
+        CliOptionals options = CliFactory.parseArguments(CliOptionals.class, args);
+        piperReader.setCliOptionals(options);
     }
 
     private String getParamString(String name, String value) {

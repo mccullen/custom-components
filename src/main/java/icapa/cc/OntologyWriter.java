@@ -38,6 +38,8 @@ public class OntologyWriter extends AbstractOntologyWriter {
     private void setWriter() {
         try {
             File file = new File(_outputFile);
+            // Uncomment to append rather than recreate file
+            //FileWriter fileWriter = new FileWriter(file, true);
             FileWriter fileWriter = new FileWriter(file);
             getParams().setWriter(fileWriter);
             _writer = OntologyWriterService.from(getParams());
