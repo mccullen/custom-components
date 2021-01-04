@@ -13,6 +13,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
+import org.apache.uima.UIMAException;
 
 import java.io.*;
 import java.util.List;
@@ -46,8 +47,8 @@ public class Runner implements Serializable {
     private void run() {
         try {
             PiperFileReader piperReader = new PiperFileReader();
-            PipelineBuilder builder = piperReader.getBuilder();
             setCliOptions(piperReader);
+            PipelineBuilder builder = piperReader.getBuilder();
             piperReader.loadPipelineFile(_config.getPiperFile());
             builder.run();
         } catch (Exception e) {
@@ -143,15 +144,70 @@ public class Runner implements Serializable {
         ss.stop();
     }
 
-    private void setCliOptions(PiperFileReader piperReader) {
-        String[] args = {
-            "--user", _config.getUmlsUsername(),
-            "--pass", _config.getUmlsPassword(),
-            "-p", _config.getPiperFile(),
-            "-l", _config.getLookupXml()
-        };
-        CliOptionals options = CliFactory.parseArguments(CliOptionals.class, args);
-        piperReader.setCliOptionals(options);
+    private void setCliOptions(PiperFileReader reader) {
+        try {
+            String[] args = {
+                "--user", _config.getUmlsUsername(),
+                "--pass", _config.getUmlsPassword(),
+                "-p", _config.getPiperFile(),
+                "-l", _config.getLookupXml()
+            };
+            CliOptionals options = CliFactory.parseArguments(CliOptionals.class, args);
+            PipelineBuilder builder = reader.getBuilder();
+
+            String inputDir = options.getInputDirectory();
+            if (!inputDir.isEmpty()) {
+                builder.set("InputDirectory", inputDir);
+            }
+
+            String outputDir = options.getOutputDirectory();
+            String subDir = options.getSubDirectory();
+            if (!subDir.isEmpty()) {
+                builder.set("SubDirectory", subDir);
+            }
+
+            String xmiOutDir = options.getXmiOutDirectory();
+            if (!outputDir.isEmpty()) {
+                builder.set("OutputDirectory", outputDir);
+            } else if (!xmiOutDir.isEmpty()) {
+                builder.set("OutputDirectory", xmiOutDir);
+            }
+
+            String lookupXml = options.getLookupXml();
+            if (!lookupXml.isEmpty()) {
+                builder.set("LookupXml", lookupXml);
+            }
+
+            String umlsUser = options.getUmlsUserName();
+            if (!umlsUser.isEmpty()) {
+                builder.set("umlsUser", umlsUser);
+                builder.set("ctakes.umlsuser", umlsUser);
+            }
+
+            String umlsPass = options.getUmlsPassword();
+            if (!umlsPass.isEmpty()) {
+                builder.set("umlsPass", umlsPass);
+                builder.set("ctakes.umlspw", umlsPass);
+            }
+
+            reader.setCliOptionals(options);
+
+            /*
+            reader.loadPipelineFile(options.getPiperPath());
+            if (!inputDir.isEmpty() && builder.getReader() == null) {
+                builder.readFiles(inputDir);
+            }
+
+            if (!xmiOutDir.isEmpty() && !builder.getAeNames().stream().map(String::toLowerCase).anyMatch((n) -> {
+                return n.contains("xmiwriter");
+            })) {
+                builder.writeXMIs(xmiOutDir);
+            }
+             */
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            System.exit(1);
+        }
     }
 
     private String getParamString(String name, String value) {
