@@ -26,8 +26,9 @@ public class Tests {
     @Test
     public void testLocalS3API() {
         AmazonS3 s3 = TestUtils.getClientS3();
-        //List<Bucket> buckets = s3.listBuckets();
-        s3.createBucket("hello");
+        //s3.setEndpoint("localhost:4556");
+        List<Bucket> buckets = s3.listBuckets();
+        //s3.createBucket("hello");
         System.out.println("here");
     }
 }
