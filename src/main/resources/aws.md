@@ -15,3 +15,8 @@ aws --endpoint-url=http://localhost:4566 s3 mb s3://temp
 aws --endpoint-url=http://localhost:4566 s3 ls
 ### Copy file contents
 aws --endpoint-url=http://localhost:4566 s3 cp <C:/src> <s3://dest>
+### Copy directory
+aws --endpoint-url=http://localhost:4566 s3 cp <C:/src> <s3://dest> --recursive
+### List keys in bucket
+aws --endpoint-url=http://localhost:4566 s3api list-objects --bucket <bucket-name>
+### Copy ctakes

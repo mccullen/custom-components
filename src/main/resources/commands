@@ -7,7 +7,7 @@ java -cp "./*;C:/root/vdt/icapa/nlp/apache-ctakes-4.0.0/lib/*;C:/root/vdt/icapa/
 https://stackoverflow.com/questions/18413014/run-a-jar-file-from-the-command-line-and-specify-classpath
 
 
-bin/spark-submit --class icapa.Main --master local[2] .\custom-components-1.0-SNAPSHOT-jar-with-dependencies.jar
+bin/spark-submit --class icapa.SparkMain --master local[2] .\custom-components-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 ## Fix for temp dir delete issue: https://stackoverflow.com/questions/41825871/exception-while-deleting-spark-temp-dir-in-windows-7-64-bit
 
