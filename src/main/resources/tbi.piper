@@ -1,0 +1,9 @@
+// Custom reader
+reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/notes.csv NoteColumnName=NOTE DocumentIdColumnName=ROW_NUMBERx
+
+// Default Clinical Pipeline
+load C:\root\vdt\icapa\nlp\apache-ctakes-4.0.0\resources\org\apache\ctakes\clinical\pipeline\DefaultFastPipeline.piper
+
+add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/annotations.csv
+
+// RUN COMMAND: bin\runPiperFile.bat -p Z:/share/apache-ctakes-4.0.0/tbi-default.piper --user jmccullen  --pass jrmWW133$ -l org/apache/ctakes/dictionary/lookup/fast/icd.xml
