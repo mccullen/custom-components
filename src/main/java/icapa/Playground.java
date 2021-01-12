@@ -11,28 +11,38 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class Playground {
     public static void main(String[] args) {
-        // endpoint = endpoint == null ? Localstack.INSTANCE.getEndpointSQS() : endpoint;
-        //        return (AmazonSQS)((AmazonSQSClientBuilder)((AmazonSQSClientBuilder)AmazonSQSClientBuilder.standard().withEndpointConfiguration(getEndpointConfiguration(endpoint))).withCredentials(getCredentialsProvider())).build();
-        //    }
-        AmazonS3ClientBuilder builder = AmazonS3ClientBuilder.standard()
-            //.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost.localstack.cloud:4566", "us-east-1"))
-            .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:4566", "us-east-1"))
-            .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("test", "test")));
-        builder.setPathStyleAccessEnabled(true);
-        AmazonS3 s3Client = builder.build();
-        String bucketName = "hello";
-        Bucket bucket = s3Client.createBucket(bucketName);
-        List<Bucket> buckets = s3Client.listBuckets();
-        // Now write to the bucket
-        String key = "world";
-        String content = "Changed contents";
-        InputStream inputStream = new ByteArrayInputStream(content.getBytes());
-        s3Client.putObject(bucketName, key, inputStream, new ObjectMetadata());
+        String url = "jdbc:teradata://EDWP/CHARSET=UTF8,ENCRYPTDATA=ON,TCP=KEEPALIVE,TMODE=ANSI,LOGMECH=TDNEGO";
+        String query = "CREATE TABLE DDAR.Temp (testing INT);";
+        try {
+            System.out.println("\n Sample T20000JD: \n");
+            System.out.println(" Looking for the Teradata JDBC driver... ");
+            // Loading the Teradata JDBC driver
+            Class.forName("com.teradata.jdbc.TeraDriver");
+            System.out.println(" JDBC driver loaded. \n");
 
-        System.out.println("here");
+            // Attempting to connect to Teradata
+            System.out.println(" Attempting to connect to Teradata via" +
+                " the JDBC driver...");
+            // Creating a Connection object. A Connection represents a session
+            // with a specific database. Within the context of a Connection,
+            // SQL statements are executed and results are returned.
+            // Creating a database connection with the given database URL,
+            // user name, and password
+            Connection con = DriverManager.getConnection(url);
+            System.out.println(" Connection to Teradata established. \n");
+
+            Statement statement = con.createStatement();
+            statement.executeQuery(query);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

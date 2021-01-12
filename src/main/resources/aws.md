@@ -21,3 +21,7 @@ aws --endpoint-url=http://localhost:4566 s3 cp <C:/src> <s3://dest> --recursive
 aws --endpoint-url=http://localhost:4566 s3api list-objects --bucket <bucket-name>
 ### Copy s3 bucket to local
 aws --endpoint-url=http://localhost:4566 s3 cp s3://<bucket> C:/<dest> --recursive
+### Remove object
+aws --endpoint-url=http://localhost:4566 s3 rm <s3://bucket/key>
+### Remove everything in bucket
+aws --endpoint-url=http://localhost:4566 s3 rm <s3://bucket> --recursive
