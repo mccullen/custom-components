@@ -1,8 +1,12 @@
 package icapa.cr;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
+import icapa.Util;
 import icapa.services.CollectionReader;
 import icapa.services.DelimiterReaderService;
 import org.apache.uima.UimaContext;
@@ -44,7 +48,9 @@ public class S3DelimiterReader extends AbstractDelimiterReader {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
+        //AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
+        AmazonS3 s3Client = Util.getS3Client();
+
         S3Object s3Object = s3Client.getObject(_bucket, _key);
         InputStream inputStream = s3Object.getObjectContent();
         Reader reader = new InputStreamReader(inputStream);

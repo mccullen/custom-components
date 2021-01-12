@@ -19,4 +19,5 @@ aws --endpoint-url=http://localhost:4566 s3 cp <C:/src> <s3://dest>
 aws --endpoint-url=http://localhost:4566 s3 cp <C:/src> <s3://dest> --recursive
 ### List keys in bucket
 aws --endpoint-url=http://localhost:4566 s3api list-objects --bucket <bucket-name>
-### Copy ctakes
+### Copy s3 bucket to local
+aws --endpoint-url=http://localhost:4566 s3 cp s3://<bucket> C:/<dest> --recursive

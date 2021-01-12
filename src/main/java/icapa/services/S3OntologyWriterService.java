@@ -3,6 +3,10 @@ package icapa.services;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PresignedUrlUploadRequest;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
+import icapa.Util;
 import icapa.models.S3OntologyWriterParams;
 import org.apache.uima.UimaContext;
 import org.apache.uima.jcas.JCas;
@@ -31,7 +35,8 @@ public class S3OntologyWriterService implements AnalysisEngine {
 
     @Override
     public void initialize(UimaContext context) {
-        AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
+        //AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
+        AmazonS3 s3Client = Util.getS3Client();
         if (s3Client.doesObjectExist(_bucket, _key)) {
             // Object exists, so delete it so you can write to it later
             s3Client.deleteObject(_bucket, _key);
@@ -56,10 +61,40 @@ public class S3OntologyWriterService implements AnalysisEngine {
         // S3 only allows you to upload using an InputStream (not an OutputStream) so we have to copy our
         // OutputStream to an InputStream.
         // TODO: Consider using PipedOutputStream to convert to input strem here: https://stackoverflow.com/questions/5778658/how-to-convert-outputstream-to-inputstream
-        AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
+        //AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
+        AmazonS3 s3Client = Util.getS3Client();
+        /*
         byte[] bytes = _byteArrayOutputStream.toByteArray();
         InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(bytes));
         ObjectMetadata metadata = new ObjectMetadata();
         s3Client.putObject(_bucket, _key, inputStream, metadata);
+         */
+
+        TransferManager tm = TransferManagerBuilder.standard().withS3Client(s3Client).build();
+        PipedOutputStream out = new PipedOutputStream();
+        PipedInputStream in = new PipedInputStream(out);
+        new Thread(() -> {
+            try {
+                _byteArrayOutputStream.writeTo(out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+        ObjectMetadata metadata = new ObjectMetadata();
+        tm.upload(_bucket, _key, in, metadata);
+        /*
+        ((Runnable)() -> {
+
+        }).run();
+
+         */
     }
 }

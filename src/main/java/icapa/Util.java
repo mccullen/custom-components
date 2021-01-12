@@ -1,5 +1,10 @@
 package icapa;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.apache.ctakes.core.cc.XMISerializer;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
@@ -95,5 +100,14 @@ public class Util {
         long endTime = System.nanoTime();
         long durationInMilliseconds = (endTime - startTime)/1000000;
         return durationInMilliseconds;
+    }
+
+    public static AmazonS3 getS3Client() {
+        AmazonS3ClientBuilder builder = AmazonS3ClientBuilder.standard()
+            .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:4566", "us-east-1"))
+            .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("test", "test")));
+        builder.setPathStyleAccessEnabled(true);
+        AmazonS3 s3Client = builder.build();
+        return s3Client;
     }
 }

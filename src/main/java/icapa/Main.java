@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 
 public class Main {
-    static private final Logger LOGGER = Logger.getLogger( "Main" );
+    static private final Logger LOGGER = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) throws IOException, CsvValidationException {
         Runner runner = new Runner();
         runner.start();

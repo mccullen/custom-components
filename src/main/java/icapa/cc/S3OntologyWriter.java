@@ -27,7 +27,7 @@ public class S3OntologyWriter extends AbstractOntologyWriter {
 
     static public final String PARAM_KEY = "Key";
     @ConfigurationParameter(
-        name = PARAM_BUCKET,
+        name = PARAM_KEY,
         description = "Key",
         defaultValue = "*",
         mandatory = true

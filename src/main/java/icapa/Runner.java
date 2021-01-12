@@ -4,6 +4,7 @@ import com.lexicalscope.jewel.cli.CliFactory;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import icapa.cr.DelimiterReader;
+import icapa.cr.S3DelimiterReader;
 import icapa.models.ConfigurationSettings;
 import org.apache.ctakes.core.pipeline.CliOptionals;
 import org.apache.ctakes.core.pipeline.PipelineBuilder;
@@ -124,15 +125,26 @@ public class Runner implements Serializable {
             PiperFileReader piperReader = new PiperFileReader();
             PipelineBuilder builder = piperReader.getBuilder();
             System.out.println("ROWS FROM " + rowStart + " TO " + rowEnd);
+            /*
             String readerLine = "reader " + DelimiterReader.class.getName() + " " +
                 getParamString(DelimiterReader.PARAM_INPUT_FILE, _config.getInputFile()) + " " +
                 getParamString(DelimiterReader.PARAM_ROW_START, String.valueOf(rowStart)) + " " +
                 getParamString(DelimiterReader.PARAM_ROW_END, String.valueOf(rowEnd)) + " " +
                 getParamString(DelimiterReader.PARAM_NOTE_COL_NAME, _config.getNoteColumnName());
+             */
+            // TODO: S3 Reader
+            String readerLine = "reader " + S3DelimiterReader.class.getName() + " " +
+                getParamString(S3DelimiterReader.PARAM_BUCKET, "analysis") + " " +
+                getParamString(S3DelimiterReader.PARAM_KEY, "pyctakes_notes_in.mimiciii.top3.csv") + " " +
+                getParamString(S3DelimiterReader.PARAM_ROW_START, String.valueOf(rowStart)) + " " +
+                getParamString(S3DelimiterReader.PARAM_ROW_END, String.valueOf(rowEnd)) + " " +
+                getParamString(S3DelimiterReader.PARAM_NOTE_COL_NAME, _config.getNoteColumnName());
             piperReader.parsePipelineLine(readerLine);
             setCliOptions(piperReader);
             piperReader.loadPipelineFile(_config.getPiperFile());
-            piperReader.parsePipelineLine("add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/" + String.valueOf(rowStart) + ".csv");
+            // TODO S3 WRITER
+            piperReader.parsePipelineLine("add icapa.cc.S3OntologyWriter Bucket=analysis Key=" + String.valueOf(rowStart) + ".csv");
+            //piperReader.parsePipelineLine("add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/" + String.valueOf(rowStart) + ".csv");
             // TODO: Uncomment if you want to try to write everything to same file. I have not had success with this yet
             // Currently, the OntologyWriter will write the header for each thread but otherwise works fine.
             // S3 doesn't allow appending so this is a low priority.
