@@ -23,3 +23,7 @@ $ ./usr/bin/spark-submit \
 --conf spark.driver.extraClassPath=/tmp/ctakesdependencies/ \
 --conf spark.driver.memory=5g --executor-memory=10g \
 spark-ctakes-0.1-shaded.jar
+
+### Teradata jdbc args
+java -cp ./* -Djavax.security.auth.useSubjectCredsOnly=false -Djava.security.auth.login.config=C:\ProgramData\Teradata\jaas.conf -Djava.security.krb5.conf=C:\ProgramData\Teradata\krb5.conf icapa.Playground
+### Teradata ini file: C:\Program Files\Teradata\Client\17.00\Teradata Studio nt-x8664

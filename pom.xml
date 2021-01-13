@@ -40,7 +40,31 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+
+            <!-- The teradata jdbc
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <file>lib/terajdbc4.jar</file>
+                            <version>1.0</version>
+                            <groupId>com</groupId>
+                            <artifactId>teradata-jdbc</artifactId>
+                            <packaging>jar</packaging>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin> -->
         </plugins>
+
+
     </build>
 
     <dependencies>
@@ -95,6 +119,15 @@
             <artifactId>localstack-utils</artifactId>
             <version>0.2.2</version>
         </dependency>
+
+        <!--
+        <dependency>
+            <groupId>com</groupId>
+            <artifactId>teradata-jdbc</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/terajdbc4.jar</systemPath>
+        </dependency>
+        -->
     </dependencies>
 
 </project>
