@@ -1,0 +1,5 @@
+// Custom reader
+reader icapa.cr.JdbcReader SqlStatement="SELECT * FROM DDAR.NLP_TBI_test_note;" DocTextColName=note DriverClassName="com.teradata.jdbc.TeraDriver" DocumentIdColumnName=NLP_TBI_test_note_id URL="jdbc:teradata://EDWP/CHARSET=UTF8,ENCRYPTDATA=ON,TCP=KEEPALIVE,TMODE=ANSI,LOGMECH=KRB5"
+load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
+add icapa.cc.OntologyWriter OutputFile=Z:/share/apache-ctakes-4.0.0/ontology-concepts.csv
+// RUN COMMAND: bin/runPiperFile.bat -p Z:/share/apache-ctakes-4.0.0/jdbc.piper --user jmccullen  --pass jrmWW133$ -l org/apache/ctakes/dictionary/lookup/fast/icd.xml

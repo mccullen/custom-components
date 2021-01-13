@@ -9,6 +9,15 @@ public class JdbcReaderParams {
     private String URL;
     private String username;
     private String password;
+    private String documentIdColName;
+
+    public String getDocumentIdColName() {
+        return documentIdColName;
+    }
+
+    public void setDocumentIdColName(String documentIdColName) {
+        this.documentIdColName = documentIdColName;
+    }
 
     public String getSqlStatement() {
         return sqlStatement;

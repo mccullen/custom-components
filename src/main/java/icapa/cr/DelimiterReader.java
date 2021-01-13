@@ -22,8 +22,8 @@ public class DelimiterReader extends AbstractDelimiterReader {
     @ConfigurationParameter(
         name = PARAM_INPUT_FILE,
         description = "Input file",
-        mandatory = false//,
-        //defaultValue = "*"
+        mandatory = false,
+        defaultValue = "*"
     )
     private String _inputFile;
 

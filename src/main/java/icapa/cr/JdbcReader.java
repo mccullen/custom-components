@@ -46,6 +46,12 @@ public class JdbcReader extends JCasCollectionReader_ImplBase {
     )
     private String _driverClassName;
 
+    public static final String PARAM_DOCUMENT_ID_COLUMN = "DocumentIdColumnName";
+    @ConfigurationParameter(
+        name = PARAM_DOCUMENT_ID_COLUMN
+    )
+    private String _documentIdCol;
+
     public static final String PARAM_URL = "URL";
     @ConfigurationParameter(
         name = PARAM_URL
@@ -78,6 +84,7 @@ public class JdbcReader extends JCasCollectionReader_ImplBase {
         params.setSqlStatement(_sqlStatement);
         params.setURL(_url);
         params.setUsername(_username);
+        params.setDocumentIdColName(_documentIdCol);
         _reader = JdbcReaderService.fromParams(params);
         _reader.initialize();
     }
