@@ -56,6 +56,11 @@ public class DelimiterReaderService implements CollectionReader {
     }
 
     @Override
+    public void initialize() {
+
+    }
+
+    @Override
     public void readNext(JCas jCas) {
         try {
             String[] line = _csvReader.readNext();

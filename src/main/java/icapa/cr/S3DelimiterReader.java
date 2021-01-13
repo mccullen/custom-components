@@ -56,6 +56,7 @@ public class S3DelimiterReader extends AbstractDelimiterReader {
         Reader reader = new InputStreamReader(inputStream);
         getParams().setReader(reader);
         _reader = DelimiterReaderService.from(getParams());
+        _reader.initialize();
     }
 
     @Override

@@ -22,8 +22,8 @@ public class DelimiterReader extends AbstractDelimiterReader {
     @ConfigurationParameter(
         name = PARAM_INPUT_FILE,
         description = "Input file",
-        mandatory = false,
-        defaultValue = "*"
+        mandatory = false//,
+        //defaultValue = "*"
     )
     private String _inputFile;
 
@@ -41,8 +41,11 @@ public class DelimiterReader extends AbstractDelimiterReader {
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
         try {
+            // The abstract class will set the params that it can. But it can't set the reader until
+            // it gets the _inputFile so set it here.
             getParams().setReader(new FileReader(_inputFile));
             _reader = DelimiterReaderService.from(getParams());
+            _reader.initialize();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
