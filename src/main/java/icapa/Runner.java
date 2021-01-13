@@ -50,7 +50,7 @@ public class Runner implements Serializable {
             PiperFileReader piperReader = new PiperFileReader();
             setCliOptions(piperReader);
             PipelineBuilder builder = piperReader.getBuilder();
-            piperReader.loadPipelineFile(_config.getPiperFile());
+            piperReader.loadPipelineFile("C:/root/vdt/icapa/nlp/custom-components/src/main/resources/default-pipeline.piper");
             builder.run();
         } catch (Exception e) {
             System.out.println("ERROR");

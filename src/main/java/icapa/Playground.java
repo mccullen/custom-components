@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Playground {
     public static void main(String[] args) {
-        String url = "jdbc:teradata://EDWP/CHARSET=UTF8,ENCRYPTDATA=ON,TCP=KEEPALIVE,TMODE=ANSI,LOGMECH=TDNEGO";
+        String url = "jdbc:teradata://EDWP/CHARSET=UTF8,ENCRYPTDATA=ON,TCP=KEEPALIVE,TMODE=ANSI,LOGMECH=KRB5";
         String query = "CREATE TABLE DDAR.Temp (testing INT);";
         try {
             System.out.println("\n Sample T20000JD: \n");
