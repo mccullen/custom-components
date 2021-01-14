@@ -24,7 +24,9 @@ public class JdbcReaderService implements CollectionReader {
 
     @Override
     public void initialize() {
+        LOGGER.info("Initializing logger reader service");
         loadDriver();
+        LOGGER.info("Connecting to driver");
         if (_params.getUsername() != null && _params.getPassword() != null) {
             connectUsingUsernameAndPassword();
         } else {
@@ -34,6 +36,7 @@ public class JdbcReaderService implements CollectionReader {
     }
 
     private void loadDriver() {
+        LOGGER.info("Loading jdbc driver");
         try {
             Class.forName(_params.getDriverClassName());
         } catch (ClassNotFoundException e) {
@@ -45,7 +48,7 @@ public class JdbcReaderService implements CollectionReader {
         try {
             _connection = DriverManager.getConnection(_params.getURL());
         } catch (Exception e) {
-            LOGGER.error("Could not connect to driver named " + _params.getDriverClassName(), e);
+            LOGGER.error("Could not connect to driver named " + _params.getDriverClassName() + " at " + _params.getURL(), e);
         }
     }
 
@@ -53,11 +56,12 @@ public class JdbcReaderService implements CollectionReader {
         try {
             _connection = DriverManager.getConnection(_params.getURL(), _params.getUsername(), _params.getPassword());
         } catch (Exception e) {
-            LOGGER.error("Could not connect to driver named " + _params.getDriverClassName(), e);
+            LOGGER.error("Could not connect to driver named " + _params.getDriverClassName() + " at " + _params.getURL() , e);
         }
     }
 
     private void setStatementAndResultSet() {
+        LOGGER.info("Setting sql statement and getting result set");
         try {
             _statement = _connection.createStatement();
             _resultSet = _statement.executeQuery(_params.getSqlStatement());
@@ -70,6 +74,7 @@ public class JdbcReaderService implements CollectionReader {
 
     @Override
     public void readNext(JCas jCas) {
+        LOGGER.info("Reading next document");
         try {
             // Set document text
             jCas.setDocumentText(_resultSet.getString(_params.getDocumentTextColName()));
@@ -85,6 +90,7 @@ public class JdbcReaderService implements CollectionReader {
 
     @Override
     public boolean hasNext() {
+        LOGGER.info("Checking for another document");
         boolean result = false;
         try {
             result = _resultSet.next();
@@ -96,6 +102,7 @@ public class JdbcReaderService implements CollectionReader {
 
     @Override
     public void destroy() {
+        LOGGER.info("Destroying reader and closing sql connection");
         if (_connection != null) {
             try {
                 _connection.close();

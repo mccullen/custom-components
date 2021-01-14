@@ -1,5 +1,6 @@
 // Custom reader
-reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv NoteColumnName=note DocumentIdColumnName=note_id
+reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv
+    NoteColumnName=note DocumentIdColumnName=note_id
 // Without specifying document id
 //reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv NoteColumnName=note
 

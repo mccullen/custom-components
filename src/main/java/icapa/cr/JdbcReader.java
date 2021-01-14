@@ -3,6 +3,7 @@ package icapa.cr;
 import icapa.models.JdbcReaderParams;
 import icapa.services.CollectionReader;
 import icapa.services.JdbcReaderService;
+import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
 import org.apache.uima.fit.component.JCasCollectionReader_ImplBase;
@@ -12,8 +13,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Progress;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Connection;
-import java.util.logging.Logger;
 
 public class JdbcReader extends JCasCollectionReader_ImplBase {
     private static Logger LOGGER = Logger.getLogger(JdbcReader.class.getName());
@@ -72,17 +74,25 @@ public class JdbcReader extends JCasCollectionReader_ImplBase {
     )
     private String _password;
 
+    public static final String PARAM_URL_SUFFIX = "ConfigurationOptions";
+    public static final String PARAM_CONFIGURATION_JOIN_SEQ = "ConfigurationJoinSeq";
+
     private CollectionReader _reader;
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
+        LOGGER.info("Initializing Jdbc Reader");
         JdbcReaderParams params = new JdbcReaderParams();
         params.setDocumentTextColName(_docTextColName);
         params.setDriverClassName(_driverClassName);
         params.setPassword(_password);
         params.setSqlStatement(_sqlStatement);
-        params.setURL(_url);
+        try {
+            params.setURL(URLDecoder.decode(_url, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Error decoding url " + _url, e);
+        }
         params.setUsername(_username);
         params.setDocumentIdColName(_documentIdCol);
         _reader = JdbcReaderService.fromParams(params);
