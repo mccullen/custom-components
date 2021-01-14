@@ -1,5 +1,7 @@
 package icapa;
 
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
+
 public class Const {
     public static final String ADDRESS_HEADER = "address";
     public static final String CODE_HEADER = "code";
@@ -21,4 +23,10 @@ public class Const {
     public static final String UNCERTAINTY_HEADER = "uncertainty";
     public static final String TRUE_TEXT_HEADER = "trueText";
     public static final String PARTS_OF_SPEECH_HEADER = "partsOfSpeech";
+
+    public static final String PARAM_DRIVER_CLASS = "DriverClassName";
+    public static final String PARAM_DOCUMENT_ID_COLUMN = "DocumentIdColumnName";
+    public static final String PARAM_URL = "URL";
+    public static final String PARAM_USERNAME = "Username";
+    public static final String PARAM_PASSWORD = "Password";
 }

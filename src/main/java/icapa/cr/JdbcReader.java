@@ -1,5 +1,6 @@
 package icapa.cr;
 
+import icapa.Const;
 import icapa.models.JdbcReaderParams;
 import icapa.services.CollectionReader;
 import icapa.services.JdbcReaderService;
@@ -41,41 +42,33 @@ public class JdbcReader extends JCasCollectionReader_ImplBase {
     )
     private String _docTextColName;
 
-    public static final String PARAM_DRIVER_CLASS = "DriverClassName";
     @ConfigurationParameter(
-        name = PARAM_DRIVER_CLASS,
+        name = Const.PARAM_DRIVER_CLASS,
         description = "Full class name of the driver. Make sure to put the driver jar in lib/"
     )
     private String _driverClassName;
 
-    public static final String PARAM_DOCUMENT_ID_COLUMN = "DocumentIdColumnName";
     @ConfigurationParameter(
-        name = PARAM_DOCUMENT_ID_COLUMN
+        name = Const.PARAM_DOCUMENT_ID_COLUMN
     )
     private String _documentIdCol;
 
-    public static final String PARAM_URL = "URL";
     @ConfigurationParameter(
-        name = PARAM_URL
+        name = Const.PARAM_URL
     )
     private String _url;
 
-    public static final String PARAM_USERNAME = "Username";
     @ConfigurationParameter(
-        name = PARAM_USERNAME,
+        name = Const.PARAM_USERNAME,
         mandatory = false
     )
     private String _username;
 
-    public static final String PARAM_PASSWORD = "Password";
     @ConfigurationParameter(
-        name = PARAM_PASSWORD,
+        name = Const.PARAM_PASSWORD,
         mandatory = false
     )
     private String _password;
-
-    public static final String PARAM_URL_SUFFIX = "ConfigurationOptions";
-    public static final String PARAM_CONFIGURATION_JOIN_SEQ = "ConfigurationJoinSeq";
 
     private CollectionReader _reader;
 

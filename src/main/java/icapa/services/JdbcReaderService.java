@@ -63,7 +63,7 @@ public class JdbcReaderService implements CollectionReader {
     private void setStatementAndResultSet() {
         LOGGER.info("Setting sql statement and getting result set");
         try {
-            _statement = _connection.createStatement();
+            _statement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             _resultSet = _statement.executeQuery(_params.getSqlStatement());
             // Set cursor to one before the first record so you can iterate properly
             _resultSet.beforeFirst();
@@ -77,11 +77,15 @@ public class JdbcReaderService implements CollectionReader {
         LOGGER.info("Reading next document");
         try {
             // Set document text
-            jCas.setDocumentText(_resultSet.getString(_params.getDocumentTextColName()));
+            String text = _resultSet.getString(_params.getDocumentTextColName());
+            text = text == null ? "" : text;
+            jCas.setDocumentText(text);
 
             // Add document Id
             DocumentID documentId = new DocumentID(jCas);
-            documentId.setDocumentID(_params.getDocumentIdColName());
+            String docIdText = _resultSet.getString(_params.getDocumentIdColName());
+            docIdText = docIdText == null ? "" : docIdText;
+            documentId.setDocumentID(docIdText);
             documentId.addToIndexes();
         } catch (SQLException throwables) {
             LOGGER.error("Error reading next document: ", throwables);
@@ -105,6 +109,8 @@ public class JdbcReaderService implements CollectionReader {
         LOGGER.info("Destroying reader and closing sql connection");
         if (_connection != null) {
             try {
+                _resultSet.close();
+                _statement.close();
                 _connection.close();
             } catch (SQLException throwables) {
                 LOGGER.error("Error closing DB connection: ", throwables);
