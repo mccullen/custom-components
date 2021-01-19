@@ -14,7 +14,7 @@ public class JdbcReaderService implements CollectionReader {
     private Connection _connection;
     private Statement _statement;
     private ResultSet _resultSet;
-
+    private SqlConnection _sqlConnection;
 
     public static CollectionReader fromParams(JdbcReaderParams params) {
         JdbcReaderService reader = new JdbcReaderService();

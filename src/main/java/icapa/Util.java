@@ -10,6 +10,7 @@ import org.apache.ctakes.core.cc.XMISerializer;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.ctakes.typesystem.type.syntax.ConllDependencyNode;
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
+import org.apache.log4j.Logger;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.FeatureStructure;
@@ -22,10 +23,13 @@ import org.xml.sax.SAXException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Util {
+    private static final Logger LOGGER = Logger.getLogger(Util.class.getName());
     public static String getXmi(CAS cas) {
         String xmiString = "";
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
@@ -205,5 +209,34 @@ public class Util {
             });
         }
         return ontologies;
+    }
+
+    public static Connection getConnection(String url, String driverClassName) {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url);
+        } catch (Exception e) {
+            LOGGER.error("Could not connect to driver named " + driverClassName + " at " + url, e);
+        }
+        return connection;
+    }
+
+    public static Connection getConnection(String username, String password, String url, String driverClassName) {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (Exception e) {
+            LOGGER.error("Could not connect to driver named " + driverClassName + " at " + url , e);
+        }
+        return connection;
+    }
+
+    public static void loadDriver(String driverClassName) {
+        LOGGER.info("Loading jdbc driver");
+        try {
+            Class.forName(driverClassName);
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("Error loading driver: ", e);
+        }
     }
 }
