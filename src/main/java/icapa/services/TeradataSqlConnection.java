@@ -46,6 +46,18 @@ public class TeradataSqlConnection implements SqlConnection {
     }
 
     @Override
+    public int executeUpdate(String query) {
+        int result = 0;
+        try {
+            Statement statement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            result = statement.executeUpdate(query);
+        } catch (SQLException throwables) {
+            LOGGER.error("Error executing update", throwables);
+        }
+        return result;
+    }
+
+    @Override
     public boolean tableExists(String table) {
         return false;
     }

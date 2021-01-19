@@ -11,10 +11,8 @@ public class JdbcReaderService implements CollectionReader {
     private static final Logger LOGGER = Logger.getLogger(JdbcReaderService.class.getName());
 
     private JdbcReaderParams _params;
-    private Connection _connection;
     private Statement _statement;
     private ResultSet _resultSet;
-    private SqlConnection _sqlConnection;
 
     public static CollectionReader fromParams(JdbcReaderParams params) {
         JdbcReaderService reader = new JdbcReaderService();
@@ -24,47 +22,15 @@ public class JdbcReaderService implements CollectionReader {
 
     @Override
     public void initialize() {
-        LOGGER.info("Initializing logger reader service");
-        loadDriver();
-        LOGGER.info("Connecting to driver");
-        if (_params.getUsername() != null && _params.getPassword() != null) {
-            connectUsingUsernameAndPassword();
-        } else {
-            connectUsingUrl();
-        }
+        LOGGER.info("Initializing Jdbc Reader Service");
         setStatementAndResultSet();
-    }
-
-    private void loadDriver() {
-        LOGGER.info("Loading jdbc driver");
-        try {
-            Class.forName(_params.getDriverClassName());
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("Error loading driver: ", e);
-        }
-    }
-
-    private void connectUsingUsernameAndPassword() {
-        try {
-            _connection = DriverManager.getConnection(_params.getURL());
-        } catch (Exception e) {
-            LOGGER.error("Could not connect to driver named " + _params.getDriverClassName() + " at " + _params.getURL(), e);
-        }
-    }
-
-    private void connectUsingUrl() {
-        try {
-            _connection = DriverManager.getConnection(_params.getURL(), _params.getUsername(), _params.getPassword());
-        } catch (Exception e) {
-            LOGGER.error("Could not connect to driver named " + _params.getDriverClassName() + " at " + _params.getURL() , e);
-        }
     }
 
     private void setStatementAndResultSet() {
         LOGGER.info("Setting sql statement and getting result set");
         try {
-            _statement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            _resultSet = _statement.executeQuery(_params.getSqlStatement());
+            _resultSet = _params.getSqlConnection().executeQuery(_params.getSqlStatement());
+            _statement = _resultSet.getStatement();
             // Set cursor to one before the first record so you can iterate properly
             _resultSet.beforeFirst();
         } catch (SQLException throwables) {
@@ -107,11 +73,11 @@ public class JdbcReaderService implements CollectionReader {
     @Override
     public void destroy() {
         LOGGER.info("Destroying reader and closing sql connection");
-        if (_connection != null) {
+        if (_params.getSqlConnection() != null) {
             try {
                 _resultSet.close();
                 _statement.close();
-                _connection.close();
+                _params.getSqlConnection().close();
             } catch (SQLException throwables) {
                 LOGGER.error("Error closing DB connection: ", throwables);
             }

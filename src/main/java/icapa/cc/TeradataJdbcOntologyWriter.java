@@ -1,9 +1,13 @@
 package icapa.cc;
 
 import icapa.Const;
+import icapa.Util;
 import icapa.models.JdbcOntologyWriterParams;
+import icapa.models.TeradataParams;
 import icapa.services.AnalysisEngine;
 import icapa.services.JdbcOntologyWriterService;
+import icapa.services.SqlConnection;
+import icapa.services.TeradataSqlConnection;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -13,11 +17,9 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 
-public class JdbcOntologyWriter extends JCasAnnotator_ImplBase {
-    private static final Logger LOGGER = Logger.getLogger(JdbcOntologyWriter.class.getName());
+public class TeradataJdbcOntologyWriter extends JCasAnnotator_ImplBase {
+    private static final Logger LOGGER = Logger.getLogger(TeradataJdbcOntologyWriter.class.getName());
 
     public static final String PARAM_TABLE = "Table";
     @ConfigurationParameter(
@@ -63,15 +65,17 @@ public class JdbcOntologyWriter extends JCasAnnotator_ImplBase {
         super.initialize(context);
         JdbcOntologyWriterParams params = new JdbcOntologyWriterParams();
         params.setDocumentIdColumn(_documentIdCol);
-        params.setDriverClassName(_driverClassName);
         params.setTable(_table);
-        try {
-            params.setUrl(URLDecoder.decode(_url, "UTF-8")); // TODO decode
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.error("Error decoding url " + _url, e);
-        }
-        params.setUsername(_username);
-        params.setPassword(_password);
+
+        // Set sql connection
+        TeradataParams teradataParams = new TeradataParams();
+        teradataParams.setPassword(_password);
+        teradataParams.setUsername(_username);
+        teradataParams.setUrl(Util.decodeUrl(_url));
+        teradataParams.setDriverClassName(_driverClassName);
+        SqlConnection sqlConnection = TeradataSqlConnection.fromParams(teradataParams);
+        params.setSqlConnection(sqlConnection);
+
         _writer = JdbcOntologyWriterService.fromParams(params);
         _writer.initialize(context);
     }

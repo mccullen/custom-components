@@ -1,6 +1,6 @@
 // Custom reader
-reader icapa.cr.JdbcReader SqlStatement="SELECT * FROM DDAR.NLP_TBI_test_note;" DocTextColName="note" DriverClassName="com.teradata.jdbc.TeraDriver" DocumentIdColumnName="NLP_TBI_test_note_id" URL="jdbc:teradata://EDWP/" URLSuffix="CHARSET=UTF8,ENCRYPTDATA=ON,TCP=KEEPALIVE,TMODE=ANSI,LOGMECH=KRB5"
-//reader icapa.cr.JdbcReader SqlStatement="SELECT * FROM DDAR.NLP_TBI_test_note;" DocTextColName="note" DriverClassName="com.teradata.jdbc.TeraDriver" DocumentIdColumnName="NLP_TBI_test_note_id" URL="Hello"
+reader icapa.cr.TeradataJdbcReader SqlStatement="SELECT * FROM DDAR.NLP_TBI_test_note;" DocTextColName="note" DriverClassName="com.teradata.jdbc.TeraDriver" DocumentIdColumnName="NLP_TBI_test_note_id" URL="jdbc:teradata://EDWP/" URLSuffix="CHARSET=UTF8,ENCRYPTDATA=ON,TCP=KEEPALIVE,TMODE=ANSI,LOGMECH=KRB5"
+//reader icapa.cr.TeradataJdbcReader SqlStatement="SELECT * FROM DDAR.NLP_TBI_test_note;" DocTextColName="note" DriverClassName="com.teradata.jdbc.TeraDriver" DocumentIdColumnName="NLP_TBI_test_note_id" URL="Hello"
 load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
-add icapa.cc.JdbcOntologyWriter Table=DDAR.NLP_TBI_Annotation DocumentIdColumnName= DriverClassName= URL
+add icapa.cc.TeradataJdbcOntologyWriter Table=DDAR.NLP_TBI_Annotation DocumentIdColumnName= DriverClassName= URL
 // RUN COMMAND: bin/runPiperFile.bat -p Z:/share/apache-ctakes-4.0.0/jdbc.piper --user jmccullen  --pass jrmWW133$ -l org/apache/ctakes/dictionary/lookup/fast/icd.xml

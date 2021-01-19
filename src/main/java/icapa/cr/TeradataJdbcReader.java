@@ -2,8 +2,10 @@ package icapa.cr;
 
 import icapa.Const;
 import icapa.models.JdbcReaderParams;
+import icapa.models.TeradataParams;
 import icapa.services.CollectionReader;
 import icapa.services.JdbcReaderService;
+import icapa.services.TeradataSqlConnection;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
@@ -16,10 +18,9 @@ import org.apache.uima.util.Progress;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.sql.Connection;
 
-public class JdbcReader extends JCasCollectionReader_ImplBase {
-    private static Logger LOGGER = Logger.getLogger(JdbcReader.class.getName());
+public class TeradataJdbcReader extends JCasCollectionReader_ImplBase {
+    private static Logger LOGGER = Logger.getLogger(TeradataJdbcReader.class.getName());
 
     /**
      * SQL statement to retrieve the document.
@@ -78,16 +79,22 @@ public class JdbcReader extends JCasCollectionReader_ImplBase {
         LOGGER.info("Initializing Jdbc Reader");
         JdbcReaderParams params = new JdbcReaderParams();
         params.setDocumentTextColName(_docTextColName);
-        params.setDriverClassName(_driverClassName);
-        params.setPassword(_password);
+        params.setDocumentIdColName(_documentIdCol);
         params.setSqlStatement(_sqlStatement);
+
+        // Set sql connection
+        TeradataParams teradataParams = new TeradataParams();
+        teradataParams.setDriverClassName(_driverClassName);
         try {
-            params.setURL(URLDecoder.decode(_url, "UTF-8"));
+            teradataParams.setUrl(URLDecoder.decode(_url, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             LOGGER.error("Error decoding url " + _url, e);
         }
-        params.setUsername(_username);
-        params.setDocumentIdColName(_documentIdCol);
+        teradataParams.setUsername(_username);
+        teradataParams.setPassword(_password);
+        TeradataSqlConnection sqlConnection = TeradataSqlConnection.fromParams(teradataParams);
+        params.setSqlConnection(sqlConnection);
+
         _reader = JdbcReaderService.fromParams(params);
         _reader.initialize();
     }

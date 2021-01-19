@@ -22,6 +22,8 @@ import org.xml.sax.SAXException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -238,5 +240,15 @@ public class Util {
         } catch (ClassNotFoundException e) {
             LOGGER.error("Error loading driver: ", e);
         }
+    }
+
+    public static String decodeUrl(String url) {
+        String newUrl = "";
+        try {
+            newUrl = URLDecoder.decode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Error decoding url + " + url, e);
+        }
+        return newUrl;
     }
 }
