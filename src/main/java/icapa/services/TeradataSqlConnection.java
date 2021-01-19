@@ -5,11 +5,12 @@ import icapa.models.TeradataParams;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.Map;
 
 public class TeradataSqlConnection implements SqlConnection {
     private static final Logger LOGGER = Logger.getLogger(TeradataSqlConnection.class.getName());
-    Connection _connection;
 
+    private Connection _connection;
     private TeradataParams _params;
 
     public static TeradataSqlConnection fromParams(TeradataParams params) {
@@ -51,6 +52,7 @@ public class TeradataSqlConnection implements SqlConnection {
         try {
             Statement statement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             result = statement.executeUpdate(query);
+            statement.close();
         } catch (SQLException throwables) {
             LOGGER.error("Error executing update", throwables);
         }

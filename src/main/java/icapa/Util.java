@@ -251,4 +251,45 @@ public class Util {
         }
         return newUrl;
     }
+
+    public static String[] getOntologyAsStringArray(Ontology ontology, Map<String, Integer> headerToIndex) {
+        String[] row = new String[headerToIndex.size()];
+        putInRow(row, Const.ADDRESS_HEADER, String.valueOf(ontology.getAddress()), headerToIndex);
+        putInRow(row, Const.CODE_HEADER, ontology.getCode(), headerToIndex);
+        putInRow(row, Const.CONDITIONAL_HEADER, String.valueOf(ontology.isConditional()), headerToIndex);
+        putInRow(row, Const.CONFIDENCE_HEADER, String.valueOf(ontology.getConfidence()), headerToIndex);
+        putInRow(row, Const.CUI_HEADER, ontology.getCui(), headerToIndex);
+        putInRow(row, Const.GENERIC_HEADER, String.valueOf(ontology.isGeneric()), headerToIndex);
+        putInRow(row, Const.POLARITY_HEADER, String.valueOf(ontology.getPolarity()), headerToIndex);
+        putInRow(row, Const.END_HEADER, String.valueOf(ontology.getEnd()), headerToIndex);
+        putInRow(row, Const.BEGIN_HEADER, String.valueOf(ontology.getBegin()), headerToIndex);
+        putInRow(row, Const.PREFERRED_TEXT_HEADER, ontology.getPreferredText(), headerToIndex);
+        putInRow(row, Const.REFSEM_HEADER, ontology.getRefsem(), headerToIndex);
+        putInRow(row, Const.SCHEME_HEADER, ontology.getCodingScheme(), headerToIndex);
+        putInRow(row, Const.SCORE_HEADER, String.valueOf(ontology.getScore()), headerToIndex);
+        putInRow(row, Const.SUBJECT_HEADER, ontology.getSubject(), headerToIndex);
+        putInRow(row, Const.TEXTSEM_HEADER, ontology.getTextsem(), headerToIndex);
+        putInRow(row, Const.TUI_HEADER, ontology.getTui(), headerToIndex);
+        putInRow(row, Const.UNCERTAINTY_HEADER, String.valueOf(ontology.getUncertainty()), headerToIndex);
+        putInRow(row, Const.TRUE_TEXT_HEADER, ontology.getTrueText(), headerToIndex);
+        putInRow(row, Const.DOCUMENT_ID, ontology.getDocumentId(), headerToIndex);
+        putInRow(row, Const.PARTS_OF_SPEECH_HEADER, ontology.getPartsOfSpeech(), headerToIndex);
+        return row;
+    }
+
+    private static void putInRow(String[] row, String header, String value, Map<String, Integer> headerToIndex) {
+        row[headerToIndex.get(header)] = value;
+    }
+
+    public static String wrapInSqlString(String[] row) {
+        String result = "";
+        for (int i = 0; i < row.length; ++i) {
+            if (i == row.length - 1) {
+                result += "'" + row[i] + "'";
+            } else {
+                result += "'" + row[i] + "',";
+            }
+        }
+        return result;
+    }
 }

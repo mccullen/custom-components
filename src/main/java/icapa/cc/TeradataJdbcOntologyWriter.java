@@ -37,7 +37,9 @@ public class TeradataJdbcOntologyWriter extends JCasAnnotator_ImplBase {
     private String _driverClassName;
 
     @ConfigurationParameter(
-        name = Const.PARAM_DOCUMENT_ID_COLUMN
+        name = Const.PARAM_DOCUMENT_ID_COLUMN,
+        mandatory = false,
+        defaultValue = Const.DOCUMENT_ID
     )
     private String _documentIdCol;
 
