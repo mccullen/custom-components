@@ -5,6 +5,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import icapa.models.HeaderProperties;
 import icapa.models.Ontology;
 import org.apache.ctakes.core.cc.XMISerializer;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
@@ -291,5 +292,75 @@ public class Util {
             }
         }
         return result;
+    }
+
+    public static List<HeaderProperties> getHeaderProperties() {
+        List<HeaderProperties> headerProperties = new ArrayList<>();
+        String[] headers = Util.getOntologyConceptHeaders();
+        for (int i = 0; i < headers.length; ++i) {
+            HeaderProperties props = new HeaderProperties();
+            props.setIndex(i);
+            String dataType = "";
+            switch (headers[i]) {
+                case Const.ADDRESS_HEADER:
+                case Const.CONDITIONAL_HEADER: // Flag
+                case Const.GENERIC_HEADER: // Flag
+                case Const.POLARITY_HEADER:
+                case Const.END_HEADER:
+                case Const.BEGIN_HEADER:
+                case Const.UNCERTAINTY_HEADER:
+                    dataType = "INT";
+                    break;
+                case Const.CONFIDENCE_HEADER:
+                case Const.SCORE_HEADER:
+                    // Max 5 digits total; 2 digits stored to right of decimal point (so max of 3 will be to the left).
+                    dataType = "DECIMAL(5, 2)";
+                    break;
+                default:
+                    dataType = "VARCHAR(100)";
+                    break;
+            }
+            props.setDataType(dataType);
+            props.setName(headers[i]);
+            headerProperties.add(props);
+        }
+        return headerProperties;
+    }
+
+    public static String getCreateTableQuery(String tableName) {
+        String query = "CREATE TABLE " + tableName + " (";
+        List<HeaderProperties> headerProperties = Util.getHeaderProperties();
+        for (int i = 0; i < headerProperties.size(); ++i) {
+            HeaderProperties p = headerProperties.get(i);
+            // Wrap in double quotes just in case there are any keywords in the header names
+            query += "\"" + p.getName() + "\" " + p.getDataType();
+            if (i != headerProperties.size()-1) {
+                // Only add comma for all entries except the last one
+                query += ", ";
+            }
+        }
+        query += ");";
+        return query;
+    }
+
+    public static String getInsertQuery(String tableName, Ontology ontology) {
+        //String insertStatement = "INSERT INTO " + _params.getTable() + " (" + String.join(",", wrappedHeaders) + ") VALUES (" + Util.wrapInSqlString(row) + ");";
+        String query = "INSERT INTO " + tableName + " (";
+        List<HeaderProperties> headerProperties = Util.getHeaderProperties();
+        // Add column names
+        Map<String, Object> headerNameToValue = new HashMap<>();
+        for (int i = 0; i < headerProperties.size(); ++i) {
+            headerNameToValue.put()
+            HeaderProperties p = headerProperties.get(i);
+            query += "\"" + p.getName() + "\"";
+            if (i != headerProperties.size()-1) {
+                // Only add comma for all entries except the last one
+                query += ", ";
+            }
+        }
+        query += ") VALUES (";
+
+        // Add values
+        return query;
     }
 }

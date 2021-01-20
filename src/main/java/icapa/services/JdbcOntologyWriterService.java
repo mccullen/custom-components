@@ -38,6 +38,11 @@ public class JdbcOntologyWriterService implements AnalysisEngine {
     private void createTable() {
         String[] headersWithDatatypes = new String[_headers.length];
         for (int i = 0; i < _headers.length; ++i) {
+            switch (_headers[i]) {
+                case "":
+                    headersWithDatatypes[i] = "\"" + _headers[i] + "\"" + " VARCHAR(100)";
+                    break;
+            }
             headersWithDatatypes[i] = "\"" + _headers[i] + "\"" + " VARCHAR(100)";
         }
         String query = "CREATE TABLE " + _params.getTable() + " (" + String.join(",", headersWithDatatypes) + ");";

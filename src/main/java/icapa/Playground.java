@@ -22,8 +22,7 @@ import java.util.List;
 
 public class Playground {
     public static void main(String[] args) throws Exception {
-        String encoded = "jdbc:teradata://EDWP/CHARSET%3DUTF8,ENCRYPTDATA%3DON,TCP%3DKEEPALIVE,TMODE%3DANSI,LOGMECH%3DKRB5";
-        String decoded = URLDecoder.decode(encoded, "UTF-8");
-        System.out.println(decoded);
+        String query = Util.getCreateTableQuery("MyTable");
+        System.out.println(query);
     }
 }

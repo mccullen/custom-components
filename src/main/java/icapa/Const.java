@@ -11,8 +11,8 @@ public class Const {
     public static final String DOCUMENT_ID = "documentId";
     public static final String GENERIC_HEADER = "generic";
     public static final String POLARITY_HEADER = "polarity";
-    public static final String END_HEADER = "end";
-    public static final String BEGIN_HEADER = "begin";
+    public static final String END_HEADER = "endIndex";
+    public static final String BEGIN_HEADER = "beginIndex";
     public static final String PREFERRED_TEXT_HEADER = "preferredText";
     public static final String REFSEM_HEADER = "refsem";
     public static final String SCHEME_HEADER = "codingScheme";
