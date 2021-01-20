@@ -1,10 +1,9 @@
 package icapa.models;
 
-public class HeaderProperties<T> {
+public class HeaderProperties {
     private String name;
     private int index;
     private String dataType;
-    private T value;
 
     public String getName() {
         return name;

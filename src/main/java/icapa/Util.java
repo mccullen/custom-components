@@ -348,9 +348,8 @@ public class Util {
         String query = "INSERT INTO " + tableName + " (";
         List<HeaderProperties> headerProperties = Util.getHeaderProperties();
         // Add column names
-        Map<String, Object> headerNameToValue = new HashMap<>();
+        //Map<String, Object> headerNameToValue = new HashMap<>();
         for (int i = 0; i < headerProperties.size(); ++i) {
-            headerNameToValue.put()
             HeaderProperties p = headerProperties.get(i);
             query += "\"" + p.getName() + "\"";
             if (i != headerProperties.size()-1) {
@@ -359,6 +358,78 @@ public class Util {
             }
         }
         query += ") VALUES (";
+        for (int i = 0; i < headerProperties.size(); ++i) {
+            HeaderProperties p = headerProperties.get(i);
+            switch (p.getName()) {
+                case Const.ADDRESS_HEADER:
+                    query += ontology.getAddress();
+                    break;
+                case Const.CODE_HEADER:
+                    query += ontology.getCode();
+                    break;
+                case Const.CONDITIONAL_HEADER:
+                    query += ontology.isConditional();
+                    break;
+                case Const.CONFIDENCE_HEADER:
+                    query += ontology.getConfidence();
+                    break;
+                case Const.CUI_HEADER:
+                    query += ontology.getCui();
+                    break;
+                case Const.GENERIC_HEADER:
+                    query += ontology.isGeneric();
+                    break;
+                case Const.POLARITY_HEADER:
+                    query += ontology.getPolarity();
+                    break;
+                case Const.END_HEADER:
+                    query += ontology.getEnd();
+                    break;
+                case Const.BEGIN_HEADER:
+                    query += ontology.getBegin();
+                    break;
+                case Const.PREFERRED_TEXT_HEADER:
+                    query += ontology.getPreferredText();
+                    break;
+                case Const.REFSEM_HEADER:
+                    query += ontology.getRefsem();
+                    break;
+                case Const.SCHEME_HEADER:
+                    query += ontology.getCodingScheme();
+                    break;
+                case Const.SCORE_HEADER:
+                    query += ontology.getScore();
+                    break;
+                case Const.SUBJECT_HEADER:
+                    query += ontology.getSubject();
+                    break;
+                case Const.TEXTSEM_HEADER:
+                    query += ontology.getTextsem();
+                    break;
+                case Const.TUI_HEADER:
+                    query += ontology.getTui();
+                    break;
+                case Const.UNCERTAINTY_HEADER:
+                    query += ontology.getUncertainty();
+                    break;
+                case Const.TRUE_TEXT_HEADER:
+                    query += ontology.getTrueText();
+                    break;
+                case Const.DOCUMENT_ID:
+                    query += ontology.getDocumentId();
+                    break;
+                case Const.PARTS_OF_SPEECH_HEADER:
+                    query += ontology.getPartsOfSpeech();
+                    break;
+                default:
+                    break;
+            }
+            if (i != headerProperties.size()-1) {
+                // Only add comma for all entries except the last one
+                query += ", ";
+            }
+        }
+        query += ");";
 
         // Add values
         return query;

@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import icapa.models.Ontology;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -22,7 +23,10 @@ import java.util.List;
 
 public class Playground {
     public static void main(String[] args) throws Exception {
-        String query = Util.getCreateTableQuery("MyTable");
+        Ontology ontology = new Ontology();
+        ontology.setScore(2.34);
+        ontology.setCode("abc");
+        String query = Util.getInsertQuery("MyTable", ontology);
         System.out.println(query);
     }
 }
