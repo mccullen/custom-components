@@ -29,4 +29,7 @@ public class Const {
     public static final String PARAM_URL = "URL";
     public static final String PARAM_USERNAME = "Username";
     public static final String PARAM_PASSWORD = "Password";
+
+    public static final int PRECISION = 5;
+    public static final int SCALE = 2;
 }

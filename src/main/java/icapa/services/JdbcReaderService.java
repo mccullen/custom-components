@@ -50,6 +50,7 @@ public class JdbcReaderService implements CollectionReader {
             // Add document Id
             DocumentID documentId = new DocumentID(jCas);
             String docIdText = _resultSet.getString(_params.getDocumentIdColName());
+            LOGGER.info("Reading document: " + docIdText);
             docIdText = docIdText == null ? "" : docIdText;
             documentId.setDocumentID(docIdText);
             documentId.addToIndexes();

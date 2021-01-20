@@ -314,7 +314,7 @@ public class Util {
                 case Const.CONFIDENCE_HEADER:
                 case Const.SCORE_HEADER:
                     // Max 5 digits total; 2 digits stored to right of decimal point (so max of 3 will be to the left).
-                    dataType = "DECIMAL(5, 2)";
+                    dataType = "DECIMAL(" + Const.PRECISION + ", " + Const.SCALE + ")";
                     break;
                 default:
                     dataType = "VARCHAR(100)";
@@ -327,111 +327,158 @@ public class Util {
         return headerProperties;
     }
 
+    /**
+     * Returns a CREATE TABLE statment for ontology concepts using a given table name.
+     * Note this will not add an identity column b/c this differs for each
+     * database
+     * */
     public static String getCreateTableQuery(String tableName) {
-        String query = "CREATE TABLE " + tableName + " (";
         List<HeaderProperties> headerProperties = Util.getHeaderProperties();
+        String query = Util.getCreateTableQuery(tableName, headerProperties, "");
+        return query;
+    }
+
+    public static String getCreateTableQuery(String tableName, String augment) {
+        List<HeaderProperties> headerProperties = Util.getHeaderProperties();
+        String query = Util.getCreateTableQuery(tableName, headerProperties, augment);
+        return query;
+    }
+
+    /**
+     * Returns a CREATE TABLE statement for ontology concepts using the given tableName and the header properties.
+     * This is useful if you want to provide your own identity column by appending to the headerProperties list.
+     * */
+    public static String getCreateTableQuery(String tableName, List<HeaderProperties> headerProperties, String augment) {
+        StringBuilder query = new StringBuilder("CREATE TABLE " + tableName + " (");
         for (int i = 0; i < headerProperties.size(); ++i) {
             HeaderProperties p = headerProperties.get(i);
             // Wrap in double quotes just in case there are any keywords in the header names
-            query += "\"" + p.getName() + "\" " + p.getDataType();
+            query.append("\"").append(p.getName()).append("\" ").append(p.getDataType());
             if (i != headerProperties.size()-1) {
                 // Only add comma for all entries except the last one
-                query += ", ";
+                query.append(", ");
+            } else if (augment != null && !augment.equals("")) {
+                // We are on the last entry and the user chose to augment the statement, so add the
+                // comma in this case followed by whatever they wanted to augment to the CREATE statement
+                query.append(", ").append(augment);
             }
         }
-        query += ");";
-        return query;
+        query.append(");");
+        return query.toString();
     }
 
     public static String getInsertQuery(String tableName, Ontology ontology) {
         //String insertStatement = "INSERT INTO " + _params.getTable() + " (" + String.join(",", wrappedHeaders) + ") VALUES (" + Util.wrapInSqlString(row) + ");";
-        String query = "INSERT INTO " + tableName + " (";
+        StringBuilder query = new StringBuilder("INSERT INTO " + tableName + " (");
         List<HeaderProperties> headerProperties = Util.getHeaderProperties();
         // Add column names
         //Map<String, Object> headerNameToValue = new HashMap<>();
         for (int i = 0; i < headerProperties.size(); ++i) {
             HeaderProperties p = headerProperties.get(i);
-            query += "\"" + p.getName() + "\"";
+            query.append("\"").append(p.getName()).append("\"");
             if (i != headerProperties.size()-1) {
                 // Only add comma for all entries except the last one
-                query += ", ";
+                query.append(", ");
             }
         }
-        query += ") VALUES (";
+        query.append(") VALUES (");
         for (int i = 0; i < headerProperties.size(); ++i) {
             HeaderProperties p = headerProperties.get(i);
             switch (p.getName()) {
                 case Const.ADDRESS_HEADER:
-                    query += ontology.getAddress();
+                    query.append(Util.getSqlString(ontology.getAddress()));
                     break;
                 case Const.CODE_HEADER:
-                    query += ontology.getCode();
+                    query.append(Util.getSqlString(ontology.getCode()));
                     break;
                 case Const.CONDITIONAL_HEADER:
-                    query += ontology.isConditional();
+                    query.append(Util.getSqlString(ontology.isConditional()));
                     break;
                 case Const.CONFIDENCE_HEADER:
-                    query += ontology.getConfidence();
+                    query.append(Util.getSqlString(ontology.getConfidence()));
                     break;
                 case Const.CUI_HEADER:
-                    query += ontology.getCui();
+                    query.append(Util.getSqlString(ontology.getCui()));
                     break;
                 case Const.GENERIC_HEADER:
-                    query += ontology.isGeneric();
+                    query.append(Util.getSqlString(ontology.isGeneric()));
                     break;
                 case Const.POLARITY_HEADER:
-                    query += ontology.getPolarity();
+                    query.append(Util.getSqlString(ontology.getPolarity()));
                     break;
                 case Const.END_HEADER:
-                    query += ontology.getEnd();
+                    query.append(Util.getSqlString(ontology.getEnd()));
                     break;
                 case Const.BEGIN_HEADER:
-                    query += ontology.getBegin();
+                    query.append(Util.getSqlString(ontology.getBegin()));
                     break;
                 case Const.PREFERRED_TEXT_HEADER:
-                    query += ontology.getPreferredText();
+                    query.append(Util.getSqlString(ontology.getPreferredText()));
                     break;
                 case Const.REFSEM_HEADER:
-                    query += ontology.getRefsem();
+                    query.append(Util.getSqlString(ontology.getRefsem()));
                     break;
                 case Const.SCHEME_HEADER:
-                    query += ontology.getCodingScheme();
+                    query.append(Util.getSqlString(ontology.getCodingScheme()));
                     break;
                 case Const.SCORE_HEADER:
-                    query += ontology.getScore();
+                    query.append(Util.getSqlString(ontology.getScore()));
                     break;
                 case Const.SUBJECT_HEADER:
-                    query += ontology.getSubject();
+                    query.append(Util.getSqlString(ontology.getSubject()));
                     break;
                 case Const.TEXTSEM_HEADER:
-                    query += ontology.getTextsem();
+                    query.append(Util.getSqlString(ontology.getTextsem()));
                     break;
                 case Const.TUI_HEADER:
-                    query += ontology.getTui();
+                    query.append(Util.getSqlString(ontology.getTui()));
                     break;
                 case Const.UNCERTAINTY_HEADER:
-                    query += ontology.getUncertainty();
+                    query.append(Util.getSqlString(ontology.getUncertainty()));
                     break;
                 case Const.TRUE_TEXT_HEADER:
-                    query += ontology.getTrueText();
+                    query.append(Util.getSqlString(ontology.getTrueText()));
                     break;
                 case Const.DOCUMENT_ID:
-                    query += ontology.getDocumentId();
+                    query.append(Util.getSqlString(ontology.getDocumentId()));
                     break;
                 case Const.PARTS_OF_SPEECH_HEADER:
-                    query += ontology.getPartsOfSpeech();
+                    query.append(Util.getSqlString(ontology.getPartsOfSpeech()));
                     break;
                 default:
                     break;
             }
             if (i != headerProperties.size()-1) {
                 // Only add comma for all entries except the last one
-                query += ", ";
+                query.append(", ");
             }
         }
-        query += ");";
+        query.append(");");
 
         // Add values
-        return query;
+        return query.toString();
+    }
+
+    /**
+     * Get the string for a sql insert statement based on the type. For example, strings will be wrapped in single
+     * quotes, booleans will be converted to integer flags, etc.
+     * */
+    public static <T> String getSqlString(T t) {
+        String result = "";
+        if (t instanceof String) {
+            result = "'" + t + "'";
+        } else if (t instanceof Boolean) {
+            if ((Boolean)t) {
+                result += 1;
+            } else {
+                result += 0;
+            }
+        } else if (t instanceof Double || t instanceof Float) {
+            String f = "%" + Const.PRECISION + "." + Const.SCALE + "f";
+            result += String.format(f, t);
+        } else {
+            result += t;
+        }
+        return result;
     }
 }
