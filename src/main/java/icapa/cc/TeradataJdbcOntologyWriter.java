@@ -60,6 +60,14 @@ public class TeradataJdbcOntologyWriter extends JCasAnnotator_ImplBase {
     )
     private String _password;
 
+    public static final String PARAM_ID_COLUMN_NAME = "IdColName";
+    @ConfigurationParameter(
+        name = Const.PARAM_DOCUMENT_ID_COLUMN,
+        mandatory = false,
+        defaultValue = "Id"
+    )
+    private String _idColumnName;
+
     private AnalysisEngine _writer;
 
     @Override
@@ -75,6 +83,7 @@ public class TeradataJdbcOntologyWriter extends JCasAnnotator_ImplBase {
         teradataParams.setUsername(_username);
         teradataParams.setUrl(Util.decodeUrl(_url));
         teradataParams.setDriverClassName(_driverClassName);
+        teradataParams.setIdColumnName(_idColumnName);
         SqlConnection sqlConnection = TeradataSqlConnection.fromParams(teradataParams);
         params.setSqlConnection(sqlConnection);
 

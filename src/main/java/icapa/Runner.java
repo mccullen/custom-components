@@ -6,6 +6,7 @@ import com.opencsv.exceptions.CsvException;
 import icapa.cr.DelimiterReader;
 import icapa.cr.S3DelimiterReader;
 import icapa.models.ConfigurationSettings;
+import org.apache.ctakes.core.config.ConfigParameterConstants;
 import org.apache.ctakes.core.pipeline.CliOptionals;
 import org.apache.ctakes.core.pipeline.PipelineBuilder;
 import org.apache.ctakes.core.pipeline.PiperFileReader;
@@ -83,8 +84,7 @@ public class Runner implements Serializable {
             prop.load(input);
             _config.setInputFile(prop.getProperty(icapa.models.ConfigurationSettings.INPUT_FILE_PROP));
             _config.setNoteColumnName(prop.getProperty(icapa.models.ConfigurationSettings.NOTE_COLUMN_NAME_PROP));
-            _config.setUmlsUsername(prop.getProperty(icapa.models.ConfigurationSettings.UMLS_USERNAME_PROP));
-            _config.setUmlsPassword(prop.getProperty(icapa.models.ConfigurationSettings.UMLS_PASSWORD_PROP));
+            _config.setUmlsKey(prop.getProperty(icapa.models.ConfigurationSettings.UMLS_KEY_PROP));
             _config.setPiperFile(prop.getProperty(ConfigurationSettings.PIPER_FILE_PROP));
             _config.setLookupXml(prop.getProperty(ConfigurationSettings.LOOKUP_XML_PROP));
         } catch (IOException e) {
@@ -159,10 +159,10 @@ public class Runner implements Serializable {
     }
 
     private void setCliOptions(PiperFileReader reader) {
+        // Taken from PiperFileRunner.class
         try {
             String[] args = {
-                "--user", _config.getUmlsUsername(),
-                "--pass", _config.getUmlsPassword(),
+                "--key", _config.getUmlsKey(),
                 "-p", _config.getPiperFile(),
                 "-l", _config.getLookupXml()
             };
@@ -171,25 +171,25 @@ public class Runner implements Serializable {
 
             String inputDir = options.getInputDirectory();
             if (!inputDir.isEmpty()) {
-                builder.set("InputDirectory", inputDir);
+                builder.set(ConfigParameterConstants.PARAM_INPUTDIR, inputDir);
             }
 
             String outputDir = options.getOutputDirectory();
             String subDir = options.getSubDirectory();
             if (!subDir.isEmpty()) {
-                builder.set("SubDirectory", subDir);
+                builder.set(ConfigParameterConstants.PARAM_SUBDIR, subDir);
             }
 
             String xmiOutDir = options.getXmiOutDirectory();
             if (!outputDir.isEmpty()) {
-                builder.set("OutputDirectory", outputDir);
+                builder.set(ConfigParameterConstants.PARAM_OUTPUTDIR, outputDir);
             } else if (!xmiOutDir.isEmpty()) {
-                builder.set("OutputDirectory", xmiOutDir);
+                builder.set(ConfigParameterConstants.PARAM_OUTPUTDIR, xmiOutDir);
             }
 
             String lookupXml = options.getLookupXml();
             if (!lookupXml.isEmpty()) {
-                builder.set("LookupXml", lookupXml);
+                builder.set(ConfigParameterConstants.PARAM_LOOKUP_XML, lookupXml);
             }
 
             String umlsUser = options.getUmlsUserName();
@@ -202,6 +202,12 @@ public class Runner implements Serializable {
             if (!umlsPass.isEmpty()) {
                 builder.set("umlsPass", umlsPass);
                 builder.set("ctakes.umlspw", umlsPass);
+            }
+
+            String umlsKey = options.getUmlsApiKey();
+            if (!umlsKey.isEmpty()) {
+                builder.set("umlsKey", umlsKey);
+                builder.set("ctakes.umls_apikey", umlsKey);
             }
 
             reader.setCliOptionals(options);

@@ -5,6 +5,15 @@ public class TeradataParams {
     private String username;
     private String password;
     private String url;
+    private String idColumnName;
+
+    public String getIdColumnName() {
+        return idColumnName;
+    }
+
+    public void setIdColumnName(String idColumnName) {
+        this.idColumnName = idColumnName;
+    }
 
     public String getDriverClassName() {
         return driverClassName;
