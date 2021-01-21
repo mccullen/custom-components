@@ -1,18 +1,18 @@
 package icapa.models;
 
-public class TeradataParams {
+public class JdbcParams {
     private String driverClassName;
     private String username;
     private String password;
     private String url;
-    private String idColumnName;
+    private String createTableSuffix;
 
-    public String getIdColumnName() {
-        return idColumnName;
+    public String getCreateTableSuffix() {
+        return createTableSuffix;
     }
 
-    public void setIdColumnName(String idColumnName) {
-        this.idColumnName = idColumnName;
+    public void setCreateTableSuffix(String createTableSuffix) {
+        this.createTableSuffix = createTableSuffix;
     }
 
     public String getDriverClassName() {

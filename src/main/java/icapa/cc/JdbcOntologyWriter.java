@@ -3,11 +3,11 @@ package icapa.cc;
 import icapa.Const;
 import icapa.Util;
 import icapa.models.JdbcOntologyWriterParams;
-import icapa.models.TeradataParams;
+import icapa.models.JdbcParams;
 import icapa.services.AnalysisEngine;
 import icapa.services.JdbcOntologyWriterService;
 import icapa.services.SqlConnection;
-import icapa.services.TeradataSqlConnection;
+import icapa.services.JdbcSqlConnection;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -18,8 +18,8 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.IOException;
 
-public class TeradataJdbcOntologyWriter extends JCasAnnotator_ImplBase {
-    private static final Logger LOGGER = Logger.getLogger(TeradataJdbcOntologyWriter.class.getName());
+public class JdbcOntologyWriter extends JCasAnnotator_ImplBase {
+    private static final Logger LOGGER = Logger.getLogger(JdbcOntologyWriter.class.getName());
 
     public static final String PARAM_TABLE = "Table";
     @ConfigurationParameter(
@@ -60,13 +60,13 @@ public class TeradataJdbcOntologyWriter extends JCasAnnotator_ImplBase {
     )
     private String _password;
 
-    public static final String PARAM_ID_COLUMN_NAME = "IdColName";
+    public static final String PARAM_CREATE_TABLE_SUFFIX = "CreateTableSuffix";
     @ConfigurationParameter(
-        name = Const.PARAM_DOCUMENT_ID_COLUMN,
+        name = PARAM_CREATE_TABLE_SUFFIX,
         mandatory = false,
         defaultValue = "Id"
     )
-    private String _idColumnName;
+    private String _createTableSuffix;
 
     private AnalysisEngine _writer;
 
@@ -78,13 +78,13 @@ public class TeradataJdbcOntologyWriter extends JCasAnnotator_ImplBase {
         params.setTable(_table);
 
         // Set sql connection
-        TeradataParams teradataParams = new TeradataParams();
-        teradataParams.setPassword(_password);
-        teradataParams.setUsername(_username);
-        teradataParams.setUrl(Util.decodeUrl(_url));
-        teradataParams.setDriverClassName(_driverClassName);
-        teradataParams.setIdColumnName(_idColumnName);
-        SqlConnection sqlConnection = TeradataSqlConnection.fromParams(teradataParams);
+        JdbcParams jdbcParams = new JdbcParams();
+        jdbcParams.setPassword(_password);
+        jdbcParams.setUsername(_username);
+        jdbcParams.setUrl(Util.decodeUrl(_url));
+        jdbcParams.setDriverClassName(_driverClassName);
+        jdbcParams.setCreateTableSuffix(_createTableSuffix);
+        SqlConnection sqlConnection = JdbcSqlConnection.fromParams(jdbcParams);
         params.setSqlConnection(sqlConnection);
 
         _writer = JdbcOntologyWriterService.fromParams(params);

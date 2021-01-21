@@ -2,10 +2,10 @@ package icapa.cr;
 
 import icapa.Const;
 import icapa.models.JdbcReaderParams;
-import icapa.models.TeradataParams;
+import icapa.models.JdbcParams;
 import icapa.services.CollectionReader;
 import icapa.services.JdbcReaderService;
-import icapa.services.TeradataSqlConnection;
+import icapa.services.JdbcSqlConnection;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-public class TeradataJdbcReader extends JCasCollectionReader_ImplBase {
-    private static Logger LOGGER = Logger.getLogger(TeradataJdbcReader.class.getName());
+public class JdbcReader extends JCasCollectionReader_ImplBase {
+    private static Logger LOGGER = Logger.getLogger(JdbcReader.class.getName());
 
     /**
      * SQL statement to retrieve the document.
@@ -83,16 +83,16 @@ public class TeradataJdbcReader extends JCasCollectionReader_ImplBase {
         params.setSqlStatement(_sqlStatement);
 
         // Set sql connection
-        TeradataParams teradataParams = new TeradataParams();
-        teradataParams.setDriverClassName(_driverClassName);
+        JdbcParams jdbcParams = new JdbcParams();
+        jdbcParams.setDriverClassName(_driverClassName);
         try {
-            teradataParams.setUrl(URLDecoder.decode(_url, "UTF-8"));
+            jdbcParams.setUrl(URLDecoder.decode(_url, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             LOGGER.error("Error decoding url " + _url, e);
         }
-        teradataParams.setUsername(_username);
-        teradataParams.setPassword(_password);
-        TeradataSqlConnection sqlConnection = TeradataSqlConnection.fromParams(teradataParams);
+        jdbcParams.setUsername(_username);
+        jdbcParams.setPassword(_password);
+        JdbcSqlConnection sqlConnection = JdbcSqlConnection.fromParams(jdbcParams);
         params.setSqlConnection(sqlConnection);
 
         _reader = JdbcReaderService.fromParams(params);

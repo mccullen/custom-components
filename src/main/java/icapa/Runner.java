@@ -51,7 +51,7 @@ public class Runner implements Serializable {
             PiperFileReader piperReader = new PiperFileReader();
             setCliOptions(piperReader);
             PipelineBuilder builder = piperReader.getBuilder();
-            //String piperfile = "C:/root/vdt/icapa/nlp/custom-components/src/main/resources/jdbc.piper";
+            //String piperfile = "C:/root/vdt/icapa/nlp/custom-components/src/main/resources/teradata.piper";
             String piperfile = "C:/root/vdt/icapa/nlp/custom-components/src/main/resources/default-pipeline.piper";
             piperReader.loadPipelineFile(piperfile);
             builder.run();

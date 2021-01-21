@@ -1,11 +1,14 @@
 ## Packages
 * models: Simple model objects with getters/setters
 * services: Anything with business/implementation logic that you may want to stub out
-* cr: Collection Readers
+* cr: Collection Readers.
 * cc: CAS Consumers
 * ae: Analysis Engines
 
-## Attributes
+## Collection Readers
+### 
+
+## Ontology Attribute Descriptions
 * Confidence: Created by dictionary lookup, not probabalistic algorithm, and is never set.
 it will always be 0 with the default dictionary lookup procedure. The default procedure
 is a strict lookup against a term in the dictionary and no lookup has any more validity
