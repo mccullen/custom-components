@@ -4,7 +4,6 @@ import icapa.services.SqlConnection;
 
 public class JdbcOntologyWriterParams {
     private String table;
-    private String documentIdColumn;
     private SqlConnection sqlConnection;
 
     public SqlConnection getSqlConnection() {
@@ -21,13 +20,5 @@ public class JdbcOntologyWriterParams {
 
     public void setTable(String table) {
         this.table = table;
-    }
-
-    public String getDocumentIdColumn() {
-        return documentIdColumn;
-    }
-
-    public void setDocumentIdColumn(String documentIdColumn) {
-        this.documentIdColumn = documentIdColumn;
     }
 }

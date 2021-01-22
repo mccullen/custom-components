@@ -35,15 +35,10 @@ public class JdbcOntologyWriterService implements AnalysisEngine {
     public void process(JCas jCas) {
         List<Ontology> ontologies = Util.getOntologies(jCas);
         for (Ontology ontology : ontologies) {
-            writeRow(ontology);
+            _params.getSqlConnection().insertOntologyIntoTable(ontology, _params.getTable());
         }
     }
 
-    private void writeRow(Ontology ontology) {
-        String query = Util.getInsertQuery(_params.getTable(), ontology);
-        LOGGER.info("Executing query: " + query);
-        int nRowsAffected = _params.getSqlConnection().executeUpdate(query);
-    }
 
     @Override
     public void close() throws IOException {

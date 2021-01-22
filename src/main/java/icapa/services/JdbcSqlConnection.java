@@ -1,10 +1,13 @@
 package icapa.services;
 
 import icapa.Util;
+import icapa.models.HeaderProperties;
 import icapa.models.JdbcParams;
+import icapa.models.Ontology;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.List;
 
 public class JdbcSqlConnection implements SqlConnection {
     private static final Logger LOGGER = Logger.getLogger(JdbcSqlConnection.class.getName());
@@ -84,13 +87,15 @@ public class JdbcSqlConnection implements SqlConnection {
 
     @Override
     public void createAnnotationTable(String table) {
-        String query = "";
-        if (_params.getCreateTableSuffix() == null) {
-            query = Util.getCreateTableQuery(table);
-        } else {
-            query = Util.getCreateTableQuery(table, _params.getCreateTableSuffix());
-        }
+        String query = Util.getCreateTableQuery(table, _params.getCreateTableSuffix(), _params.getDocumentIdColAndDatatype());
         LOGGER.info("Executing query: " + query);
         executeUpdate(query);
+    }
+
+    @Override
+    public void insertOntologyIntoTable(Ontology ontology, String table) {
+        String query = Util.getInsertQuery(table, ontology, _params.getDocumentIdColAndDatatype());
+        LOGGER.info("Executing query: " + query);
+        int nRowsAffected = executeUpdate(query);
     }
 }

@@ -135,6 +135,13 @@ public class Util {
             ontologies.addAll(subset);
         }
         return ontologies;
+        /*
+        Collection<OntologyConcept> ontologies = JCasUtil.select(jCas, OntologyConcept.class);
+        for (OntologyConcept ontology : ontologies) {
+            ontology.
+        }
+
+         */
     }
 
     public static String getDocumentId(JCas jCas) {
@@ -158,6 +165,7 @@ public class Util {
             int begin = identifiedAnnotation.getBegin();
             int end = identifiedAnnotation.getEnd();
             boolean conditional = identifiedAnnotation.getConditional();
+            //identifiedAnnotation.getHistoryOf() TODO
             float confidence = identifiedAnnotation.getConfidence();
             boolean generic = identifiedAnnotation.getGeneric();
             int polarity = identifiedAnnotation.getPolarity();
@@ -183,6 +191,7 @@ public class Util {
                 String refsem = ontologyFeatureStructure.getType().toString();
                 String codingScheme = Util.getFeatureString(ontologyFeatureStructure, "codingScheme");
                 double score = Util.getFeatureDouble(ontologyFeatureStructure, "score");
+                // TODO: tui, cui, and preferred text only exist as UMLSConcepts, so be sure to do a check to ensure you are of that type
                 String tui = Util.getFeatureString(ontologyFeatureStructure, "tui");
 
                 // Add everything into an ontology
@@ -294,34 +303,43 @@ public class Util {
         return result;
     }
 
-    public static List<HeaderProperties> getHeaderProperties() {
+    public static List<HeaderProperties> getDefaultHeaderProperties() {
+        return Util.getHeaderPropertiesWithDocumentIdOverride(null);
+    }
+
+    public static List<HeaderProperties> getHeaderPropertiesWithDocumentIdOverride(HeaderProperties documentIdOverride) {
         List<HeaderProperties> headerProperties = new ArrayList<>();
         String[] headers = Util.getOntologyConceptHeaders();
         for (int i = 0; i < headers.length; ++i) {
             HeaderProperties props = new HeaderProperties();
-            props.setIndex(i);
-            String dataType = "";
-            switch (headers[i]) {
-                case Const.ADDRESS_HEADER:
-                case Const.CONDITIONAL_HEADER: // Flag
-                case Const.GENERIC_HEADER: // Flag
-                case Const.POLARITY_HEADER:
-                case Const.END_HEADER:
-                case Const.BEGIN_HEADER:
-                case Const.UNCERTAINTY_HEADER:
-                    dataType = "INT";
-                    break;
-                case Const.CONFIDENCE_HEADER:
-                case Const.SCORE_HEADER:
-                    // Max 5 digits total; 2 digits stored to right of decimal point (so max of 3 will be to the left).
-                    dataType = "DECIMAL(" + Const.PRECISION + ", " + Const.SCALE + ")";
-                    break;
-                default:
-                    dataType = "VARCHAR(100)";
-                    break;
+            String header = headers[i];
+            if (documentIdOverride != null && header.equals(Const.DOCUMENT_ID)) {
+                props.setDataType(documentIdOverride.getDataType());
+                props.setName(documentIdOverride.getName());
+            } else {
+                String dataType = "";
+                switch (header) {
+                    case Const.ADDRESS_HEADER:
+                    case Const.CONDITIONAL_HEADER: // Flag
+                    case Const.GENERIC_HEADER: // Flag
+                    case Const.POLARITY_HEADER:
+                    case Const.END_HEADER:
+                    case Const.BEGIN_HEADER:
+                    case Const.UNCERTAINTY_HEADER:
+                        dataType = "INT";
+                        break;
+                    case Const.CONFIDENCE_HEADER:
+                    case Const.SCORE_HEADER:
+                        // Max 5 digits total; 2 digits stored to right of decimal point (so max of 3 will be to the left).
+                        dataType = "DECIMAL(" + Const.PRECISION + ", " + Const.SCALE + ")";
+                        break;
+                    default:
+                        dataType = "VARCHAR(100)";
+                        break;
+                }
+                props.setName(header);
+                props.setDataType(dataType);
             }
-            props.setDataType(dataType);
-            props.setName(headers[i]);
             headerProperties.add(props);
         }
         return headerProperties;
@@ -333,13 +351,19 @@ public class Util {
      * database
      * */
     public static String getCreateTableQuery(String tableName) {
-        List<HeaderProperties> headerProperties = Util.getHeaderProperties();
+        List<HeaderProperties> headerProperties = Util.getDefaultHeaderProperties();
         String query = Util.getCreateTableQuery(tableName, headerProperties, "");
         return query;
     }
 
     public static String getCreateTableQuery(String tableName, String augment) {
-        List<HeaderProperties> headerProperties = Util.getHeaderProperties();
+        List<HeaderProperties> headerProperties = Util.getDefaultHeaderProperties();
+        String query = Util.getCreateTableQuery(tableName, headerProperties, augment);
+        return query;
+    }
+
+    public static String getCreateTableQuery(String tableName, String augment, HeaderProperties customDocumentId) {
+        List<HeaderProperties> headerProperties = Util.getHeaderPropertiesWithDocumentIdOverride(customDocumentId);
         String query = Util.getCreateTableQuery(tableName, headerProperties, augment);
         return query;
     }
@@ -348,10 +372,11 @@ public class Util {
      * Returns a CREATE TABLE statement for ontology concepts using the given tableName and the header properties.
      * This is useful if you want to provide your own identity column by appending to the headerProperties list.
      * */
-    public static String getCreateTableQuery(String tableName, List<HeaderProperties> headerProperties, String augment) {
+    private static String getCreateTableQuery(String tableName, List<HeaderProperties> headerProperties, String augment) {
         StringBuilder query = new StringBuilder("CREATE TABLE " + tableName + " (");
         for (int i = 0; i < headerProperties.size(); ++i) {
             HeaderProperties p = headerProperties.get(i);
+
             // Wrap in double quotes just in case there are any keywords in the header names
             query.append("\"").append(p.getName()).append("\" ").append(p.getDataType());
             if (i != headerProperties.size()-1) {
@@ -367,10 +392,9 @@ public class Util {
         return query.toString();
     }
 
-    public static String getInsertQuery(String tableName, Ontology ontology) {
-        //String insertStatement = "INSERT INTO " + _params.getTable() + " (" + String.join(",", wrappedHeaders) + ") VALUES (" + Util.wrapInSqlString(row) + ");";
+    public static String getInsertQuery(String tableName, Ontology ontology, HeaderProperties documentIdOverride) {
         StringBuilder query = new StringBuilder("INSERT INTO " + tableName + " (");
-        List<HeaderProperties> headerProperties = Util.getHeaderProperties();
+        List<HeaderProperties> headerProperties = Util.getHeaderPropertiesWithDocumentIdOverride(documentIdOverride);
         // Add column names
         //Map<String, Object> headerNameToValue = new HashMap<>();
         for (int i = 0; i < headerProperties.size(); ++i) {
@@ -480,5 +504,9 @@ public class Util {
             result += t;
         }
         return result;
+    }
+
+    public static boolean nullOrEmpty(String s) {
+        return s == null || s.equals("");
     }
 }

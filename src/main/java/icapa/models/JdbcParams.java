@@ -6,6 +6,15 @@ public class JdbcParams {
     private String password;
     private String url;
     private String createTableSuffix;
+    private HeaderProperties documentIdColAndDatatype;
+
+    public HeaderProperties getDocumentIdColAndDatatype() {
+        return documentIdColAndDatatype;
+    }
+
+    public void setDocumentIdColAndDatatype(HeaderProperties documentIdColAndDatatype) {
+        this.documentIdColAndDatatype = documentIdColAndDatatype;
+    }
 
     public String getCreateTableSuffix() {
         return createTableSuffix;
