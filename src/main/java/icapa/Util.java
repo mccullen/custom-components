@@ -187,6 +187,9 @@ public class Util {
         ontology.setPolarity(identifiedAnnotation.getPolarity());
         ontology.setTextsem(identifiedAnnotation.getType().toString());
         ontology.setUncertainty(identifiedAnnotation.getUncertainty());
+        ontology.setEntityType(Util.getEntityTypeFromId(identifiedAnnotation.getTypeID()));
+        ontology.setDiscoveryTechnique(Util.getDiscoveryTechniqueFromId(identifiedAnnotation.getDiscoveryTechnique()));
+
         // Set segment
         String segmentId = identifiedAnnotation.getSegmentID();
         if (segmentId != null) {
@@ -230,10 +233,6 @@ public class Util {
                     ontology.setOid(ontologyConcept.getOid());
                     ontology.setOui(ontologyConcept.getOui());
                     ontology.setDisambiguated(ontologyConcept.getDisambiguated());
-                /*
-                ontology.setEntityType(entityType);
-                ontology.setDiscoveryTechnique(discoveryTechnique);
-                 */
                     if (ontologyConcept instanceof UmlsConcept) {
                         // Add umls concept properties if present
                         UmlsConcept umlsConcept = (UmlsConcept)ontologyConcept;
@@ -245,6 +244,62 @@ public class Util {
                 }
             });
         }
+    }
+
+    public static String getEntityTypeFromId(int id) {
+        String type = "";
+        switch (id) {
+            case CONST.NE_TYPE_ID_UNKNOWN:
+                type = "unknown";
+                break;
+            case CONST.NE_TYPE_ID_DRUG:
+                type = "drug";
+                break;
+            case CONST.NE_TYPE_ID_DISORDER:
+                type = "disorder";
+                break;
+            case CONST.NE_TYPE_ID_FINDING:
+                type = "finding";
+                break;
+            case CONST.NE_TYPE_ID_PROCEDURE:
+                type = "procedure";
+                break;
+            case CONST.NE_TYPE_ID_ANATOMICAL_SITE:
+                type = "anatomical site";
+                break;
+            case CONST.NE_TYPE_ID_CLINICAL_ATTRIBUTE:
+                type = "clinical attribute";
+                break;
+            case CONST.NE_TYPE_ID_DEVICE:
+                type = "device";
+                break;
+            case CONST.NE_TYPE_ID_LAB:
+                type = "lab";
+                break;
+            case CONST.NE_TYPE_ID_PHENOMENA:
+                type = "phenomena";
+                break;
+            default:
+                type = String.valueOf(id);
+                break;
+        }
+        return type;
+    }
+
+    public static String getDiscoveryTechniqueFromId(int id) {
+        String technique = "";
+        switch (id) {
+            case CONST.NE_DISCOVERY_TECH_DICT_LOOKUP:
+                technique = "dict lookup";
+                break;
+            case CONST.NE_DISCOVERY_TECH_GOLD_ANNOTATION:
+                technique = "gold annotation";
+                break;
+            default:
+                technique = String.valueOf(id);
+                break;
+        }
+        return technique;
     }
 
     /**
@@ -306,9 +361,9 @@ public class Util {
         String[] row = new String[headerToIndex.size()];
         putInRow(row, Const.ADDRESS_HEADER, String.valueOf(ontology.getIdentifiedAnnotationAddress()), headerToIndex);
         putInRow(row, Const.CODE_HEADER, ontology.getCode(), headerToIndex);
-        putInRow(row, Const.CONDITIONAL_HEADER, String.valueOf(ontology.isConditional()), headerToIndex);
+        putInRow(row, Const.CONDITIONAL_HEADER, String.valueOf(ontology.getConditional()), headerToIndex);
         putInRow(row, Const.CUI_HEADER, ontology.getCui(), headerToIndex);
-        putInRow(row, Const.GENERIC_HEADER, String.valueOf(ontology.isGeneric()), headerToIndex);
+        putInRow(row, Const.GENERIC_HEADER, String.valueOf(ontology.getGeneric()), headerToIndex);
         putInRow(row, Const.POLARITY_HEADER, String.valueOf(ontology.getPolarity()), headerToIndex);
         putInRow(row, Const.END_HEADER, String.valueOf(ontology.getEnd()), headerToIndex);
         putInRow(row, Const.BEGIN_HEADER, String.valueOf(ontology.getBegin()), headerToIndex);
@@ -329,13 +384,14 @@ public class Util {
         putInRow(row, Const.HISTORY_OF_HEADER, String.valueOf(ontology.getHistoryOf()), headerToIndex);
         putInRow(row, Const.OID_HEADER, ontology.getOid(), headerToIndex);
         putInRow(row, Const.OUI_HEADER, ontology.getOui(), headerToIndex);
-        putInRow(row, Const.DISAMBIGUATED_HEADER, String.valueOf(ontology.isDisambiguated()), headerToIndex);
+        putInRow(row, Const.DISAMBIGUATED_HEADER, String.valueOf(ontology.getDisambiguated()), headerToIndex);
         putInRow(row, Const.ONTOLOGY_ADDRESS_HEADER, String.valueOf(ontology.getOntologyConceptAddress()), headerToIndex);
         return row;
     }
 
     private static void putInRow(String[] row, String header, String value, Map<String, Integer> headerToIndex) {
-        row[headerToIndex.get(header)] = value;
+        String newValue = value == null ? "" : value;
+        row[headerToIndex.get(header)] = newValue;
     }
 
     public static String wrapInSqlString(String[] row) {
@@ -470,13 +526,13 @@ public class Util {
                     query.append(Util.getSqlString(ontology.getCode()));
                     break;
                 case Const.CONDITIONAL_HEADER:
-                    query.append(Util.getSqlString(ontology.isConditional()));
+                    query.append(Util.getSqlString(ontology.getConditional()));
                     break;
                 case Const.CUI_HEADER:
                     query.append(Util.getSqlString(ontology.getCui()));
                     break;
                 case Const.GENERIC_HEADER:
-                    query.append(Util.getSqlString(ontology.isGeneric()));
+                    query.append(Util.getSqlString(ontology.getGeneric()));
                     break;
                 case Const.POLARITY_HEADER:
                     query.append(Util.getSqlString(ontology.getPolarity()));

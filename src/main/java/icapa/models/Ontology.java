@@ -1,113 +1,40 @@
 package icapa.models;
 
 public class Ontology {
-    private int identifiedAnnotationAddress;
+    private Integer identifiedAnnotationAddress;
     private String code;
-    private boolean conditional;
+    private Boolean conditional;
     private String cui;
-    private boolean generic;
-    private int polarity;
-    private int end;
-    private int begin;
+    private Boolean generic;
+    private Integer polarity;
+    private Integer end;
+    private Integer begin;
     private String preferredText;
     private String refsem;
     private String codingScheme;
-    private double score;
+    private Double score;
     private String subject;
     private String textsem;
     private String tui;
-    private int uncertainty;
+    private Integer uncertainty;
     private String trueText;
     private String documentId;
     private String partsOfSpeech;
-
     private String entityType;
     private String segment;
     private String discoveryTechnique;
-    private int historyOf;
+    private Integer historyOf;
     private String originalText;
     private String oid;
     private String oui;
-    private boolean disambiguated;
-    private int ontologyConceptAddress;
+    private Boolean disambiguated;
+    private Integer ontologyConceptAddress;
 
-    public int getOntologyConceptAddress() {
-        return ontologyConceptAddress;
-    }
-
-    public void setOntologyConceptAddress(int ontologyConceptAddress) {
-        this.ontologyConceptAddress = ontologyConceptAddress;
-    }
-
-    public String getEntityType() {
-        return entityType;
-    }
-
-    public void setEntityType(String entityType) {
-        this.entityType = entityType;
-    }
-
-    public String getSegment() {
-        return segment;
-    }
-
-    public void setSegment(String segment) {
-        this.segment = segment;
-    }
-
-    public String getDiscoveryTechnique() {
-        return discoveryTechnique;
-    }
-
-    public void setDiscoveryTechnique(String discoveryTechnique) {
-        this.discoveryTechnique = discoveryTechnique;
-    }
-
-    public int getHistoryOf() {
-        return historyOf;
-    }
-
-    public void setHistoryOf(int historyOf) {
-        this.historyOf = historyOf;
-    }
-
-    public String getOriginalText() {
-        return originalText;
-    }
-
-    public void setOriginalText(String originalText) {
-        this.originalText = originalText;
-    }
-
-    public String getOid() {
-        return oid;
-    }
-
-    public void setOid(String oid) {
-        this.oid = oid;
-    }
-
-    public String getOui() {
-        return oui;
-    }
-
-    public void setOui(String oui) {
-        this.oui = oui;
-    }
-
-    public boolean isDisambiguated() {
-        return disambiguated;
-    }
-
-    public void setDisambiguated(boolean disambiguated) {
-        this.disambiguated = disambiguated;
-    }
-
-    public int getIdentifiedAnnotationAddress() {
+    public Integer getIdentifiedAnnotationAddress() {
         return identifiedAnnotationAddress;
     }
 
-    public void setIdentifiedAnnotationAddress(int identifiedAnnotationAddress) {
+    public void setIdentifiedAnnotationAddress(Integer identifiedAnnotationAddress) {
         this.identifiedAnnotationAddress = identifiedAnnotationAddress;
     }
 
@@ -119,11 +46,11 @@ public class Ontology {
         this.code = code;
     }
 
-    public boolean isConditional() {
+    public Boolean getConditional() {
         return conditional;
     }
 
-    public void setConditional(boolean conditional) {
+    public void setConditional(Boolean conditional) {
         this.conditional = conditional;
     }
 
@@ -135,35 +62,35 @@ public class Ontology {
         this.cui = cui;
     }
 
-    public boolean isGeneric() {
+    public Boolean getGeneric() {
         return generic;
     }
 
-    public void setGeneric(boolean generic) {
+    public void setGeneric(Boolean generic) {
         this.generic = generic;
     }
 
-    public int getPolarity() {
+    public Integer getPolarity() {
         return polarity;
     }
 
-    public void setPolarity(int polarity) {
+    public void setPolarity(Integer polarity) {
         this.polarity = polarity;
     }
 
-    public int getEnd() {
+    public Integer getEnd() {
         return end;
     }
 
-    public void setEnd(int end) {
+    public void setEnd(Integer end) {
         this.end = end;
     }
 
-    public int getBegin() {
+    public Integer getBegin() {
         return begin;
     }
 
-    public void setBegin(int begin) {
+    public void setBegin(Integer begin) {
         this.begin = begin;
     }
 
@@ -191,11 +118,11 @@ public class Ontology {
         this.codingScheme = codingScheme;
     }
 
-    public double getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 
@@ -223,11 +150,11 @@ public class Ontology {
         this.tui = tui;
     }
 
-    public int getUncertainty() {
+    public Integer getUncertainty() {
         return uncertainty;
     }
 
-    public void setUncertainty(int uncertainty) {
+    public void setUncertainty(Integer uncertainty) {
         this.uncertainty = uncertainty;
     }
 
@@ -253,5 +180,77 @@ public class Ontology {
 
     public void setPartsOfSpeech(String partsOfSpeech) {
         this.partsOfSpeech = partsOfSpeech;
+    }
+
+    public String getEntityType() {
+        return entityType;
+    }
+
+    public void setEntityType(String entityType) {
+        this.entityType = entityType;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
+    }
+
+    public String getDiscoveryTechnique() {
+        return discoveryTechnique;
+    }
+
+    public void setDiscoveryTechnique(String discoveryTechnique) {
+        this.discoveryTechnique = discoveryTechnique;
+    }
+
+    public Integer getHistoryOf() {
+        return historyOf;
+    }
+
+    public void setHistoryOf(Integer historyOf) {
+        this.historyOf = historyOf;
+    }
+
+    public String getOriginalText() {
+        return originalText;
+    }
+
+    public void setOriginalText(String originalText) {
+        this.originalText = originalText;
+    }
+
+    public String getOid() {
+        return oid;
+    }
+
+    public void setOid(String oid) {
+        this.oid = oid;
+    }
+
+    public String getOui() {
+        return oui;
+    }
+
+    public void setOui(String oui) {
+        this.oui = oui;
+    }
+
+    public Boolean getDisambiguated() {
+        return disambiguated;
+    }
+
+    public void setDisambiguated(Boolean disambiguated) {
+        this.disambiguated = disambiguated;
+    }
+
+    public Integer getOntologyConceptAddress() {
+        return ontologyConceptAddress;
+    }
+
+    public void setOntologyConceptAddress(Integer ontologyConceptAddress) {
+        this.ontologyConceptAddress = ontologyConceptAddress;
     }
 }
