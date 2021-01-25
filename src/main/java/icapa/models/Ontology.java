@@ -1,12 +1,9 @@
 package icapa.models;
 
-import icapa.Const;
-
 public class Ontology {
-    private int address;
+    private int identifiedAnnotationAddress;
     private String code;
     private boolean conditional;
-    private float confidence;
     private String cui;
     private boolean generic;
     private int polarity;
@@ -24,12 +21,94 @@ public class Ontology {
     private String documentId;
     private String partsOfSpeech;
 
-    public int getAddress() {
-        return address;
+    private String entityType;
+    private String segment;
+    private String discoveryTechnique;
+    private int historyOf;
+    private String originalText;
+    private String oid;
+    private String oui;
+    private boolean disambiguated;
+    private int ontologyConceptAddress;
+
+    public int getOntologyConceptAddress() {
+        return ontologyConceptAddress;
     }
 
-    public void setAddress(int address) {
-        this.address = address;
+    public void setOntologyConceptAddress(int ontologyConceptAddress) {
+        this.ontologyConceptAddress = ontologyConceptAddress;
+    }
+
+    public String getEntityType() {
+        return entityType;
+    }
+
+    public void setEntityType(String entityType) {
+        this.entityType = entityType;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
+    }
+
+    public String getDiscoveryTechnique() {
+        return discoveryTechnique;
+    }
+
+    public void setDiscoveryTechnique(String discoveryTechnique) {
+        this.discoveryTechnique = discoveryTechnique;
+    }
+
+    public int getHistoryOf() {
+        return historyOf;
+    }
+
+    public void setHistoryOf(int historyOf) {
+        this.historyOf = historyOf;
+    }
+
+    public String getOriginalText() {
+        return originalText;
+    }
+
+    public void setOriginalText(String originalText) {
+        this.originalText = originalText;
+    }
+
+    public String getOid() {
+        return oid;
+    }
+
+    public void setOid(String oid) {
+        this.oid = oid;
+    }
+
+    public String getOui() {
+        return oui;
+    }
+
+    public void setOui(String oui) {
+        this.oui = oui;
+    }
+
+    public boolean isDisambiguated() {
+        return disambiguated;
+    }
+
+    public void setDisambiguated(boolean disambiguated) {
+        this.disambiguated = disambiguated;
+    }
+
+    public int getIdentifiedAnnotationAddress() {
+        return identifiedAnnotationAddress;
+    }
+
+    public void setIdentifiedAnnotationAddress(int identifiedAnnotationAddress) {
+        this.identifiedAnnotationAddress = identifiedAnnotationAddress;
     }
 
     public String getCode() {
@@ -46,14 +125,6 @@ public class Ontology {
 
     public void setConditional(boolean conditional) {
         this.conditional = conditional;
-    }
-
-    public float getConfidence() {
-        return confidence;
-    }
-
-    public void setConfidence(float confidence) {
-        this.confidence = confidence;
     }
 
     public String getCui() {

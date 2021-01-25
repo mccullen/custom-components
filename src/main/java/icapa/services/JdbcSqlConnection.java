@@ -28,10 +28,9 @@ public class JdbcSqlConnection implements SqlConnection {
             _connection = Util.getConnection(
                 _params.getUsername(),
                 _params.getPassword(),
-                _params.getUrl(),
-                _params.getDriverClassName());
+                _params.getUrl());
         } else {
-            _connection = Util.getConnection(_params.getUrl(), _params.getDriverClassName());
+            _connection = Util.getConnection(_params.getUrl());
         }
     }
 

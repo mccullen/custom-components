@@ -3,10 +3,15 @@ package icapa;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 
 public class Const {
-    public static final String ADDRESS_HEADER = "address";
+    // NOTE: Any time these headers are added, you should go to Util and update the following
+    // - getOntologyConceptHeaders
+    // - getOntologyAsStringArray
+    // - getHeaderPropertiesWithDocumentIdOverrideo
+    // - getInsertQuery
+    // - getOntologiesFromIdentifiedAnnotation
+    public static final String ADDRESS_HEADER = "identifiedAnnotationAddress";
     public static final String CODE_HEADER = "code";
     public static final String CONDITIONAL_HEADER = "conditionalFlag";
-    public static final String CONFIDENCE_HEADER = "confidence";
     public static final String CUI_HEADER = "umlsCui";
     public static final String DOCUMENT_ID = "documentId";
     public static final String GENERIC_HEADER = "genericFlag";
@@ -23,6 +28,14 @@ public class Const {
     public static final String UNCERTAINTY_HEADER = "uncertainty";
     public static final String TRUE_TEXT_HEADER = "trueText";
     public static final String PARTS_OF_SPEECH_HEADER = "partsOfSpeech";
+    public static final String ENTITY_TYPE_HEADER = "entityTypeId";
+    public static final String SEGMENT_HEADER = "segment";
+    public static final String DISCOVERY_TECHNIQUE_HEADER = "discoveryTechniqueId";
+    public static final String HISTORY_OF_HEADER = "historyOf";
+    public static final String OID_HEADER = "oid";
+    public static final String OUI_HEADER = "oui";
+    public static final String DISAMBIGUATED_HEADER = "disambiguatedFlag";
+    public static final String ONTOLOGY_ADDRESS_HEADER = "ontologyConceptAddress";
 
     public static final String PARAM_DRIVER_CLASS = "DriverClassName";
     public static final String PARAM_DOCUMENT_ID_COLUMN = "DocumentIdColumnName";

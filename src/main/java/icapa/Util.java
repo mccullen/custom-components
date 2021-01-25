@@ -8,9 +8,13 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import icapa.models.HeaderProperties;
 import icapa.models.Ontology;
 import org.apache.ctakes.core.cc.XMISerializer;
+import org.apache.ctakes.typesystem.type.constants.CONST;
+import org.apache.ctakes.typesystem.type.refsem.OntologyConcept;
+import org.apache.ctakes.typesystem.type.refsem.UmlsConcept;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.ctakes.typesystem.type.syntax.ConllDependencyNode;
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
+import org.apache.ctakes.typesystem.type.textspan.Segment;
 import org.apache.log4j.Logger;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
@@ -41,7 +45,7 @@ public class Util {
             casSerializer.serialize(cas, xmiSerializer.getContentHandler());
             xmiString = new String(outputStream.toByteArray(), Charset.defaultCharset());
         } catch (IOException | SAXException e) {
-            e.printStackTrace();
+            LOGGER.error("Error getting xmi as string", e);
         }
         return xmiString;
     }
@@ -59,7 +63,6 @@ public class Util {
             Const.ADDRESS_HEADER,
             Const.CODE_HEADER,
             Const.CONDITIONAL_HEADER,
-            Const.CONFIDENCE_HEADER,
             Const.CUI_HEADER,
             Const.GENERIC_HEADER,
             Const.POLARITY_HEADER,
@@ -75,7 +78,15 @@ public class Util {
             Const.UNCERTAINTY_HEADER,
             Const.DOCUMENT_ID,
             Const.END_HEADER,
-            Const.BEGIN_HEADER
+            Const.BEGIN_HEADER,
+            Const.ENTITY_TYPE_HEADER,
+            Const.SEGMENT_HEADER,
+            Const.DISCOVERY_TECHNIQUE_HEADER,
+            Const.HISTORY_OF_HEADER,
+            Const.OID_HEADER,
+            Const.OUI_HEADER,
+            Const.DISAMBIGUATED_HEADER,
+            Const.ONTOLOGY_ADDRESS_HEADER
         };
     }
 
@@ -125,25 +136,25 @@ public class Util {
         return s3Client;
     }
 
+    /**
+     * Gets all the ontologies in the jCas
+     * */
     public static List<Ontology> getOntologies(JCas jCas) {
         List<Ontology> ontologies = new ArrayList<>();
         // Identified annotations: Pretty much anything with a begin and end position. May or may not include an ontologyArrConcept
-        String documentId = getDocumentId(jCas);
+        String documentId = getDocumentId(jCas); // Get the documentId here so you don't have to keep parsing the jcas to get it.
         Collection<IdentifiedAnnotation> identifiedAnnotations = JCasUtil.select(jCas, IdentifiedAnnotation.class);
         for (IdentifiedAnnotation identifiedAnnotation : identifiedAnnotations) {
             List<Ontology> subset = getOntologiesFromIdentifiedAnnotation(jCas, identifiedAnnotation, documentId);
             ontologies.addAll(subset);
         }
         return ontologies;
-        /*
-        Collection<OntologyConcept> ontologies = JCasUtil.select(jCas, OntologyConcept.class);
-        for (OntologyConcept ontology : ontologies) {
-            ontology.
-        }
-
-         */
     }
 
+    /**
+     * There should only be one DocumentID annotation in the jCas so this just gets the first one and returns it.
+     * If there is more than one, only the first will be returned. If none is found, and empty string is returned.
+     * */
     public static String getDocumentId(JCas jCas) {
         String result = "";
         Collection<DocumentID> documentIds = JCasUtil.select(jCas, DocumentID.class);
@@ -156,93 +167,115 @@ public class Util {
 
     private static List<Ontology> getOntologiesFromIdentifiedAnnotation(JCas jCas, IdentifiedAnnotation identifiedAnnotation, String documentId) {
         List<Ontology> ontologies = new ArrayList<>();
-        // Identified annotations can have arrays of ontology concepts, so extract them
-        FSArray ontologyConceptArr = identifiedAnnotation.getOntologyConceptArr();
-        if (ontologyConceptArr != null) {
-            // Only add things w/ ontology concept
-            int address = identifiedAnnotation.getAddress(); // The id of the annotation (xmi:id in the xmi file)
-            String subject = identifiedAnnotation.getSubject();
-            int begin = identifiedAnnotation.getBegin();
-            int end = identifiedAnnotation.getEnd();
-            boolean conditional = identifiedAnnotation.getConditional();
-            //identifiedAnnotation.getHistoryOf() TODO
-            float confidence = identifiedAnnotation.getConfidence();
-            boolean generic = identifiedAnnotation.getGeneric();
-            int polarity = identifiedAnnotation.getPolarity();
-            String textsem = identifiedAnnotation.getType().toString();
-            int uncertainty = identifiedAnnotation.getUncertainty();
-            FeatureStructure[] ontologyFeatureStructures = ontologyConceptArr.toArray();
-
-            Arrays.stream(ontologyFeatureStructures).forEach(ontologyFeatureStructure -> {
-                // Get Connl
-                List<ConllDependencyNode> conllDependencyNodes = JCasUtil.select(jCas, ConllDependencyNode.class)
-                    .stream()
-                    .filter(node -> begin <= node.getBegin() &&  node.getEnd() <= end)
-                    .collect(Collectors.toList());
-
-                //Collection<ConllDependencyNode> conllDependencyNodes = JCasUtil.select(jCas, ConllDependencyNode.class);
-                String trueTextFromConll = conllDependencyNodes.stream().map(n -> n.getForm()).collect(Collectors.joining(" "));
-                String partsOfSpeech = conllDependencyNodes.stream().map(n -> n.getPostag()).collect(Collectors.joining(","));
-                String trueText = jCas.getDocumentText().substring(begin, end);
-                // Get ontology concepts
-                String code = Util.getFeatureString(ontologyFeatureStructure, "code");
-                String cui = Util.getFeatureString(ontologyFeatureStructure, "cui");
-                String preferredText = Util.getFeatureString(ontologyFeatureStructure, "preferredText");
-                String refsem = ontologyFeatureStructure.getType().toString();
-                String codingScheme = Util.getFeatureString(ontologyFeatureStructure, "codingScheme");
-                double score = Util.getFeatureDouble(ontologyFeatureStructure, "score");
-                // TODO: tui, cui, and preferred text only exist as UMLSConcepts, so be sure to do a check to ensure you are of that type
-                String tui = Util.getFeatureString(ontologyFeatureStructure, "tui");
-
-                // Add everything into an ontology
-                Ontology ontology = new Ontology();
-                ontology.setAddress(address);
-                ontology.setCode(code);
-                ontology.setConditional(conditional);
-                ontology.setConfidence(confidence);
-                ontology.setCui(cui);
-                ontology.setGeneric(generic);
-                ontology.setPolarity(polarity);
-                ontology.setEnd(end);
-                ontology.setBegin(begin);
-                ontology.setPreferredText(preferredText);
-                ontology.setRefsem(refsem);
-                ontology.setCodingScheme(codingScheme);
-                ontology.setScore(score);
-                ontology.setSubject(subject);
-                ontology.setTextsem(textsem);
-                ontology.setTui(tui);
-                ontology.setUncertainty(uncertainty);
-                ontology.setTrueText(trueText);
-                ontology.setDocumentId(documentId);
-                ontology.setPartsOfSpeech(partsOfSpeech);
-
-                ontologies.add(ontology);
-            });
-        }
+        // TODO: If you want to set condition for which identity annotations to add
+        Ontology ontology = new Ontology();
+        ontology.setDocumentId(documentId);// Set document id beforehand for efficiency
+        setOntologyProperties(jCas, identifiedAnnotation, ontology);
+        ontologies.add(ontology);
         return ontologies;
     }
 
-    public static Connection getConnection(String url, String driverClassName) {
+    private static void setOntologyProperties(JCas jCas, IdentifiedAnnotation identifiedAnnotation, Ontology ontology) {
+        // Only add things w/ ontology concept
+        ontology.setIdentifiedAnnotationAddress(identifiedAnnotation.getAddress()); // The id of the identified annotation (xmi:id in the xmi file)
+        ontology.setSubject(identifiedAnnotation.getSubject());
+        ontology.setBegin(identifiedAnnotation.getBegin());
+        ontology.setEnd(identifiedAnnotation.getEnd());
+        ontology.setConditional(identifiedAnnotation.getConditional());
+        ontology.setHistoryOf(identifiedAnnotation.getHistoryOf());
+        ontology.setGeneric(identifiedAnnotation.getGeneric());
+        ontology.setPolarity(identifiedAnnotation.getPolarity());
+        ontology.setTextsem(identifiedAnnotation.getType().toString());
+        ontology.setUncertainty(identifiedAnnotation.getUncertainty());
+        // Set segment
+        String segmentId = identifiedAnnotation.getSegmentID();
+        if (segmentId != null) {
+            Collection<Segment> segments = JCasUtil.select(jCas, Segment.class);
+            for (Segment segment : segments) {
+                if (segmentId.equals(segment.getId())) {
+                    ontology.setSegment(segment.getPreferredText());
+                    break; // Meh. Don't like the break here. May be better to do an old-fashioned Iterator, but that would be ugly too
+                }
+            }
+        }
+
+        FSArray ontologyConceptArr = identifiedAnnotation.getOntologyConceptArr();
+        if (ontologyConceptArr != null) {
+
+            FeatureStructure[] ontologyFeatureStructures = ontologyConceptArr.toArray();
+
+            Arrays.stream(ontologyFeatureStructures).forEach(ontologyFeatureStructure -> {
+                if (ontologyFeatureStructure instanceof OntologyConcept) {
+                    OntologyConcept ontologyConcept = (OntologyConcept)ontologyFeatureStructure;
+                    // Get Connl
+                    ontology.setOntologyConceptAddress(ontologyConcept.getAddress());
+                    List<ConllDependencyNode> conllDependencyNodes = JCasUtil.select(jCas, ConllDependencyNode.class)
+                        .stream()
+                        .filter(node -> ontology.getBegin() <= node.getBegin() &&  node.getEnd() <= ontology.getEnd())
+                        .collect(Collectors.toList());
+
+                    //Collection<ConllDependencyNode> conllDependencyNodes = JCasUtil.select(jCas, ConllDependencyNode.class);
+                    String trueTextFromConll = conllDependencyNodes.stream().map(n -> n.getForm()).collect(Collectors.joining(" "));
+                    String partsOfSpeech = conllDependencyNodes.stream().map(n -> n.getPostag()).collect(Collectors.joining(","));
+                    String trueText = jCas.getDocumentText().substring(ontology.getBegin(), ontology.getEnd());
+                    // Get ontology concepts
+                    // Add everything into an ontology
+                    ontology.setCode(ontologyConcept.getCode());
+                    String refsem = ontologyFeatureStructure.getType().toString();
+                    ontology.setRefsem(refsem);
+                    ontology.setCodingScheme(ontologyConcept.getCodingScheme());
+                    ontology.setScore(ontologyConcept.getScore());
+                    ontology.setTrueText(trueText);
+                    ontology.setPartsOfSpeech(partsOfSpeech);
+                    ontology.setOid(ontologyConcept.getOid());
+                    ontology.setOui(ontologyConcept.getOui());
+                    ontology.setDisambiguated(ontologyConcept.getDisambiguated());
+                /*
+                ontology.setEntityType(entityType);
+                ontology.setDiscoveryTechnique(discoveryTechnique);
+                 */
+                    if (ontologyConcept instanceof UmlsConcept) {
+                        // Add umls concept properties if present
+                        UmlsConcept umlsConcept = (UmlsConcept)ontologyConcept;
+                        ontology.setCui(umlsConcept.getCui());
+                        ontology.setPreferredText(umlsConcept.getPreferredText());
+                        ontology.setTui(umlsConcept.getTui());
+                    }
+
+                }
+            });
+        }
+    }
+
+    /**
+     * Get a jdbc connection from just a url (no username/pw)
+     * */
+    public static Connection getConnection(String url) {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url);
         } catch (Exception e) {
-            LOGGER.error("Could not connect to driver named " + driverClassName + " at " + url, e);
+            LOGGER.error("Could not connect to url: " + url, e);
         }
         return connection;
     }
 
-    public static Connection getConnection(String username, String password, String url, String driverClassName) {
+    /**
+     * Get jdbc connection using url,username, and pw
+     * */
+    public static Connection getConnection(String username, String password, String url) {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
-            LOGGER.error("Could not connect to driver named " + driverClassName + " at " + url , e);
+            LOGGER.error("Could not connect to url: " + url , e);
         }
         return connection;
     }
 
+    /**
+     * Load the jdbc driver. This needs to be done before getting the connection.
+     * */
     public static void loadDriver(String driverClassName) {
         LOGGER.info("Loading jdbc driver");
         try {
@@ -252,6 +285,9 @@ public class Util {
         }
     }
 
+    /**
+     * Decode the url using UTF-8
+     * */
     public static String decodeUrl(String url) {
         String newUrl = "";
         try {
@@ -262,12 +298,15 @@ public class Util {
         return newUrl;
     }
 
+    /**
+     * Get the ontology object as a string array. headerToIndex is a mapping of the header name (ex: 'cui', etc.)
+     * to the index its value should be in the resulting array.
+     * */
     public static String[] getOntologyAsStringArray(Ontology ontology, Map<String, Integer> headerToIndex) {
         String[] row = new String[headerToIndex.size()];
-        putInRow(row, Const.ADDRESS_HEADER, String.valueOf(ontology.getAddress()), headerToIndex);
+        putInRow(row, Const.ADDRESS_HEADER, String.valueOf(ontology.getIdentifiedAnnotationAddress()), headerToIndex);
         putInRow(row, Const.CODE_HEADER, ontology.getCode(), headerToIndex);
         putInRow(row, Const.CONDITIONAL_HEADER, String.valueOf(ontology.isConditional()), headerToIndex);
-        putInRow(row, Const.CONFIDENCE_HEADER, String.valueOf(ontology.getConfidence()), headerToIndex);
         putInRow(row, Const.CUI_HEADER, ontology.getCui(), headerToIndex);
         putInRow(row, Const.GENERIC_HEADER, String.valueOf(ontology.isGeneric()), headerToIndex);
         putInRow(row, Const.POLARITY_HEADER, String.valueOf(ontology.getPolarity()), headerToIndex);
@@ -284,6 +323,14 @@ public class Util {
         putInRow(row, Const.TRUE_TEXT_HEADER, ontology.getTrueText(), headerToIndex);
         putInRow(row, Const.DOCUMENT_ID, ontology.getDocumentId(), headerToIndex);
         putInRow(row, Const.PARTS_OF_SPEECH_HEADER, ontology.getPartsOfSpeech(), headerToIndex);
+        putInRow(row, Const.ENTITY_TYPE_HEADER, ontology.getEntityType(), headerToIndex);
+        putInRow(row, Const.SEGMENT_HEADER, ontology.getSegment(), headerToIndex);
+        putInRow(row, Const.DISCOVERY_TECHNIQUE_HEADER, ontology.getDiscoveryTechnique(), headerToIndex);
+        putInRow(row, Const.HISTORY_OF_HEADER, String.valueOf(ontology.getHistoryOf()), headerToIndex);
+        putInRow(row, Const.OID_HEADER, ontology.getOid(), headerToIndex);
+        putInRow(row, Const.OUI_HEADER, ontology.getOui(), headerToIndex);
+        putInRow(row, Const.DISAMBIGUATED_HEADER, String.valueOf(ontology.isDisambiguated()), headerToIndex);
+        putInRow(row, Const.ONTOLOGY_ADDRESS_HEADER, String.valueOf(ontology.getOntologyConceptAddress()), headerToIndex);
         return row;
     }
 
@@ -314,11 +361,14 @@ public class Util {
             HeaderProperties props = new HeaderProperties();
             String header = headers[i];
             if (documentIdOverride != null && header.equals(Const.DOCUMENT_ID)) {
+                // DocumentId override provided and you are on that column, so override that property
                 props.setDataType(documentIdOverride.getDataType());
                 props.setName(documentIdOverride.getName());
             } else {
+                // Not documentId column or override not provided, so use default
                 String dataType = "";
                 switch (header) {
+                    // Flags and ints
                     case Const.ADDRESS_HEADER:
                     case Const.CONDITIONAL_HEADER: // Flag
                     case Const.GENERIC_HEADER: // Flag
@@ -326,13 +376,17 @@ public class Util {
                     case Const.END_HEADER:
                     case Const.BEGIN_HEADER:
                     case Const.UNCERTAINTY_HEADER:
+                    case Const.HISTORY_OF_HEADER:
+                    case Const.DISAMBIGUATED_HEADER: // Flag
+                    case Const.ONTOLOGY_ADDRESS_HEADER:
                         dataType = "INT";
                         break;
-                    case Const.CONFIDENCE_HEADER:
+                    // Numbers
                     case Const.SCORE_HEADER:
                         // Max 5 digits total; 2 digits stored to right of decimal point (so max of 3 will be to the left).
                         dataType = "DECIMAL(" + Const.PRECISION + ", " + Const.SCALE + ")";
                         break;
+                    // Everything else
                     default:
                         dataType = "VARCHAR(100)";
                         break;
@@ -410,16 +464,13 @@ public class Util {
             HeaderProperties p = headerProperties.get(i);
             switch (p.getName()) {
                 case Const.ADDRESS_HEADER:
-                    query.append(Util.getSqlString(ontology.getAddress()));
+                    query.append(Util.getSqlString(ontology.getIdentifiedAnnotationAddress()));
                     break;
                 case Const.CODE_HEADER:
                     query.append(Util.getSqlString(ontology.getCode()));
                     break;
                 case Const.CONDITIONAL_HEADER:
                     query.append(Util.getSqlString(ontology.isConditional()));
-                    break;
-                case Const.CONFIDENCE_HEADER:
-                    query.append(Util.getSqlString(ontology.getConfidence()));
                     break;
                 case Const.CUI_HEADER:
                     query.append(Util.getSqlString(ontology.getCui()));
@@ -468,6 +519,30 @@ public class Util {
                     break;
                 case Const.PARTS_OF_SPEECH_HEADER:
                     query.append(Util.getSqlString(ontology.getPartsOfSpeech()));
+                    break;
+                case Const.ENTITY_TYPE_HEADER:
+                    query.append(Util.getSqlString(ontology.getEntityType()));
+                    break;
+                case Const.SEGMENT_HEADER:
+                    query.append(Util.getSqlString(ontology.getSegment()));
+                    break;
+                case Const.DISCOVERY_TECHNIQUE_HEADER:
+                    query.append(Util.getSqlString(ontology.getDiscoveryTechnique()));
+                    break;
+                case Const.HISTORY_OF_HEADER:
+                    query.append(Util.getSqlString(ontology.getHistoryOf()));
+                    break;
+                case Const.OID_HEADER:
+                    query.append(Util.getSqlString(ontology.getOid()));
+                    break;
+                case Const.OUI_HEADER:
+                    query.append(Util.getSqlString(ontology.getOui()));
+                    break;
+                case Const.DISAMBIGUATED_HEADER:
+                    query.append(Util.getSqlString(ontology.getDiscoveryTechnique()));
+                    break;
+                case Const.ONTOLOGY_ADDRESS_HEADER:
+                    query.append(Util.getSqlString(ontology.getOntologyConceptAddress()));
                     break;
                 default:
                     break;
