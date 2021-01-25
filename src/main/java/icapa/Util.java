@@ -600,8 +600,21 @@ public class Util {
                 case Const.ONTOLOGY_ADDRESS_HEADER:
                     query.append(Util.getSqlString(ontology.getOntologyConceptAddress()));
                     break;
-                default:
+                default: {
+                    if (documentIdOverride != null &&
+                            p.getName() != null &&
+                            p.getName().equals(documentIdOverride.getName())) {
+                        String datatype = documentIdOverride.getDataType().toLowerCase();
+                        if (datatype.contains("int")) {
+                            query.append(Util.getSqlString(Integer.valueOf(ontology.getDocumentId())));
+                        } else if (datatype.contains("decimal") || datatype.contains("numberic")) {
+                            query.append(Util.getSqlString(Double.valueOf(ontology.getDocumentId())));
+                        } else {
+                            query.append(Util.getSqlString(ontology.getDocumentId()));
+                        }
+                    }
                     break;
+                }
             }
             if (i != headerProperties.size()-1) {
                 // Only add comma for all entries except the last one
