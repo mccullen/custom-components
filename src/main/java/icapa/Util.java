@@ -595,7 +595,7 @@ public class Util {
                     query.append(Util.getSqlString(ontology.getOui()));
                     break;
                 case Const.DISAMBIGUATED_HEADER:
-                    query.append(Util.getSqlString(ontology.getDiscoveryTechnique()));
+                    query.append(Util.getSqlString(ontology.getDisambiguated()));
                     break;
                 case Const.ONTOLOGY_ADDRESS_HEADER:
                     query.append(Util.getSqlString(ontology.getOntologyConceptAddress()));
