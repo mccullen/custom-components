@@ -390,7 +390,7 @@ public class Util {
     }
 
     private static void putInRow(String[] row, String header, String value, Map<String, Integer> headerToIndex) {
-        String newValue = value == null ? "" : value;
+        String newValue = value == null || value.equals("null") ? "" : value;
         row[headerToIndex.get(header)] = newValue;
     }
 

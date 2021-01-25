@@ -50,6 +50,7 @@ public class OntologyWriter extends AbstractOntologyWriter {
 
     @Override
     public void process(JCas jCas) throws AnalysisEngineProcessException {
+        super.process(jCas);
         _writer.process(jCas);
     }
 
