@@ -4,7 +4,7 @@ import icapa.Const;
 import icapa.Util;
 import icapa.models.HeaderProperties;
 import icapa.models.JdbcOntologyWriterParams;
-import icapa.models.JdbcParams;
+import icapa.models.JdbcSqlConnectionParams;
 import icapa.services.AnalysisEngine;
 import icapa.services.JdbcOntologyWriterService;
 import icapa.services.SqlConnection;
@@ -19,7 +19,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.IOException;
 
-public class JdbcOntologyWriter extends JCasAnnotator_ImplBase {
+public class JdbcOntologyWriter extends AbstractJdbcWriter {
     private static final Logger LOGGER = Logger.getLogger(JdbcOntologyWriter.class.getName());
 
     public static final String PARAM_TABLE = "Table";
@@ -30,29 +30,6 @@ public class JdbcOntologyWriter extends JCasAnnotator_ImplBase {
         mandatory = true
     )
     private String _table;
-
-    @ConfigurationParameter(
-        name = Const.PARAM_DRIVER_CLASS,
-        description = "Full class name of the driver. Make sure to put the driver jar in lib/"
-    )
-    private String _driverClassName;
-
-    @ConfigurationParameter(
-        name = Const.PARAM_URL
-    )
-    private String _url;
-
-    @ConfigurationParameter(
-        name = Const.PARAM_USERNAME,
-        mandatory = false
-    )
-    private String _username;
-
-    @ConfigurationParameter(
-        name = Const.PARAM_PASSWORD,
-        mandatory = false
-    )
-    private String _password;
 
     public static final String PARAM_CREATE_TABLE_SUFFIX = "CreateTableSuffix";
     @ConfigurationParameter(
@@ -79,19 +56,19 @@ public class JdbcOntologyWriter extends JCasAnnotator_ImplBase {
         params.setTable(_table);
 
         // Set sql connection
-        JdbcParams jdbcParams = new JdbcParams();
-        jdbcParams.setPassword(_password);
-        jdbcParams.setUsername(_username);
+        JdbcSqlConnectionParams jdbcSqlConnectionParams = new JdbcSqlConnectionParams();
+        jdbcSqlConnectionParams.setPassword(getParams().getPassword());
+        jdbcSqlConnectionParams.setUsername(getParams().getUsername());
         // Create the custom col/datatype pair by splitting the string on a space.
         String[] parts = _documentIdColAndDatatype.split(" ");
         HeaderProperties docHeader = new HeaderProperties();
         docHeader.setName(parts[0]);
         docHeader.setDataType(parts[1]);
-        jdbcParams.setDocumentIdColAndDatatype(docHeader);
-        jdbcParams.setUrl(Util.decodeUrl(_url));
-        jdbcParams.setDriverClassName(_driverClassName);
-        jdbcParams.setCreateTableSuffix(_createTableSuffix);
-        SqlConnection sqlConnection = JdbcSqlConnection.fromParams(jdbcParams);
+        jdbcSqlConnectionParams.setDocumentIdColAndDatatype(docHeader);
+        jdbcSqlConnectionParams.setUrl(Util.decodeUrl(getParams().getUrl()));
+        jdbcSqlConnectionParams.setDriverClassName(getParams().getDriverClassName());
+        jdbcSqlConnectionParams.setCreateTableSuffix(_createTableSuffix);
+        SqlConnection sqlConnection = JdbcSqlConnection.fromParams(jdbcSqlConnectionParams);
         params.setSqlConnection(sqlConnection);
 
         _writer = JdbcOntologyWriterService.fromParams(params);

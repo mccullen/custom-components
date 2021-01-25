@@ -1,28 +1,12 @@
 package icapa.models;
 
+import icapa.Const;
+
 public class JdbcParams {
     private String driverClassName;
+    private String url;
     private String username;
     private String password;
-    private String url;
-    private String createTableSuffix;
-    private HeaderProperties documentIdColAndDatatype;
-
-    public HeaderProperties getDocumentIdColAndDatatype() {
-        return documentIdColAndDatatype;
-    }
-
-    public void setDocumentIdColAndDatatype(HeaderProperties documentIdColAndDatatype) {
-        this.documentIdColAndDatatype = documentIdColAndDatatype;
-    }
-
-    public String getCreateTableSuffix() {
-        return createTableSuffix;
-    }
-
-    public void setCreateTableSuffix(String createTableSuffix) {
-        this.createTableSuffix = createTableSuffix;
-    }
 
     public String getDriverClassName() {
         return driverClassName;
@@ -30,6 +14,14 @@ public class JdbcParams {
 
     public void setDriverClassName(String driverClassName) {
         this.driverClassName = driverClassName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getUsername() {
@@ -46,13 +38,5 @@ public class JdbcParams {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

@@ -2,7 +2,7 @@ package icapa.cr;
 
 import icapa.Const;
 import icapa.models.JdbcReaderParams;
-import icapa.models.JdbcParams;
+import icapa.models.JdbcSqlConnectionParams;
 import icapa.services.CollectionReader;
 import icapa.services.JdbcReaderService;
 import icapa.services.JdbcSqlConnection;
@@ -83,16 +83,16 @@ public class JdbcReader extends JCasCollectionReader_ImplBase {
         params.setSqlStatement(_sqlStatement);
 
         // Set sql connection
-        JdbcParams jdbcParams = new JdbcParams();
-        jdbcParams.setDriverClassName(_driverClassName);
+        JdbcSqlConnectionParams jdbcSqlConnectionParams = new JdbcSqlConnectionParams();
+        jdbcSqlConnectionParams.setDriverClassName(_driverClassName);
         try {
-            jdbcParams.setUrl(URLDecoder.decode(_url, "UTF-8"));
+            jdbcSqlConnectionParams.setUrl(URLDecoder.decode(_url, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             LOGGER.error("Error decoding url " + _url, e);
         }
-        jdbcParams.setUsername(_username);
-        jdbcParams.setPassword(_password);
-        JdbcSqlConnection sqlConnection = JdbcSqlConnection.fromParams(jdbcParams);
+        jdbcSqlConnectionParams.setUsername(_username);
+        jdbcSqlConnectionParams.setPassword(_password);
+        JdbcSqlConnection sqlConnection = JdbcSqlConnection.fromParams(jdbcSqlConnectionParams);
         params.setSqlConnection(sqlConnection);
 
         _reader = JdbcReaderService.fromParams(params);

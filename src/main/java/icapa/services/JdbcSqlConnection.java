@@ -1,21 +1,19 @@
 package icapa.services;
 
 import icapa.Util;
-import icapa.models.HeaderProperties;
-import icapa.models.JdbcParams;
+import icapa.models.JdbcSqlConnectionParams;
 import icapa.models.Ontology;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.List;
 
 public class JdbcSqlConnection implements SqlConnection {
     private static final Logger LOGGER = Logger.getLogger(JdbcSqlConnection.class.getName());
 
     private Connection _connection;
-    private JdbcParams _params;
+    private JdbcSqlConnectionParams _params;
 
-    public static JdbcSqlConnection fromParams(JdbcParams params) {
+    public static JdbcSqlConnection fromParams(JdbcSqlConnectionParams params) {
         JdbcSqlConnection engine = new JdbcSqlConnection();
         engine._params = params;
         Util.loadDriver(engine._params.getDriverClassName());

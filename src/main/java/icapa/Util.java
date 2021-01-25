@@ -607,7 +607,7 @@ public class Util {
                         String datatype = documentIdOverride.getDataType().toLowerCase();
                         if (datatype.contains("int")) {
                             query.append(Util.getSqlString(Integer.valueOf(ontology.getDocumentId())));
-                        } else if (datatype.contains("decimal") || datatype.contains("numberic")) {
+                        } else if (datatype.contains("decimal") || datatype.contains("numeric")) {
                             query.append(Util.getSqlString(Double.valueOf(ontology.getDocumentId())));
                         } else {
                             query.append(Util.getSqlString(ontology.getDocumentId()));
