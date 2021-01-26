@@ -1,5 +1,6 @@
 package icapa.cc;
 
+import icapa.Const;
 import icapa.models.OntologyWriterParams;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -20,13 +21,20 @@ public abstract class AbstractOntologyWriter extends JCasAnnotator_ImplBase {
     )
     private char _delimiter;
 
-    // Private variables
+    @ConfigurationParameter(
+        name = Const.PARAM_KEEP_ALL,
+        defaultValue = "true",
+        mandatory = false
+    )
+    private boolean _keepAll;
+
     private OntologyWriterParams _params = new OntologyWriterParams();
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
         _params.setDelimiter(_delimiter);
+        _params.setKeepAll(_keepAll);
     }
 
     @Override

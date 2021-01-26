@@ -33,7 +33,7 @@ public class JdbcOntologyWriterService implements AnalysisEngine {
 
     @Override
     public void process(JCas jCas) {
-        List<Ontology> ontologies = Util.getOntologies(jCas);
+        List<Ontology> ontologies = Util.getOntologies(jCas, _params.isKeepAll());
         for (Ontology ontology : ontologies) {
             _params.getSqlConnection().insertOntologyIntoTable(ontology, _params.getTable());
         }

@@ -5,6 +5,15 @@ import icapa.services.SqlConnection;
 public class JdbcOntologyWriterParams {
     private String table;
     private SqlConnection sqlConnection;
+    private boolean keepAll;
+
+    public boolean isKeepAll() {
+        return keepAll;
+    }
+
+    public void setKeepAll(boolean keepAll) {
+        this.keepAll = keepAll;
+    }
 
     public SqlConnection getSqlConnection() {
         return sqlConnection;

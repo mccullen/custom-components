@@ -12,7 +12,6 @@ import icapa.services.JdbcSqlConnection;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -39,13 +38,20 @@ public class JdbcOntologyWriter extends AbstractJdbcWriter {
     private String _createTableSuffix;
 
     public static final String PARAM_DOCUMENT_ID_COL_AND_DATATYPE = "DocumentIdColAndDatatype";
-    public static final String DEFAULT_VALUE_DOCUMENT_ID_COL_AND_DATATYPE = Const.DOCUMENT_ID + " VARCHAR(100)";
+    public static final String DEFAULT_VALUE_DOCUMENT_ID_COL_AND_DATATYPE = Const.DOCUMENT_ID_HEADER + " VARCHAR(100)";
     @ConfigurationParameter(
         name = PARAM_DOCUMENT_ID_COL_AND_DATATYPE,
         mandatory = false,
         defaultValue = DEFAULT_VALUE_DOCUMENT_ID_COL_AND_DATATYPE
     )
     private String _documentIdColAndDatatype;
+
+    @ConfigurationParameter(
+        name = Const.PARAM_KEEP_ALL,
+        mandatory = false,
+        defaultValue = "true"
+    )
+    private boolean _keepAll;
 
     private AnalysisEngine _writer;
 
@@ -54,6 +60,7 @@ public class JdbcOntologyWriter extends AbstractJdbcWriter {
         super.initialize(context);
         JdbcOntologyWriterParams params = new JdbcOntologyWriterParams();
         params.setTable(_table);
+        params.setKeepAll(_keepAll);
 
         // Set sql connection
         JdbcSqlConnectionParams jdbcSqlConnectionParams = new JdbcSqlConnectionParams();

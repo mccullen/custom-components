@@ -56,7 +56,7 @@ public class Runner implements Serializable {
             piperReader.loadPipelineFile(piperfile);
             builder.run();
         } catch (Exception e) {
-            System.out.println("ERROR");
+            LOGGER.error("Error running piper file", e);
         }
     }
 

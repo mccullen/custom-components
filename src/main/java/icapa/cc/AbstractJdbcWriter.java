@@ -36,7 +36,7 @@ public class AbstractJdbcWriter extends JCasAnnotator_ImplBase {
     )
     private String _password;
 
-    private JdbcParams _params;
+    private JdbcParams _params = new JdbcParams();
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {

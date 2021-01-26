@@ -20,8 +20,10 @@ public class OntologyWriterService implements AnalysisEngine {
     private ICSVWriter _writer;
     private Map<String, Integer> _headerToIndex;
     private String[] _headers;
+    private OntologyWriterParams _params;
     public static OntologyWriterService from(OntologyWriterParams params) {
         OntologyWriterService result = new OntologyWriterService();
+        result._params = params;
         try {
             result._writer = new CSVWriterBuilder(params.getWriter()).withSeparator(params.getDelimiter()).build();
             result._headers = Util.getOntologyConceptHeaders();
@@ -39,7 +41,7 @@ public class OntologyWriterService implements AnalysisEngine {
 
     @Override
     public void process(JCas jCas) {
-        List<Ontology> ontologies = Util.getOntologies(jCas);
+        List<Ontology> ontologies = Util.getOntologies(jCas, _params.isKeepAll());
         for (Ontology ontology : ontologies) {
             writeRow(ontology);
         }
