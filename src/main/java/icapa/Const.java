@@ -37,7 +37,6 @@ public class Const {
     public static final String DISAMBIGUATED_HEADER = "disambiguated_flag";
     public static final String ONTOLOGY_ADDRESS_HEADER = "ontology_concept_address";
 
-
     public static final String PARAM_DRIVER_CLASS = "DriverClassName";
     public static final String PARAM_DOCUMENT_ID_COLUMN = "DocumentIdColumnName";
     public static final String PARAM_URL = "URL";
