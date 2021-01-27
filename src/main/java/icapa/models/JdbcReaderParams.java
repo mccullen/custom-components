@@ -1,20 +1,19 @@
 package icapa.models;
 
-import icapa.services.SqlConnection;
-import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import icapa.services.OntologyConnection;
 
 public class JdbcReaderParams {
     private String sqlStatement;
     private String documentTextColName;
     private String documentIdColName;
-    private SqlConnection sqlConnection;
+    private OntologyConnection ontologyConnection;
 
-    public SqlConnection getSqlConnection() {
-        return sqlConnection;
+    public OntologyConnection getOntologyConnection() {
+        return ontologyConnection;
     }
 
-    public void setSqlConnection(SqlConnection sqlConnection) {
-        this.sqlConnection = sqlConnection;
+    public void setOntologyConnection(OntologyConnection ontologyConnection) {
+        this.ontologyConnection = ontologyConnection;
     }
 
     public String getDocumentIdColName() {

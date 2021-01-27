@@ -29,7 +29,7 @@ public class JdbcReaderService implements CollectionReader {
     private void setStatementAndResultSet() {
         LOGGER.info("Setting sql statement and getting result set");
         try {
-            _resultSet = _params.getSqlConnection().executeQuery(_params.getSqlStatement());
+            _resultSet = _params.getOntologyConnection().executeQuery(_params.getSqlStatement());
             _statement = _resultSet.getStatement();
             // Set cursor to one before the first record so you can iterate properly
             _resultSet.beforeFirst();
@@ -74,11 +74,11 @@ public class JdbcReaderService implements CollectionReader {
     @Override
     public void destroy() {
         LOGGER.info("Destroying reader and closing sql connection");
-        if (_params.getSqlConnection() != null) {
+        if (_params.getOntologyConnection() != null) {
             try {
                 _resultSet.close();
                 _statement.close();
-                _params.getSqlConnection().close();
+                _params.getOntologyConnection().close();
             } catch (SQLException throwables) {
                 LOGGER.error("Error closing DB connection: ", throwables);
             }

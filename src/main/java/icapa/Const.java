@@ -43,6 +43,7 @@ public class Const {
     public static final String PARAM_USERNAME = "Username";
     public static final String PARAM_PASSWORD = "Password";
     public static final String PARAM_KEEP_ALL = "KeepAll";
+    public static final String PARAM_BATCH_SIZE = "BatchSize";
 
     public static final int PRECISION = 5;
     public static final int SCALE = 2;

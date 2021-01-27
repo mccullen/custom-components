@@ -1,11 +1,13 @@
 package icapa.cr;
 
 import icapa.Const;
+import icapa.Util;
 import icapa.models.JdbcReaderParams;
-import icapa.models.JdbcSqlConnectionParams;
+import icapa.models.JdbcOntologyConnectionParams;
 import icapa.services.CollectionReader;
 import icapa.services.JdbcReaderService;
-import icapa.services.JdbcSqlConnection;
+import icapa.services.JdbcOntologyConnection;
+import icapa.services.OntologyConnection;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
@@ -81,26 +83,26 @@ public class JdbcReader extends JCasCollectionReader_ImplBase {
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
         LOGGER.info("Initializing Jdbc Reader");
+
         JdbcReaderParams params = new JdbcReaderParams();
         params.setDocumentTextColName(_docTextColName);
         params.setDocumentIdColName(_documentIdCol);
         params.setSqlStatement(_sqlStatement);
-
-        // Set sql connection
-        JdbcSqlConnectionParams jdbcSqlConnectionParams = new JdbcSqlConnectionParams();
-        jdbcSqlConnectionParams.setDriverClassName(_driverClassName);
-        try {
-            jdbcSqlConnectionParams.setUrl(URLDecoder.decode(_url, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.error("Error decoding url " + _url, e);
-        }
-        jdbcSqlConnectionParams.setUsername(_username);
-        jdbcSqlConnectionParams.setPassword(_password);
-        JdbcSqlConnection sqlConnection = JdbcSqlConnection.fromParams(jdbcSqlConnectionParams);
-        params.setSqlConnection(sqlConnection);
+        params.setOntologyConnection(getOntologyConnection());
 
         _reader = JdbcReaderService.fromParams(params);
         _reader.initialize();
+    }
+
+    private OntologyConnection getOntologyConnection() {
+        // Set sql connection
+        JdbcOntologyConnectionParams jdbcSqlConnectionParams = new JdbcOntologyConnectionParams();
+        jdbcSqlConnectionParams.setDriverClassName(_driverClassName);
+        jdbcSqlConnectionParams.setUrl(Util.decodeUrl(_url));
+        jdbcSqlConnectionParams.setUsername(_username);
+        jdbcSqlConnectionParams.setPassword(_password);
+        JdbcOntologyConnection sqlConnection = JdbcOntologyConnection.fromParams(jdbcSqlConnectionParams);
+        return sqlConnection;
     }
 
     @Override

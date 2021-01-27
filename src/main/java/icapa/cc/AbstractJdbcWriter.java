@@ -1,7 +1,8 @@
 package icapa.cc;
 
 import icapa.Const;
-import icapa.models.JdbcParams;
+import icapa.Util;
+import icapa.models.JdbcWriterParams;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -10,7 +11,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-public class AbstractJdbcWriter extends JCasAnnotator_ImplBase {
+public abstract class AbstractJdbcWriter extends JCasAnnotator_ImplBase {
     private static final Logger LOGGER = Logger.getLogger(AbstractJdbcWriter.class.getName());
 
     @ConfigurationParameter(
@@ -36,7 +37,14 @@ public class AbstractJdbcWriter extends JCasAnnotator_ImplBase {
     )
     private String _password;
 
-    private JdbcParams _params = new JdbcParams();
+    @ConfigurationParameter(
+        name = Const.PARAM_BATCH_SIZE,
+        mandatory = false,
+        defaultValue = "0"
+    )
+    private int _batchSize;
+
+    private JdbcWriterParams _params = new JdbcWriterParams();
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
@@ -44,14 +52,15 @@ public class AbstractJdbcWriter extends JCasAnnotator_ImplBase {
         _params.setPassword(_password);
         _params.setUsername(_username);
         _params.setDriverClassName(_driverClassName);
-        _params.setUrl(_url);
+        _params.setUrl(Util.decodeUrl(_url));
+        _params.setBatchSize(_batchSize);
     }
 
     @Override
     public void process(JCas jCas) throws AnalysisEngineProcessException {
     }
 
-    public JdbcParams getParams() {
+    public JdbcWriterParams getParams() {
         return _params;
     }
 }

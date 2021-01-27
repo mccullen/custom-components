@@ -1,14 +1,13 @@
 package icapa.cc;
 
 import icapa.Const;
-import icapa.Util;
 import icapa.models.HeaderProperties;
+import icapa.models.JdbcOntologyConnectionParams;
 import icapa.models.JdbcOntologyWriterParams;
-import icapa.models.JdbcSqlConnectionParams;
 import icapa.services.AnalysisEngine;
 import icapa.services.JdbcOntologyWriterService;
-import icapa.services.SqlConnection;
-import icapa.services.JdbcSqlConnection;
+import icapa.services.JdbcOntologyConnection;
+import icapa.services.OntologyConnection;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -54,32 +53,43 @@ public class JdbcOntologyWriter extends AbstractJdbcWriter {
     private boolean _keepAll;
 
     private AnalysisEngine _writer;
+    private JdbcOntologyWriterParams _params = new JdbcOntologyWriterParams();
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        JdbcOntologyWriterParams params = new JdbcOntologyWriterParams();
-        params.setTable(_table);
-        params.setKeepAll(_keepAll);
+        _params.setJdbcWriterParams(getParams()); // inherited params
+        _params.setTable(_table);
+        _params.setKeepAll(_keepAll);
+        _params.setCreateTableSuffix(_createTableSuffix);
+        _params.setDocumentIdColAndDatatype(getDocHeader());
+        _params.setOntologyConnection(getOntologyConnection());
 
+        _writer = JdbcOntologyWriterService.fromParams(_params);
+        _writer.initialize(context);
+    }
+
+    private OntologyConnection getOntologyConnection() {
         // Set sql connection
-        JdbcSqlConnectionParams jdbcSqlConnectionParams = new JdbcSqlConnectionParams();
-        jdbcSqlConnectionParams.setPassword(getParams().getPassword());
-        jdbcSqlConnectionParams.setUsername(getParams().getUsername());
+        JdbcOntologyConnectionParams ontologyConnectionParams = new JdbcOntologyConnectionParams();
+        ontologyConnectionParams.setPassword(getParams().getPassword());
+        ontologyConnectionParams.setUsername(getParams().getUsername());
+        ontologyConnectionParams.setDocumentIdColAndDatatype(_params.getDocumentIdColAndDatatype());
+        ontologyConnectionParams.setUrl(_params.getJdbcWriterParams().getUrl());
+        ontologyConnectionParams.setDriverClassName(getParams().getDriverClassName());
+        ontologyConnectionParams.setCreateTableSuffix(_params.getCreateTableSuffix());
+        ontologyConnectionParams.setBatchSize(_params.getJdbcWriterParams().getBatchSize());
+        OntologyConnection sqlConnection = JdbcOntologyConnection.fromParams(ontologyConnectionParams);
+        return sqlConnection;
+    }
+
+    private HeaderProperties getDocHeader() {
         // Create the custom col/datatype pair by splitting the string on a space.
         String[] parts = _documentIdColAndDatatype.split(" ");
         HeaderProperties docHeader = new HeaderProperties();
         docHeader.setName(parts[0]);
         docHeader.setDataType(parts[1]);
-        jdbcSqlConnectionParams.setDocumentIdColAndDatatype(docHeader);
-        jdbcSqlConnectionParams.setUrl(Util.decodeUrl(getParams().getUrl()));
-        jdbcSqlConnectionParams.setDriverClassName(getParams().getDriverClassName());
-        jdbcSqlConnectionParams.setCreateTableSuffix(_createTableSuffix);
-        SqlConnection sqlConnection = JdbcSqlConnection.fromParams(jdbcSqlConnectionParams);
-        params.setSqlConnection(sqlConnection);
-
-        _writer = JdbcOntologyWriterService.fromParams(params);
-        _writer.initialize(context);
+        return docHeader;
     }
 
     @Override

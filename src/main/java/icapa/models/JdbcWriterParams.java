@@ -2,11 +2,23 @@ package icapa.models;
 
 import icapa.Const;
 
-public class JdbcParams {
+/**
+ * Holds the parameters from AbstractJdbcWriter
+ * */
+public class JdbcWriterParams {
     private String driverClassName;
     private String url;
     private String username;
     private String password;
+    private int batchSize;
+
+    public int getBatchSize() {
+        return batchSize;
+    }
+
+    public void setBatchSize(int batchSize) {
+        this.batchSize = batchSize;
+    }
 
     public String getDriverClassName() {
         return driverClassName;
