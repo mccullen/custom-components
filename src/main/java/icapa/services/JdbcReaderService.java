@@ -34,7 +34,7 @@ public class JdbcReaderService implements CollectionReader {
             // Set cursor to one before the first record so you can iterate properly
             _resultSet.beforeFirst();
         } catch (SQLException throwables) {
-            LOGGER.error(throwables);
+            LOGGER.error("Error exeucting sql statement " + _params.getSqlStatement(), throwables);
         }
     }
 
@@ -66,7 +66,7 @@ public class JdbcReaderService implements CollectionReader {
         try {
             result = _resultSet.next();
         } catch (SQLException throwables) {
-            LOGGER.error(throwables);
+            LOGGER.error("Error checking for next document", throwables);
         }
         return result;
     }

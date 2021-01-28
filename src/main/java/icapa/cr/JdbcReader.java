@@ -47,32 +47,33 @@ public class JdbcReader extends JCasCollectionReader_ImplBase {
 
     @ConfigurationParameter(
         name = Const.PARAM_DRIVER_CLASS,
-        description = "The full class name of the jdbc driver. Make sure that the driver is on the java CLASSPATH (I usually put it in CTAKES_HOME/lib)"
+        description = Const.PARAM_DRIVER_CLASS_DESCRIPTION
     )
     private String _driverClassName;
 
+    private static final String PARAM_DOCUMENT_ID_COLUMN = "DocumentIdColumnName";
     @ConfigurationParameter(
-        name = Const.PARAM_DOCUMENT_ID_COLUMN,
+        name = PARAM_DOCUMENT_ID_COLUMN,
         description = "The name of the column used to identify the document. This should be unique for each document."
     )
     private String _documentIdCol;
 
     @ConfigurationParameter(
         name = Const.PARAM_URL,
-        description = "The UTF-8 encoded url to use to hook up the jdbc driver specified by DriverClassName. Using an encoded url is useful if, for example, your url needs to contain equal to (=) signs. Since the equal to character is not allowed in configuration parameter values (it is a key character reserved for specifying parameter=value pairs), you can use %3D instead."
+        description = Const.PARAM_URL_DESCRIPTION
     )
     private String _url;
 
     @ConfigurationParameter(
         name = Const.PARAM_USERNAME,
-        description = "The username to use to log into the database. If not provided, the reader will attempt to connect using only the URL.",
+        description = Const.PARAM_USERNAME_DESCRIPTION,
         mandatory = false
     )
     private String _username;
 
     @ConfigurationParameter(
         name = Const.PARAM_PASSWORD,
-        description = "The password to use to log into the database. If not provided, the reader will attempt to connect using only the URL.",
+        description = Const.PARAM_PASSWORD_DESCRIPTION,
         mandatory = false
     )
     private String _password;
@@ -87,7 +88,7 @@ public class JdbcReader extends JCasCollectionReader_ImplBase {
         JdbcReaderParams params = new JdbcReaderParams();
         params.setDocumentTextColName(_docTextColName);
         params.setDocumentIdColName(_documentIdCol);
-        params.setSqlStatement(_sqlStatement);
+        params.setSqlStatement(Util.decodeUrl(_sqlStatement));
         params.setOntologyConnection(getOntologyConnection());
 
         _reader = JdbcReaderService.fromParams(params);

@@ -23,6 +23,7 @@ public abstract class AbstractOntologyWriter extends JCasAnnotator_ImplBase {
 
     @ConfigurationParameter(
         name = Const.PARAM_KEEP_ALL,
+        description = Const.PARAM_KEEP_ALL_DESCRIPTION,
         defaultValue = "true",
         mandatory = false
     )

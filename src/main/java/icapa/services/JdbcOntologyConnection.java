@@ -15,7 +15,7 @@ public class JdbcOntologyConnection implements OntologyConnection {
     private Connection _connection;
     private JdbcOntologyConnectionParams _params;
     private boolean _supportsBatchUpdates = false;
-    private boolean _useBatchUpdates = false;
+    private int _nBatches = 0;
     private Statement _batchStatement;
 
     public static JdbcOntologyConnection fromParams(JdbcOntologyConnectionParams params) {
@@ -67,6 +67,9 @@ public class JdbcOntologyConnection implements OntologyConnection {
         try {
             Statement statement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             resultSet = statement.executeQuery(query);
+            commit();
+            // DO NOT close the statement here. If you do, the result set will not be able to iterate
+            // The caller is responsible for closing the resultSet and statement.
         } catch (SQLException throwables) {
             LOGGER.error("Error executing query", throwables);
         }
@@ -80,7 +83,8 @@ public class JdbcOntologyConnection implements OntologyConnection {
         try {
             Statement statement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             result = statement.executeUpdate(query);
-            statement.close();
+            commit();
+            statement.close(); // Close statement since you are not returning any resultSet
         } catch (SQLException throwables) {
             LOGGER.error("Error executing update", throwables);
         }
@@ -89,13 +93,14 @@ public class JdbcOntologyConnection implements OntologyConnection {
 
     @Override
     public boolean tableExists(String table) {
-        // TODO: You should probably do this using dbc.tables, but this works for now
+        // TODO: Is there a better way to do this?
         boolean result = false;
         try {
             Statement statement = _connection.createStatement();
             statement.execute("SELECT 1 FROM " + table);
-            result = true;
+            commit();
             statement.close();
+            result = true;
         } catch (SQLException throwables) {
             LOGGER.info("Table " + table + " does not exist. Attempting to create");
         }
@@ -103,22 +108,8 @@ public class JdbcOntologyConnection implements OntologyConnection {
     }
 
     @Override
-    public void close() {
-        try {
-            if (_batchStatement != null) {
-                _batchStatement.executeBatch();
-                _batchStatement.close();
-            }
-            _connection.close();
-        } catch (SQLException throwables) {
-            LOGGER.error("Error closing connection to teradata", throwables);
-        }
-    }
-
-    @Override
     public void createAnnotationTable(String table) {
         String query = Util.getCreateTableQuery(table, _params.getCreateTableSuffix(), _params.getDocumentIdColAndDatatype());
-        LOGGER.info("Executing query: " + query);
         executeUpdate(query);
     }
 
@@ -135,10 +126,13 @@ public class JdbcOntologyConnection implements OntologyConnection {
 
     @Override
     public int[] executeBatch() {
+        LOGGER.info("Attempting to execute batch");
         int[] updateCounts = new int[0];
-        if (useBatchUpdates()) {
+        if (useBatchUpdates() && _nBatches > 0) {
             try {
                 updateCounts = _batchStatement.executeBatch();
+                commit();
+                _nBatches = 0;
             } catch (SQLException throwables) {
                 LOGGER.error("Failed to execute batch statement", throwables);
             }
@@ -150,10 +144,35 @@ public class JdbcOntologyConnection implements OntologyConnection {
 
     @Override
     public void addBatch(String query) {
+        LOGGER.info("Adding query to batch: " + query);
         try {
             _batchStatement.addBatch(query);
+            ++_nBatches;
         } catch (SQLException throwables) {
             LOGGER.error("Error adding query to batch: " + query, throwables);
+        }
+    }
+
+    private void commit() {
+        try {
+            if (!_connection.getAutoCommit()) {
+                _connection.commit();
+            }
+        } catch (SQLException throwables) {
+            LOGGER.error("Error committing: ", throwables);
+        }
+    }
+
+    @Override
+    public void close() {
+        try {
+            if (_batchStatement != null) {
+                executeBatch();
+                _batchStatement.close();
+            }
+            _connection.close();
+        } catch (SQLException throwables) {
+            LOGGER.error("Error closing connection to teradata", throwables);
         }
     }
 }

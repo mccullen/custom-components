@@ -16,29 +16,34 @@ public abstract class AbstractJdbcWriter extends JCasAnnotator_ImplBase {
 
     @ConfigurationParameter(
         name = Const.PARAM_DRIVER_CLASS,
-        description = "Full class name of the driver. Make sure to put the driver jar in lib/"
+        description = Const.PARAM_DRIVER_CLASS_DESCRIPTION
     )
     private String _driverClassName;
 
     @ConfigurationParameter(
-        name = Const.PARAM_URL
+        name = Const.PARAM_URL,
+        description = Const.PARAM_URL_DESCRIPTION
     )
     private String _url;
 
     @ConfigurationParameter(
         name = Const.PARAM_USERNAME,
+        description = Const.PARAM_USERNAME_DESCRIPTION,
         mandatory = false
     )
     private String _username;
 
     @ConfigurationParameter(
         name = Const.PARAM_PASSWORD,
+        description = Const.PARAM_PASSWORD_DESCRIPTION,
         mandatory = false
     )
     private String _password;
 
+    private static final String PARAM_BATCH_SIZE = "BatchSize";
     @ConfigurationParameter(
-        name = Const.PARAM_BATCH_SIZE,
+        name = PARAM_BATCH_SIZE,
+        description = "The size of the batch for inserting into the Table. If this is set to 0 or 1, then batches will not be used. Each annotation will be inserted into the Table via an INSERT statement. If you do not use batches, then EACH of these INSERT statements will be sent across the network to the database independently, which is inefficient. But if you set BatchSize to 100, then 100 INSERT statements will be batched together and sent across the network at once. However, the risk with setting this too high is that the network payload (with 100 INSERT statements, for example) is greater. Also, there is a greater risk of something going wrong (an error being thrown, losing connection, etc.) and ruining the whole batch.",
         mandatory = false,
         defaultValue = "0"
     )

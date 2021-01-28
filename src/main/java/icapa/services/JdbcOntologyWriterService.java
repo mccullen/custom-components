@@ -40,6 +40,7 @@ public class JdbcOntologyWriterService implements AnalysisEngine {
                 // Supports batch updates
                 if (_batchIndex >= _params.getJdbcWriterParams().getBatchSize()) {
                     conn.executeBatch();
+                    _batchIndex = 0;
                 }
                 ++_batchIndex;
                 String query = conn.getOntologyInsertQueryForTable(ontology, _params.getTable());
