@@ -56,10 +56,6 @@ public class JdbcOntologyConnection implements OntologyConnection {
         }
     }
 
-    private boolean useBatchUpdates() {
-        return _supportsBatchUpdates && _params.getBatchSize() > 1;
-    }
-
     @Override
     public ResultSet executeQuery(String query) {
         LOGGER.info("Attempting to execute query: " + query);
@@ -128,7 +124,7 @@ public class JdbcOntologyConnection implements OntologyConnection {
     public int[] executeBatch() {
         LOGGER.info("Attempting to execute batch");
         int[] updateCounts = new int[0];
-        if (useBatchUpdates() && _nBatches > 0) {
+        if (useBatchUpdates()) {
             try {
                 updateCounts = _batchStatement.executeBatch();
                 commit();
@@ -137,9 +133,19 @@ public class JdbcOntologyConnection implements OntologyConnection {
                 LOGGER.error("Failed to execute batch statement", throwables);
             }
         } else {
-            LOGGER.error("Driver does not support batch updates");
+            if (!_supportsBatchUpdates) {
+                LOGGER.error("Driver does not support batch updates");
+            }
+            if (_params.getBatchSize() > 1) {
+                LOGGER.error("Can't execute batch because batch size is too small. It must be > 1 but is set to "
+                    + _params.getBatchSize());
+            }
         }
         return updateCounts;
+    }
+
+    private boolean useBatchUpdates() {
+        return _supportsBatchUpdates && _params.getBatchSize() > 1;
     }
 
     @Override

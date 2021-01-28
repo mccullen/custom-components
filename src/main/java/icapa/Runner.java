@@ -27,6 +27,7 @@ import java.util.stream.IntStream;
 public class Runner implements Serializable {
     static private final Logger LOGGER = Logger.getLogger(Runner.class.getName());
     public static final String CONFIG_FILENAME = "config.properties";
+    public static final String MAIN_PIPER = "C:/root/vdt/icapa/nlp/custom-components/src/main/resources/sql-server.piper";
     public static int n = 0;
     private icapa.models.ConfigurationSettings _config = new icapa.models.ConfigurationSettings();
 
@@ -51,9 +52,7 @@ public class Runner implements Serializable {
             PiperFileReader piperReader = new PiperFileReader();
             setCliOptions(piperReader);
             PipelineBuilder builder = piperReader.getBuilder();
-            //String piperfile = "C:/root/vdt/icapa/nlp/custom-components/src/main/resources/teradata.piper";
-            String piperfile = "C:/root/vdt/icapa/nlp/custom-components/src/main/resources/default-pipeline.piper";
-            piperReader.loadPipelineFile(piperfile);
+            piperReader.loadPipelineFile(Runner.MAIN_PIPER);
             builder.run();
         } catch (Exception e) {
             LOGGER.error("Error running piper file", e);

@@ -36,7 +36,7 @@ public class JdbcOntologyWriterService implements AnalysisEngine {
         List<Ontology> ontologies = Util.getOntologies(jCas, _params.isKeepAll());
         OntologyConnection conn = _params.getOntologyConnection();
         for (Ontology ontology : ontologies) {
-            if (conn.supportsBatchUpdates()) {
+            if (conn.supportsBatchUpdates() && _params.getJdbcWriterParams().getBatchSize() > 1) {
                 // Supports batch updates
                 if (_batchIndex >= _params.getJdbcWriterParams().getBatchSize()) {
                     conn.executeBatch();
