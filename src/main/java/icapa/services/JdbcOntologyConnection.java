@@ -36,9 +36,9 @@ public class JdbcOntologyConnection implements OntologyConnection {
             _connection = Util.getConnection(_params.getUrl());
         }
         setSupportsBatchUpdates();
-        LOGGER.info("Driver supports batch updates: " + _supportsBatchUpdates);
-        if (useBatchUpdates()) {
-            LOGGER.info("Using batch updates with a batch size of " + _params.getBatchSize());
+        if (_supportsBatchUpdates) {
+            // Batch updates supported, so set autocommit to false so you have to explicitly commit
+            // batches of queries. Also, create the batch statement that you will add batch queries to.
             try {
                 _connection.setAutoCommit(false);
                 _batchStatement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -54,11 +54,12 @@ public class JdbcOntologyConnection implements OntologyConnection {
         } catch (SQLException throwables) {
             LOGGER.error(throwables);
         }
+        LOGGER.info("Driver supports batch updates: " + _supportsBatchUpdates);
     }
 
     @Override
     public ResultSet executeQuery(String query) {
-        LOGGER.info("Attempting to execute query: " + query);
+        LOGGER.info("Executing query: " + query);
         ResultSet resultSet = null;
         try {
             Statement statement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -74,7 +75,7 @@ public class JdbcOntologyConnection implements OntologyConnection {
 
     @Override
     public int executeUpdate(String query) {
-        LOGGER.info("Attempting to execute query: " + query);
+        LOGGER.info("Executing update: " + query);
         int result = 0;
         try {
             Statement statement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -122,9 +123,9 @@ public class JdbcOntologyConnection implements OntologyConnection {
 
     @Override
     public int[] executeBatch() {
-        LOGGER.info("Attempting to execute batch");
+        LOGGER.info("Executing batch");
         int[] updateCounts = new int[0];
-        if (useBatchUpdates()) {
+        if (_supportsBatchUpdates) {
             try {
                 updateCounts = _batchStatement.executeBatch();
                 commit();
@@ -133,19 +134,9 @@ public class JdbcOntologyConnection implements OntologyConnection {
                 LOGGER.error("Failed to execute batch statement", throwables);
             }
         } else {
-            if (!_supportsBatchUpdates) {
-                LOGGER.error("Driver does not support batch updates");
-            }
-            if (_params.getBatchSize() > 1) {
-                LOGGER.error("Can't execute batch because batch size is too small. It must be > 1 but is set to "
-                    + _params.getBatchSize());
-            }
+            LOGGER.error("Driver does not support batch updates");
         }
         return updateCounts;
-    }
-
-    private boolean useBatchUpdates() {
-        return _supportsBatchUpdates && _params.getBatchSize() > 1;
     }
 
     @Override

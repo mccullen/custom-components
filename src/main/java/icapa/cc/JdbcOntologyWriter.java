@@ -81,7 +81,6 @@ public class JdbcOntologyWriter extends AbstractJdbcWriter {
         ontologyConnectionParams.setUrl(_params.getJdbcWriterParams().getUrl());
         ontologyConnectionParams.setDriverClassName(getParams().getDriverClassName());
         ontologyConnectionParams.setCreateTableSuffix(_params.getCreateTableSuffix());
-        ontologyConnectionParams.setBatchSize(_params.getJdbcWriterParams().getBatchSize());
         OntologyConnection sqlConnection = JdbcOntologyConnection.fromParams(ontologyConnectionParams);
         return sqlConnection;
     }

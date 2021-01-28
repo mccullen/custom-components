@@ -4,21 +4,14 @@ package icapa.models;
  *
  * */
 public class JdbcOntologyConnectionParams {
+    // Connection parameters
     private String driverClassName;
     private String username;
     private String password;
     private String url;
+    // variables to create annotation table
     private String createTableSuffix;
     private HeaderProperties documentIdColAndDatatype;
-    private int batchSize;
-
-    public int getBatchSize() {
-        return batchSize;
-    }
-
-    public void setBatchSize(int batchSize) {
-        this.batchSize = batchSize;
-    }
 
     public HeaderProperties getDocumentIdColAndDatatype() {
         return documentIdColAndDatatype;

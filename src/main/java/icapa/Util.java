@@ -467,9 +467,29 @@ public class Util {
                         // Max 5 digits total; 2 digits stored to right of decimal point (so max of 3 will be to the left).
                         dataType = "DECIMAL(" + Const.PRECISION + ", " + Const.SCALE + ")";
                         break;
-                    // Everything else
-                    default:
+                    // Strings variables of various lengths
+                    case Const.CUI_HEADER:
+                    case Const.TUI_HEADER:
+                    case Const.CODE_HEADER:
+                    case Const.ENTITY_TYPE_HEADER:
+                    case Const.DISCOVERY_TECHNIQUE_HEADER:
+                        dataType = "VARCHAR(50)";
+                        break;
+                    case Const.REFSEM_HEADER:
+                    case Const.TEXTSEM_HEADER:
+                    case Const.SUBJECT_HEADER:
+                    case Const.SCHEME_HEADER:
                         dataType = "VARCHAR(100)";
+                        break;
+                    // Preferred text can actually be pretty long sometimes, so give it more size than the default case
+                    case Const.PREFERRED_TEXT_HEADER:
+                    case Const.PARTS_OF_SPEECH_HEADER:
+                    case Const.TRUE_TEXT_HEADER: // Just in case...
+                        dataType = "VARCHAR(2000)";
+                        break;
+                    // Everything else (oid/oui)
+                    default:
+                        dataType = "VARCHAR(300)";
                         break;
                 }
                 props.setName(header);
