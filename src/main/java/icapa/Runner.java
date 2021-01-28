@@ -36,7 +36,7 @@ public class Runner implements Serializable {
         long durationInMiliseconds = Util.getRuntimeInMiliseconds(() -> {
             run();
         });
-        System.out.println(durationInMiliseconds);
+        LOGGER.info("Execution time in miliseconds: " + durationInMiliseconds);
     }
 
     public void sparkStart() {
@@ -44,7 +44,7 @@ public class Runner implements Serializable {
         long durationInMiliseconds = Util.getRuntimeInMiliseconds(() -> {
             runSpark();
         });
-        System.out.println(durationInMiliseconds);
+        LOGGER.info("Execution time in miliseconds: " + durationInMiliseconds);
     }
 
     private void run() {

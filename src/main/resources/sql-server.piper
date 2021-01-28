@@ -1,4 +1,17 @@
 // Custom reader
-reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv DocumentIdColumnName=note_id NoteColumnName=note DocumentIdColumnName=note_id
+reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top34.csv DocumentIdColumnName=note_id NoteColumnName=note DocumentIdColumnName=note_id
 load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
-//add icapa.cc.JdbcOntologyWriter Table="playground.dbo.annotations" KeepAll=true DriverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" URL="jdbc:sqlserver://localhost;integratedSecurity%3Dtrue;"
+add icapa.cc.JdbcOntologyWriter BatchSize=100 Table="playground.dbo.annotations" KeepAll=true DriverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" URL="jdbc:sqlserver://localhost;integratedSecurity%3Dtrue;"
+
+// - Download sql server driver: https://docs.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server?view=sql-server-ver15
+// - Enable TCP/IP connections to DB: https://stackoverflow.com/questions/18841744/jdbc-connection-failed-error-tcp-ip-connection-to-host-failed
+//   - Where is SQL Server Configuration Manager?: https://docs.microsoft.com/en-us/sql/relational-databases/sql-server-configuration-manager?view=sql-server-ver15
+// - If you want to connect using windows authentication
+//   - Copy sqljdbc_8.4\enu\auth\x64 to JAVA_HOME/bin
+// - If you want to connect using sql authentication, create a user:
+//   - https://kb.supremainc.com/knowledge/doku.php?id=en:1xfaq_how_to_create_a_sql_server_authentication_login_id
+// - Connection URL examples: https://docs.microsoft.com/en-us/sql/connect/jdbc/building-the-connection-url?view=sql-server-ver15
+
+
+// Execution time in miliseconds (batchsize of 1): 198619
+// Execution time in miliseconds (batchsize of 100):
