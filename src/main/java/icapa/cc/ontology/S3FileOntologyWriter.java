@@ -1,19 +1,19 @@
-package icapa.cc;
+package icapa.cc.ontology;
 
+import icapa.cc.ontology.AbstractFileOntologyWriter;
 import icapa.models.S3OntologyWriterParams;
 import icapa.services.AnalysisEngine;
 import icapa.services.OntologyWriterService;
 import icapa.services.S3OntologyWriterService;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.*;
 
-public class S3OntologyWriter extends AbstractOntologyWriter {
+public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
     static public final String PARAM_BUCKET = "Bucket";
 
     // Configuration parameters
@@ -37,7 +37,7 @@ public class S3OntologyWriter extends AbstractOntologyWriter {
     // Private variables
     private AnalysisEngine _writer;
 
-    public S3OntologyWriter() {
+    public S3FileOntologyWriter() {
     }
 
     @Override

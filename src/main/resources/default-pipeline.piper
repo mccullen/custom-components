@@ -7,8 +7,8 @@ reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in
 load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
 
 // Specify SOA as the delimiter
-//add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/ontology-concepts.alpha Delimiter=\u2202
-add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/ontology-concepts.csv KeepAll=false
+//add icapa.cc.ontology.LocalFileOntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/ontology-concepts.alpha Delimiter=\u2202
+add icapa.cc.ontology.LocalFileOntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/ontology-concepts.csv KeepAll=false
 //add org.apache.ctakes.core.cc.FileTreeXmiWriter OutputDirectory=C:/root/tmp/mimiciii/ctakes-out/
 
 // RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\custom-components\src\main\resources\default-pipeline.piper --user jmccullen  --pass jrmWW133$

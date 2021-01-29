@@ -11,6 +11,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
+// TODO
 public abstract class AbstractJdbcWriter extends BaseWriter {
     private static final Logger LOGGER = Logger.getLogger(AbstractJdbcWriter.class.getName());
 

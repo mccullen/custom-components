@@ -8,6 +8,7 @@ import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 
+// TODO
 public class JdbcWriter extends AbstractJdbcWriter {
     private static final Logger LOGGER = Logger.getLogger(JdbcWriter.class.getName());
 

@@ -1,6 +1,7 @@
-package icapa.cc;
+package icapa.cc.ontology;
 
 import icapa.Const;
+import icapa.cc.BaseWriter;
 import icapa.models.OntologyWriterParams;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -9,7 +10,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-public abstract class AbstractOntologyWriter extends BaseWriter {
+public abstract class AbstractFileOntologyWriter extends BaseWriter {
     static public final String PARAM_DELIMITER = "Delimiter";
 
     // Configuration parameters

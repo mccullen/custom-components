@@ -1,10 +1,10 @@
-package icapa.cc;
+package icapa.cc.ontology;
 
+import icapa.cc.ontology.AbstractFileOntologyWriter;
 import icapa.services.AnalysisEngine;
 import icapa.services.OntologyWriterService;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class OntologyWriter extends AbstractOntologyWriter {
+public class LocalFileOntologyWriter extends AbstractFileOntologyWriter {
     static public final String PARAM_OUTPUT_FILE = "OutputFile";
     @ConfigurationParameter(
         name = PARAM_OUTPUT_FILE,
@@ -25,7 +25,7 @@ public class OntologyWriter extends AbstractOntologyWriter {
 
     private AnalysisEngine _writer;
 
-    public OntologyWriter() {
+    public LocalFileOntologyWriter() {
     }
 
     @Override

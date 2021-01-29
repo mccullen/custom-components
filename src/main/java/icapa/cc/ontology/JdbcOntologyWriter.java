@@ -1,8 +1,8 @@
-package icapa.cc;
+package icapa.cc.ontology;
 
 import icapa.Const;
+import icapa.cc.AbstractJdbcWriter;
 import icapa.models.HeaderProperties;
-import icapa.models.JdbcOntologyConnectionParams;
 import icapa.models.JdbcOntologyConsumerParams;
 import icapa.models.JdbcOntologyWriterParams;
 import icapa.services.*;
