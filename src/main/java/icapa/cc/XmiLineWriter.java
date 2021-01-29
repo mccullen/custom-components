@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
 
 import java.io.*;
 
-public class XmiLineWriter extends JCasAnnotator_ImplBase {
+public class XmiLineWriter extends BaseWriter {
     static private final Logger LOGGER = Logger.getLogger(XmiLineWriter.class.getName());
 
     static public final String PARAM_OUTPUT_FILE = "OutputFile";
@@ -33,7 +33,7 @@ public class XmiLineWriter extends JCasAnnotator_ImplBase {
         super.initialize(context);
         try {
             final File file = new File(_outputFile);
-            //FileWriter fileWriter = new FileWriter(file, true);
+            //FileWriter fileWriter = new FileWriter(file, true);// To append
             FileWriter fileWriter = new FileWriter(file);
             writer = new CSVWriter(fileWriter);
         } catch (IOException e) {

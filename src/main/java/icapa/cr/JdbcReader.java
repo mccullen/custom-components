@@ -20,8 +20,9 @@ import org.apache.uima.util.Progress;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.sql.Time;
 
-public class JdbcReader extends JCasCollectionReader_ImplBase {
+public class JdbcReader extends  JCasCollectionReader_ImplBase {
     private static Logger LOGGER = Logger.getLogger(JdbcReader.class.getName());
 
     /**
@@ -113,7 +114,7 @@ public class JdbcReader extends JCasCollectionReader_ImplBase {
 
     @Override
     public boolean hasNext() throws IOException, CollectionException {
-        return _reader.hasNext();
+        return Util.hasNext(_reader);
     }
 
     @Override

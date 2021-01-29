@@ -11,7 +11,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-public abstract class AbstractJdbcWriter extends JCasAnnotator_ImplBase {
+public abstract class AbstractJdbcWriter extends BaseWriter {
     private static final Logger LOGGER = Logger.getLogger(AbstractJdbcWriter.class.getName());
 
     @ConfigurationParameter(

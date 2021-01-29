@@ -7,6 +7,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import icapa.models.HeaderProperties;
 import icapa.models.Ontology;
+import icapa.services.AnalysisEngine;
+import icapa.services.CollectionReader;
 import org.apache.ctakes.core.cc.XMISerializer;
 import org.apache.ctakes.typesystem.type.constants.CONST;
 import org.apache.ctakes.typesystem.type.refsem.OntologyConcept;
@@ -20,6 +22,7 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.cas.impl.XmiCasSerializer;
+import org.apache.uima.collection.CollectionException;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
@@ -697,5 +700,19 @@ public class Util {
 
     public static boolean nullOrEmpty(String s) {
         return s == null || s.equals("");
+    }
+
+    /**
+     * Collection reader's destroy() doesn't actually get called for some reason. So, if the cr doesn't have any
+     * more docs to process, then we will destroy it ourselves.
+     * */
+    public static boolean hasNext(CollectionReader cr) {
+        boolean next = cr.hasNext();
+        Logger log = Logger.getLogger(cr.getClass());
+        log.info("Has next? " + next);
+        if (!next) {
+            cr.destroy();
+        }
+        return next;
     }
 }
