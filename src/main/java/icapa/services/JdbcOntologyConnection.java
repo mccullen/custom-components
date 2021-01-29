@@ -117,9 +117,6 @@ public class JdbcOntologyConnection implements OntologyConnection {
         return query;
     }
 
-    public String prepareStatement(String template) {
-    }
-
     @Override
     public boolean supportsBatchUpdates() {
         return _supportsBatchUpdates;

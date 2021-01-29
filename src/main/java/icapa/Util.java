@@ -550,6 +550,30 @@ public class Util {
         return query.toString();
     }
 
+    public static String getInsertTemplate(String tableName, List<HeaderProperties> headerProperties) {
+        StringBuilder query = new StringBuilder("INSERT INTO " + tableName + " (");
+        // Add column names
+        for (int i = 0; i < headerProperties.size(); ++i) {
+            HeaderProperties p = headerProperties.get(i);
+            query.append("\"").append(p.getName()).append("\"");
+            if (i != headerProperties.size()-1) {
+                // Only add comma for all entries except the last one
+                query.append(", ");
+            }
+        }
+        query.append(") VALUES (");
+        // Add placeholders
+        for (int i = 0; i < headerProperties.size(); ++i) {
+            query.append("?");
+            if (i != headerProperties.size()-1) {
+                // Only add comma for all entries except the last one
+                query.append(", ");
+            }
+        }
+        query.append(");");
+        return query.toString();
+    }
+
     public static String getInsertQuery(String tableName, Ontology ontology, HeaderProperties documentIdOverride) {
         StringBuilder query = new StringBuilder("INSERT INTO " + tableName + " (");
         List<HeaderProperties> headerProperties = Util.getHeaderPropertiesWithDocumentIdOverride(documentIdOverride);
@@ -652,6 +676,7 @@ public class Util {
                     if (documentIdOverride != null &&
                             p.getName() != null &&
                             p.getName().equals(documentIdOverride.getName())) {
+                        // special case for document id column
                         String datatype = documentIdOverride.getDataType().toLowerCase();
                         if (datatype.contains("int")) {
                             query.append(Util.getSqlString(Integer.valueOf(ontology.getDocumentId())));

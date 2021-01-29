@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 
 public interface OntologyConnection {
     ResultSet executeQuery(String query);
+    /*
     int executeUpdate(String query);
     boolean tableExists(String table);
     void createAnnotationTable(String table);
@@ -13,5 +14,6 @@ public interface OntologyConnection {
     boolean supportsBatchUpdates();
     int[] executeBatch();
     void addBatch(String query);
+     */
     void close();
 }
