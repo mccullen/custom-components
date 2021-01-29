@@ -13,32 +13,32 @@ import java.util.List;
 public class JdbcOntologyWriterService implements AnalysisEngine {
     private static final Logger LOGGER = Logger.getLogger(JdbcOntologyWriterService.class.getName());
 
-    private JdbcOntologyWriterParams _params;
-    private int _batchIndex = 0;
+    private OntologyConsumer _ontologyConsumer;
+    private boolean _keepAll;
 
-    public static AnalysisEngine fromParams(JdbcOntologyWriterParams params) {
+    public static AnalysisEngine fromParams(OntologyConsumer ontologyConsumer, boolean keepAll) {
         JdbcOntologyWriterService result = new JdbcOntologyWriterService();
-        result._params = params;
+        result._keepAll = keepAll;
+        result._ontologyConsumer = ontologyConsumer;
         return result;
     }
 
     @Override
     public void initialize(UimaContext context) {
         LOGGER.info("Initializing Jdbc ontology writer service");
-        _params.getOntologyConsumer().createAnnotationTableIfAbsent();
+        _ontologyConsumer.createAnnotationTableIfAbsent();
     }
 
     @Override
     public void process(JCas jCas) {
-        List<Ontology> ontologies = Util.getOntologies(jCas, _params.isKeepAll());
+        List<Ontology> ontologies = Util.getOntologies(jCas, _keepAll);
         for (Ontology ontology : ontologies) {
-            _params.getOntologyConsumer().insertOntologyIntoAnnotationTable(ontology);
+            _ontologyConsumer.insertOntologyIntoAnnotationTable(ontology);
         }
     }
 
-
     @Override
     public void close() throws IOException {
-        _params.getOntologyConsumer().close();
+        _ontologyConsumer.close();
     }
 }

@@ -22,6 +22,7 @@ public class OntologyWriterService implements AnalysisEngine {
     private String[] _headers;
     private OntologyWriterParams _params;
     public static OntologyWriterService from(OntologyWriterParams params) {
+        /*
         OntologyWriterService result = new OntologyWriterService();
         result._params = params;
         try {
@@ -33,6 +34,9 @@ public class OntologyWriterService implements AnalysisEngine {
             LOGGER.error("Error initializing ontology writer service", e);
         }
         return result;
+
+         */
+        return null;
     }
 
     @Override

@@ -59,15 +59,18 @@ public class JdbcOntologyWriter extends AbstractJdbcWriter {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
+        setParams();
+        OntologyConsumer ontologyConsumer = getOntologyConsumer();
+        _writer = JdbcOntologyWriterService.fromParams(ontologyConsumer, _params.isKeepAll());
+        _writer.initialize(context);
+    }
+
+    private void setParams() {
         _params.setJdbcWriterParams(getParams()); // inherited params
         _params.setTable(_table);
         _params.setKeepAll(_keepAll);
         _params.setCreateTableSuffix(_createTableSuffix);
         _params.setDocumentIdColAndDatatype(getDocHeader());
-        _params.setOntologyConsumer(getOntologyConsumer());
-
-        _writer = JdbcOntologyWriterService.fromParams(_params);
-        _writer.initialize(context);
     }
 
     private OntologyConsumer getOntologyConsumer() {

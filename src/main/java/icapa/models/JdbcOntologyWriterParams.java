@@ -12,17 +12,6 @@ public class JdbcOntologyWriterParams {
     private String createTableSuffix;
     private HeaderProperties documentIdColAndDatatype;
 
-    // Services
-    private OntologyConsumer ontologyConsumer;
-
-    public OntologyConsumer getOntologyConsumer() {
-        return ontologyConsumer;
-    }
-
-    public void setOntologyConsumer(OntologyConsumer ontologyConsumer) {
-        this.ontologyConsumer = ontologyConsumer;
-    }
-
     public String getCreateTableSuffix() {
         return createTableSuffix;
     }

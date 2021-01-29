@@ -3,7 +3,6 @@ package icapa.models;
 import java.io.Writer;
 
 public class OntologyWriterParams {
-    private Writer writer;
     private char delimiter;
     private boolean keepAll;
 
@@ -13,14 +12,6 @@ public class OntologyWriterParams {
 
     public void setKeepAll(boolean keepAll) {
         this.keepAll = keepAll;
-    }
-
-    public Writer getWriter() {
-        return writer;
-    }
-
-    public void setWriter(Writer writer) {
-        this.writer = writer;
     }
 
     public char getDelimiter() {
