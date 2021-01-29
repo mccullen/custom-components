@@ -42,6 +42,7 @@ public class JdbcOntologyConnection implements OntologyConnection {
             try {
                 _connection.setAutoCommit(false);
                 _batchStatement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                //_connection.prepareStatement("",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             } catch (SQLException throwables) {
                 LOGGER.error("Error setting autocommit to false", throwables);
             }
@@ -114,6 +115,9 @@ public class JdbcOntologyConnection implements OntologyConnection {
     public String getOntologyInsertQueryForTable(Ontology ontology, String table) {
         String query = Util.getInsertQuery(table, ontology, _params.getDocumentIdColAndDatatype());
         return query;
+    }
+
+    public String prepareStatement(String template) {
     }
 
     @Override

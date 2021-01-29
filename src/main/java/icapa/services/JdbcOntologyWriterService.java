@@ -45,6 +45,22 @@ public class JdbcOntologyWriterService implements AnalysisEngine {
                 ++_batchIndex;
                 String query = conn.getOntologyInsertQueryForTable(ontology, _params.getTable());
                 conn.addBatch(query);
+
+                /*
+                *   PreparedStatement ps = c.prepareStatement("INSERT INTO employees VALUES (?, ?)");
+
+  ps.setString(1, "John");
+  ps.setString(2,"Doe");
+  ps.addBatch();
+
+  ps.clearParameters();
+  ps.setString(1, "Dave");
+  ps.setString(2,"Smith");
+  ps.addBatch();
+
+  ps.clearParameters();
+  int[] results = ps.executeBatch();
+                * */
             } else {
                 // Doesn't support batch updates
                 String query = conn.getOntologyInsertQueryForTable(ontology, _params.getTable());
