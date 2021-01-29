@@ -7,7 +7,7 @@ import org.apache.uima.fit.component.JCasCollectionReader_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.resource.ResourceInitializationException;
 
-public abstract class AbstractDelimiterReader extends JCasCollectionReader_ImplBase {
+public abstract class AbstractDelimiterReader extends  JCasCollectionReader_ImplBase {
     static private final Logger LOGGER = Logger.getLogger(AbstractDelimiterReader.class.getName());
 
     static public final String PARAM_ROW_START = "RowStart";

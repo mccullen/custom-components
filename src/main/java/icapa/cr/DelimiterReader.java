@@ -1,5 +1,6 @@
 package icapa.cr;
 
+import icapa.Util;
 import icapa.services.CollectionReader;
 import icapa.services.DelimiterReaderService;
 import org.apache.log4j.Logger;
@@ -31,7 +32,7 @@ public class DelimiterReader extends AbstractDelimiterReader {
     private CollectionReader _reader;
 
     public DelimiterReader() {
-        LOGGER.info("Ctor");
+        LOGGER.info("Constructing Delimiter reader");
     }
 
     /**
@@ -47,26 +48,22 @@ public class DelimiterReader extends AbstractDelimiterReader {
             _reader = DelimiterReaderService.from(getParams());
             _reader.initialize();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.error("Error loading input file " + _inputFile, e);
         }
     }
 
-    public void getNext(JCas jCas) throws IOException, CollectionException {
+    @Override
+    public void getNext(JCas jCas) {
         _reader.readNext(jCas);
     }
 
-    public boolean hasNext() throws IOException, CollectionException {
-        LOGGER.info("hasnext........................................");
-        return _reader.hasNext();
-    }
-
-    public Progress[] getProgress() {
-        return new Progress[0];
+    @Override
+    public boolean hasNext() {
+        return Util.hasNext(_reader);
     }
 
     @Override
-    public void destroy() {
-        super.destroy();
-        _reader.destroy();
+    public Progress[] getProgress() {
+        return new Progress[0];
     }
 }

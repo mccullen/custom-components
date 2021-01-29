@@ -1,7 +1,7 @@
 // Custom reader
 reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv DocumentIdColumnName=note_id NoteColumnName=note DocumentIdColumnName=note_id
 load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
-add icapa.cc.JdbcOntologyWriter BatchSize=2000 Table="playground.dbo.annotation3" KeepAll=true DriverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" URL="jdbc:sqlserver://localhost;integratedSecurity%3Dtrue;"
+add icapa.cc.JdbcOntologyWriter BatchSize=2000 Table="playground.dbo.annotation" KeepAll=true DriverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" URL="jdbc:sqlserver://localhost;integratedSecurity%3Dtrue;"
 
 // - Download sql server driver: https://docs.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server?view=sql-server-ver15
 // - Enable TCP/IP connections to DB: https://stackoverflow.com/questions/18841744/jdbc-connection-failed-error-tcp-ip-connection-to-host-failed

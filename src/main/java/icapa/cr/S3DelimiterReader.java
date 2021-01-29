@@ -66,7 +66,7 @@ public class S3DelimiterReader extends AbstractDelimiterReader {
 
     @Override
     public boolean hasNext() throws IOException, CollectionException {
-        return _reader.hasNext();
+        return Util.hasNext(_reader);
     }
 
     @Override

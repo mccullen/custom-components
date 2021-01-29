@@ -9,7 +9,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-public abstract class AbstractOntologyWriter extends JCasAnnotator_ImplBase {
+public abstract class AbstractOntologyWriter extends BaseWriter {
     static public final String PARAM_DELIMITER = "Delimiter";
 
     // Configuration parameters
