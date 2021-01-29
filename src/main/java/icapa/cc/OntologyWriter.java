@@ -44,7 +44,7 @@ public class OntologyWriter extends AbstractOntologyWriter {
             getParams().setWriter(fileWriter);
             _writer = OntologyWriterService.from(getParams());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error opening file to write to " + _outputFile, e);
         }
     }
 
@@ -60,7 +60,7 @@ public class OntologyWriter extends AbstractOntologyWriter {
         try {
             _writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error closing writer", e);
         }
     }
 }

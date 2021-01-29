@@ -16,7 +16,7 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
     private JdbcOntologyConsumerParams _params;
     private Connection _connection;
     private boolean _supportsBatchUpdates = false;
-    private int _nBatches = 0;
+    private int _batchIndex = 0;
     private PreparedStatement _preparedStatement;
     private List<HeaderProperties> _headerProperties;
 
@@ -44,7 +44,7 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
             // batches of queries. Also, create the batch statement that you will add batch queries to.
             try {
                 _connection.setAutoCommit(false);
-                _batchStatement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                //_batchStatement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 //_connection.prepareStatement("",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             } catch (SQLException throwables) {
                 LOGGER.error("Error setting autocommit to false", throwables);
@@ -53,7 +53,7 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
     }
 
     private void setPreparedStatement() {
-        _headerProperties = Util.getHeaderPropertiesWithDocumentIdOverride(_params.getDocumentIdColAndDatetype());
+        _headerProperties = Util.getHeaderPropertiesWithDocumentIdOverride(_params.getDocumentIdColAndDatatype());
         String template = Util.getInsertTemplate(_params.getTable(), _headerProperties);
         try {
             _preparedStatement = _connection.prepareStatement(template, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -73,13 +73,14 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
 
     @Override
     public void createAnnotationTableIfAbsent() {
-        if (tableExists(_params.getTable())) {
+        if (!tableExists(_params.getTable())) {
             createAnnotationTable();
         }
     }
 
     public boolean tableExists(String table) {
         // TODO: Is there a better way to do this?
+        // TODO: Replace w/ prepared statement?
         boolean result = false;
         try {
             Statement statement = _connection.createStatement();
@@ -94,15 +95,50 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
     }
 
     private void createAnnotationTable() {
+        String query = Util.getCreateTableQuery(_params.getTable(), _params.getCreateTableSuffix(), _params.getDocumentIdColAndDatatype());
+        executeUpdate(query);
+    }
 
+    private int executeUpdate(String query) {
+        LOGGER.info("Executing update: " + query);
+        int result = 0;
+        try {
+            Statement statement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            result = statement.executeUpdate(query);
+            commit();
+            statement.close(); // Close statement since you are not returning any resultSet
+        } catch (SQLException throwables) {
+            LOGGER.error("Error executing update", throwables);
+        }
+        return result;
     }
 
     @Override
     public void insertOntologyIntoAnnotationTable(Ontology ontology) {
-        if (_supportsBatchUpdates && _params.getBatchSize() > 1) {
-            // TODO: Do batch update using prepared statement
-            setParametersForPreparedStatement(ontology);
-        } else {
+        setParametersForPreparedStatement(ontology);
+        try {
+            if (_supportsBatchUpdates && _params.getBatchSize() > 1) {
+                _preparedStatement.addBatch();
+                ++_batchIndex;
+                if (_batchIndex >= _params.getBatchSize()) {
+                    _batchIndex = 0;
+                    executeBatch();
+                }
+            } else {
+                _preparedStatement.executeUpdate();
+                commit();
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error inserting ontology into table", e);
+        }
+    }
+
+    private void executeBatch() {
+        try {
+            _preparedStatement.executeBatch();
+            commit();
+        } catch (SQLException throwables) {
+            LOGGER.error("Error executing batch", throwables);
         }
     }
 
@@ -110,67 +146,89 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
         try {
             int i = 1;
             for (HeaderProperties p : _headerProperties) {
-                String datatype = p.getDataType().toLowerCase();
+                //String datatype = p.getDataType().toLowerCase();
                 String column = p.getName();
                 switch (column) {
                     case Const.IDENTIFIED_ANNOTATION_ADDRESS_HEADER:
-                        _preparedStatement.setInt(i, ontology.getIdentifiedAnnotationAddress());
+                        setVal(i, ontology.getIdentifiedAnnotationAddress(), Types.INTEGER);
                         break;
                     case Const.CODE_HEADER:
-                        _preparedStatement.setString(i, ontology.getCode());
+                        setVal(i, ontology.getCode(), Types.VARCHAR);
                         break;
                     case Const.CONDITIONAL_HEADER:
-                        _preparedStatement.setInt(i, ontology.getConditional() ? 1 : 0);
+                        setVal(i, ontology.getConditional(), Types.INTEGER);
                         break;
                     case Const.CUI_HEADER:
-                        _preparedStatement.setString(i, ontology.getCui());
+                        setVal(i, ontology.getCui(), Types.VARCHAR);
                         break;
                     case Const.DOCUMENT_ID_HEADER:
-                        _preparedStatement.setString(i, ontology.getDocumentId());
+                        setVal(i, ontology.getDocumentId(), Types.VARCHAR);
                         break;
                     case Const.GENERIC_HEADER:
+                        setVal(i, ontology.getGeneric(), Types.INTEGER);
                         break;
                     case Const.POLARITY_HEADER:
+                        setVal(i, ontology.getPolarity(), Types.INTEGER);
                         break;
                     case Const.END_HEADER:
+                        setVal(i, ontology.getEnd(), Types.INTEGER);
                         break;
                     case Const.BEGIN_HEADER:
+                        setVal(i, ontology.getBegin(), Types.INTEGER);
                         break;
                     case Const.PREFERRED_TEXT_HEADER:
+                        setVal(i, ontology.getPreferredText(), Types.VARCHAR);
                         break;
                     case Const.REFSEM_HEADER:
+                        setVal(i, ontology.getRefsem(), Types.VARCHAR);
                         break;
                     case Const.SCHEME_HEADER:
+                        setVal(i, ontology.getCodingScheme(), Types.VARCHAR);
                         break;
                     case Const.SCORE_HEADER:
+                        setVal(i, ontology.getScore(), Types.DOUBLE);
                         break;
                     case Const.SUBJECT_HEADER:
+                        setVal(i, ontology.getSubject(), Types.VARCHAR);
                         break;
                     case Const.TEXTSEM_HEADER:
+                        setVal(i, ontology.getTextsem(), Types.VARCHAR);
                         break;
                     case Const.TUI_HEADER:
+                        setVal(i, ontology.getTui(), Types.VARCHAR);
                         break;
                     case Const.UNCERTAINTY_HEADER:
+                        setVal(i, ontology.getUncertainty(), Types.INTEGER);
                         break;
                     case Const.TRUE_TEXT_HEADER:
+                        setVal(i, ontology.getTrueText(), Types.VARCHAR);
                         break;
                     case Const.PARTS_OF_SPEECH_HEADER:
+                        setVal(i, ontology.getPartsOfSpeech(), Types.VARCHAR);
                         break;
                     case Const.ENTITY_TYPE_HEADER:
+                        setVal(i, ontology.getEntityType(), Types.VARCHAR);
                         break;
                     case Const.SEGMENT_HEADER:
+                        setVal(i, ontology.getSegment(), Types.VARCHAR);
                         break;
                     case Const.DISCOVERY_TECHNIQUE_HEADER:
+                        setVal(i, ontology.getDiscoveryTechnique(), Types.VARCHAR);
                         break;
                     case Const.HISTORY_OF_HEADER:
+                        setVal(i, ontology.getHistoryOf(), Types.INTEGER);
                         break;
                     case Const.OID_HEADER:
+                        setVal(i, ontology.getOid(), Types.VARCHAR);
                         break;
                     case Const.OUI_HEADER:
+                        setVal(i, ontology.getOui(), Types.VARCHAR);
                         break;
                     case Const.DISAMBIGUATED_HEADER:
+                        setVal(i, ontology.getDisambiguated(), Types.INTEGER);
                         break;
                     case Const.ONTOLOGY_ADDRESS_HEADER:
+                        setVal(i, ontology.getOntologyConceptAddress(), Types.INTEGER);
                         break;
                     default: {
                         HeaderProperties documentIdOverride = _params.getDocumentIdColAndDatatype();
@@ -180,11 +238,11 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
                             // special case for document id column
                             String datatype = documentIdOverride.getDataType().toLowerCase();
                             if (datatype.contains("int")) {
-                                _preparedStatement.setInt(i, Integer.valueOf(ontology.getDocumentId()));
+                                setVal(i, Integer.valueOf(ontology.getDocumentId()), Types.INTEGER);
                             } else if (datatype.contains("decimal") || datatype.contains("numeric")) {
-                                _preparedStatement.setDouble(i, Double.valueOf(ontology.getDocumentId()));
+                                setVal(i, Double.valueOf(ontology.getDocumentId()), Types.DOUBLE);
                             } else {
-                                _preparedStatement.setString(i, ontology.getDocumentId());
+                                setVal(i, ontology.getDocumentId(), Types.VARCHAR);
                             }
                         }
                         break;
@@ -194,6 +252,28 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
             }
         } catch (Exception e) {
             LOGGER.error("Error setting parameters for prepared statement", e);
+        }
+    }
+
+    private <T> void setVal(int i, T val, int type) {
+        try {
+            if (val == null) {
+                _preparedStatement.setNull(i, type);
+            } else {
+                if (val instanceof Integer) {
+                    _preparedStatement.setInt(i, (Integer)val);
+                } else if (val instanceof Double) {
+                    _preparedStatement.setDouble(i, (Double)val);
+                } else if (val instanceof Float) {
+                    _preparedStatement.setFloat(i, (Float) val);
+                } else if (val instanceof String) {
+                    _preparedStatement.setString(i, (String)val);
+                } else {
+                    _preparedStatement.setNull(i, type);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error setting value " + val, e);
         }
     }
 
@@ -209,5 +289,16 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
 
     @Override
     public void close() {
+        try {
+            if (_preparedStatement != null) {
+                if (_supportsBatchUpdates && _batchIndex > 0) {
+                    executeBatch();
+                }
+                _preparedStatement.close();
+            }
+            _connection.close();
+        } catch (SQLException throwables) {
+            LOGGER.error("Error closing connection to teradata", throwables);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package icapa.models;
 
 import icapa.services.OntologyConnection;
+import icapa.services.OntologyConsumer;
 
 public class JdbcOntologyWriterParams {
     private JdbcWriterParams jdbcWriterParams; // Params inherited from jdbc writer
@@ -11,7 +12,16 @@ public class JdbcOntologyWriterParams {
     private String createTableSuffix;
     private HeaderProperties documentIdColAndDatatype;
 
-    private OntologyConnection ontologyConnection;
+    // Services
+    private OntologyConsumer ontologyConsumer;
+
+    public OntologyConsumer getOntologyConsumer() {
+        return ontologyConsumer;
+    }
+
+    public void setOntologyConsumer(OntologyConsumer ontologyConsumer) {
+        this.ontologyConsumer = ontologyConsumer;
+    }
 
     public String getCreateTableSuffix() {
         return createTableSuffix;
@@ -35,14 +45,6 @@ public class JdbcOntologyWriterParams {
 
     public void setJdbcWriterParams(JdbcWriterParams jdbcWriterParams) {
         this.jdbcWriterParams = jdbcWriterParams;
-    }
-
-    public OntologyConnection getOntologyConnection() {
-        return ontologyConnection;
-    }
-
-    public void setOntologyConnection(OntologyConnection ontologyConnection) {
-        this.ontologyConnection = ontologyConnection;
     }
 
     public boolean isKeepAll() {

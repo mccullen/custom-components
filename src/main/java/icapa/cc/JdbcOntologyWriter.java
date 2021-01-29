@@ -3,11 +3,9 @@ package icapa.cc;
 import icapa.Const;
 import icapa.models.HeaderProperties;
 import icapa.models.JdbcOntologyConnectionParams;
+import icapa.models.JdbcOntologyConsumerParams;
 import icapa.models.JdbcOntologyWriterParams;
-import icapa.services.AnalysisEngine;
-import icapa.services.JdbcOntologyWriterService;
-import icapa.services.JdbcOntologyConnection;
-import icapa.services.OntologyConnection;
+import icapa.services.*;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -66,22 +64,24 @@ public class JdbcOntologyWriter extends AbstractJdbcWriter {
         _params.setKeepAll(_keepAll);
         _params.setCreateTableSuffix(_createTableSuffix);
         _params.setDocumentIdColAndDatatype(getDocHeader());
-        _params.setOntologyConnection(getOntologyConnection());
+        _params.setOntologyConsumer(getOntologyConsumer());
 
         _writer = JdbcOntologyWriterService.fromParams(_params);
         _writer.initialize(context);
     }
 
-    private OntologyConnection getOntologyConnection() {
+    private OntologyConsumer getOntologyConsumer() {
         // Set sql connection
-        JdbcOntologyConnectionParams ontologyConnectionParams = new JdbcOntologyConnectionParams();
-        ontologyConnectionParams.setPassword(getParams().getPassword());
-        ontologyConnectionParams.setUsername(getParams().getUsername());
-        ontologyConnectionParams.setDocumentIdColAndDatatype(_params.getDocumentIdColAndDatatype());
-        ontologyConnectionParams.setUrl(_params.getJdbcWriterParams().getUrl());
-        ontologyConnectionParams.setDriverClassName(getParams().getDriverClassName());
-        ontologyConnectionParams.setCreateTableSuffix(_params.getCreateTableSuffix());
-        OntologyConnection sqlConnection = JdbcOntologyConnection.fromParams(ontologyConnectionParams);
+        JdbcOntologyConsumerParams ontologyConsumerParams = new JdbcOntologyConsumerParams();
+        ontologyConsumerParams.setDriverClassName(getParams().getDriverClassName());
+        ontologyConsumerParams.setUsername(getParams().getUsername());
+        ontologyConsumerParams.setPassword(getParams().getPassword());
+        ontologyConsumerParams.setUrl(_params.getJdbcWriterParams().getUrl());
+        ontologyConsumerParams.setTable(_params.getTable());
+        ontologyConsumerParams.setDocumentIdColAndDatatype(_params.getDocumentIdColAndDatatype());
+        ontologyConsumerParams.setCreateTableSuffix(_params.getCreateTableSuffix());
+        ontologyConsumerParams.setBatchSize(_params.getJdbcWriterParams().getBatchSize());
+        OntologyConsumer sqlConnection = JdbcOntologyConsumer.fromParams(ontologyConsumerParams);
         return sqlConnection;
     }
 
