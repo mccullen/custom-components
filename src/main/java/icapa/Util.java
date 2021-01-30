@@ -5,6 +5,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.opencsv.CSVWriterBuilder;
 import icapa.models.HeaderProperties;
 import icapa.models.Ontology;
 import icapa.services.AnalysisEngine;
@@ -31,6 +32,7 @@ import org.xml.sax.SAXException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.sql.Connection;
@@ -739,5 +741,18 @@ public class Util {
             cr.destroy();
         }
         return next;
+    }
+
+    public static void createAnnotationFileIfAbsent(Writer writer) {
+        /*
+        try {
+            _csvWriter = new CSVWriterBuilder(_writer).withSeparator(_delimiter).build();
+            _headers = Util.getOntologyConceptHeaders();
+            _headerToIndex = Util.getKeyToIndex(_headers);
+            _csvWriter.writeNext(_headers, false);
+        } catch (Exception e) {
+            LOGGER.error("Error initializing ontology writer service", e);
+        }
+         */
     }
 }

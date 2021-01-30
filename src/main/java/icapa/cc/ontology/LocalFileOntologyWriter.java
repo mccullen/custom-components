@@ -11,6 +11,8 @@ import org.apache.uima.resource.ResourceInitializationException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class LocalFileOntologyWriter extends AbstractFileOntologyWriter {
     static public final String PARAM_OUTPUT_FILE = "OutputFile";
@@ -36,11 +38,18 @@ public class LocalFileOntologyWriter extends AbstractFileOntologyWriter {
 
     private void setWriter() {
         try {
+            boolean append = false;
+            if (Files.exists(Paths.get(_outputFile))) {
+                append = true;
+            } else {
+                append = false;
+            }
+
             File file = new File(_outputFile);
-            FileWriter fileWriter = new FileWriter(file, true);
+            FileWriter fileWriter = new FileWriter(file, append);
             // Uncomment to recreate rather than append
             //FileWriter fileWriter = new FileWriter(file);
-            OntologyConsumer ontologyConsumer = LocalOntologyConsumer.from(fileWriter, getParams().getDelimiter());
+            OntologyConsumer ontologyConsumer = FileOntologyConsumer.from(fileWriter, getParams().getDelimiter(), append);
             _writer = JdbcOntologyWriterService.fromParams(ontologyConsumer, getParams().isKeepAll());
         } catch (Exception e) {
             LOGGER.error("Error opening file to write to " + _outputFile, e);

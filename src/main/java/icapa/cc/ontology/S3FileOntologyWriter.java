@@ -2,9 +2,7 @@ package icapa.cc.ontology;
 
 import icapa.cc.ontology.AbstractFileOntologyWriter;
 import icapa.models.S3OntologyWriterParams;
-import icapa.services.AnalysisEngine;
-import icapa.services.OntologyWriterService;
-import icapa.services.S3OntologyWriterService;
+import icapa.services.*;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -48,26 +46,8 @@ public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
     }
 
     private void setWriter() {
-        // Create an ontology concept writer that writes to a byte stream
-        S3OntologyWriterParams s3OntologyWriterParams = new S3OntologyWriterParams();
-
-        // Set regular ontology writer and byte array output stream
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        // S3 only allows you to upload using an input stream. So our S3OntologyWriterService _writer
-        // needs a reference to the output stream so we can copy it over to an input stream later when close()
-        // gets called.
-        s3OntologyWriterParams.setByteArrayOutputStream(byteArrayOutputStream);
-        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
-        Writer output = new OutputStreamWriter(bufferedOutputStream);
-        getParams().setWriter(output);
-        AnalysisEngine writer = OntologyWriterService.from(getParams());
-        s3OntologyWriterParams.setAnalysisEngine(writer);
-
-        // Set the bucket and key
-        s3OntologyWriterParams.setBucket(_bucket);
-        s3OntologyWriterParams.setKey(_key);
-
-        _writer = S3OntologyWriterService.from(s3OntologyWriterParams);
+        OntologyConsumer ontologyConsumer = S3OntologyConsumer.from(_bucket, _key, getParams().getDelimiter());
+        _writer = JdbcOntologyWriterService.fromParams(ontologyConsumer, getParams().isKeepAll());
     }
 
     @Override
@@ -82,7 +62,7 @@ public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
         try {
             _writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error closing writer", e);
         }
     }
 }
