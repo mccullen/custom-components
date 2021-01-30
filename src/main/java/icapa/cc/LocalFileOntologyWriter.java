@@ -1,6 +1,6 @@
-package icapa.cc.ontology;
+package icapa.cc;
 
-import icapa.cc.ontology.AbstractFileOntologyWriter;
+import icapa.cc.AbstractFileOntologyWriter;
 import icapa.services.*;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -50,7 +50,7 @@ public class LocalFileOntologyWriter extends AbstractFileOntologyWriter {
             // Uncomment to recreate rather than append
             //FileWriter fileWriter = new FileWriter(file);
             OntologyConsumer ontologyConsumer = FileOntologyConsumer.from(fileWriter, getParams().getDelimiter(), append);
-            _writer = JdbcOntologyWriterService.fromParams(ontologyConsumer, getParams().isKeepAll());
+            _writer = OntologyWriterService.fromParams(ontologyConsumer, getParams().isKeepAll());
         } catch (Exception e) {
             LOGGER.error("Error opening file to write to " + _outputFile, e);
         }

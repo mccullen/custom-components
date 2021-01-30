@@ -1,7 +1,6 @@
-package icapa.cc.ontology;
+package icapa.cc;
 
-import icapa.cc.ontology.AbstractFileOntologyWriter;
-import icapa.models.S3OntologyWriterParams;
+import icapa.cc.AbstractFileOntologyWriter;
 import icapa.services.*;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -47,7 +46,7 @@ public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
 
     private void setWriter() {
         OntologyConsumer ontologyConsumer = S3OntologyConsumer.from(_bucket, _key, getParams().getDelimiter());
-        _writer = JdbcOntologyWriterService.fromParams(ontologyConsumer, getParams().isKeepAll());
+        _writer = OntologyWriterService.fromParams(ontologyConsumer, getParams().isKeepAll());
     }
 
     @Override

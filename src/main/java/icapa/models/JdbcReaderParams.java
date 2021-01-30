@@ -1,19 +1,19 @@
 package icapa.models;
 
-import icapa.services.OntologyConnection;
+import icapa.services.SqlConnection;
 
 public class JdbcReaderParams {
     private String sqlStatement;
     private String documentTextColName;
     private String documentIdColName;
-    private OntologyConnection ontologyConnection;
+    private SqlConnection sqlConnection;
 
-    public OntologyConnection getOntologyConnection() {
-        return ontologyConnection;
+    public SqlConnection getOntologyConnection() {
+        return sqlConnection;
     }
 
-    public void setOntologyConnection(OntologyConnection ontologyConnection) {
-        this.ontologyConnection = ontologyConnection;
+    public void setOntologyConnection(SqlConnection sqlConnection) {
+        this.sqlConnection = sqlConnection;
     }
 
     public String getDocumentIdColName() {

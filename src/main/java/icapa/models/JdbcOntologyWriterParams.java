@@ -1,8 +1,5 @@
 package icapa.models;
 
-import icapa.services.OntologyConnection;
-import icapa.services.OntologyConsumer;
-
 public class JdbcOntologyWriterParams {
     private JdbcWriterParams jdbcWriterParams; // Params inherited from jdbc writer
 

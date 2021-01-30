@@ -1,7 +1,6 @@
-package icapa.cc.ontology;
+package icapa.cc;
 
 import icapa.Const;
-import icapa.cc.AbstractJdbcWriter;
 import icapa.models.HeaderProperties;
 import icapa.models.JdbcOntologyConsumerParams;
 import icapa.models.JdbcOntologyWriterParams;
@@ -61,7 +60,7 @@ public class JdbcOntologyWriter extends AbstractJdbcWriter {
         super.initialize(context);
         setParams();
         OntologyConsumer ontologyConsumer = getOntologyConsumer();
-        _writer = JdbcOntologyWriterService.fromParams(ontologyConsumer, _params.isKeepAll());
+        _writer = OntologyWriterService.fromParams(ontologyConsumer, _params.isKeepAll());
         _writer.initialize(context);
     }
 

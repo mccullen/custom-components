@@ -1,10 +1,6 @@
 package icapa.services;
 
-import com.opencsv.CSVWriterBuilder;
-import com.opencsv.ICSVWriter;
-import icapa.Util;
 import icapa.models.Ontology;
-import net.sf.cglib.core.Local;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -13,7 +9,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
 
 public class LocalOntologyConsumer implements OntologyConsumer {
     public static final Logger LOGGER = Logger.getLogger(LocalOntologyConsumer.class.getName());

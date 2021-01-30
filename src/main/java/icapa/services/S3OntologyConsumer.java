@@ -80,7 +80,6 @@ public class S3OntologyConsumer implements OntologyConsumer {
         // Credit for this conversion strategy: https://stackoverflow.com/questions/5778658/how-to-convert-outputstream-to-inputstream
 
         //AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
-        AmazonS3 s3Client = Util.getS3Client();
         /*
         Alternative (less efficient) conversion strategy
         byte[] bytes = _byteArrayOutputStream.toByteArray();
@@ -89,31 +88,35 @@ public class S3OntologyConsumer implements OntologyConsumer {
         s3Client.putObject(_bucket, _key, inputStream, metadata);
          */
 
-        TransferManager tm = TransferManagerBuilder.standard().withS3Client(s3Client).build();
-        PipedOutputStream out = new PipedOutputStream();
-        PipedInputStream in = null;
+        // TODO: This may need to be refactored to work with large files. Maybe do a multipart upload somehow?
         try {
-            in = new PipedInputStream(out);
-        } catch (IOException e) {
-            LOGGER.error("ERROR loading piped input stream", e);
-        }
-        new Thread(() -> {
-            try {
-                _byteArrayOutputStream.writeTo(out);
-            } catch (IOException e) {
-                LOGGER.error("Error writing byte array output stream to piped output", e);
-            } finally {
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                        LOGGER.error("Error closing piped output stream", e);
+            AmazonS3 s3Client = Util.getS3Client();
+            TransferManager tm = TransferManagerBuilder.standard().withS3Client(s3Client).build();
+            PipedOutputStream out = new PipedOutputStream();
+            PipedInputStream in = new PipedInputStream(out);
+            Thread thread = new Thread(() -> {
+                try {
+                    _byteArrayOutputStream.writeTo(out);
+                } catch (IOException e) {
+                    LOGGER.error("Error writing byte array output stream to piped output", e);
+                } finally {
+                    if (out != null) {
+                        try {
+                            out.close();
+                            _byteArrayOutputStream.close();
+                        } catch (IOException e) {
+                            LOGGER.error("Error closing piped output stream", e);
+                        }
                     }
                 }
-            }
-        }).start();
-        ObjectMetadata metadata = new ObjectMetadata();
-        tm.upload(_bucket, _key, in, metadata);
+            });
+            thread.start();
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(_byteArrayOutputStream.size());
+            tm.upload(_bucket, _key, in, metadata);
+        } catch (Exception e) {
+            LOGGER.error("ERROR loading piped input stream", e);
+        }
         /*
         ((Runnable)() -> {
 

@@ -3,7 +3,7 @@ package icapa.models;
 /**
  *
  * */
-public class JdbcOntologyConnectionParams {
+public class SqlConnectionParams {
     // Connection parameters
     private String driverClassName;
     private String username;

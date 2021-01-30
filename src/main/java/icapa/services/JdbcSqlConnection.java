@@ -1,22 +1,19 @@
 package icapa.services;
 
 import icapa.Util;
-import icapa.models.JdbcOntologyConnectionParams;
-import icapa.models.JdbcOntologyWriterParams;
-import icapa.models.JdbcWriterParams;
-import icapa.models.Ontology;
+import icapa.models.SqlConnectionParams;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
 
-public class JdbcOntologyConnection implements OntologyConnection {
-    private static final Logger LOGGER = Logger.getLogger(JdbcOntologyConnection.class.getName());
+public class JdbcSqlConnection implements SqlConnection {
+    private static final Logger LOGGER = Logger.getLogger(JdbcSqlConnection.class.getName());
 
     private Connection _connection;
-    private JdbcOntologyConnectionParams _params;
+    private SqlConnectionParams _params;
 
-    public static JdbcOntologyConnection fromParams(JdbcOntologyConnectionParams params) {
-        JdbcOntologyConnection engine = new JdbcOntologyConnection();
+    public static JdbcSqlConnection fromParams(SqlConnectionParams params) {
+        JdbcSqlConnection engine = new JdbcSqlConnection();
         engine._params = params;
         Util.loadDriver(engine._params.getDriverClassName());
         engine.setConnection();

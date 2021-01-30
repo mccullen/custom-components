@@ -1,4 +1,4 @@
-package icapa.cc.ontology;
+package icapa.cc;
 
 import icapa.Const;
 import icapa.cc.BaseWriter;

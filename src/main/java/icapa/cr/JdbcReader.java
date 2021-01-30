@@ -3,24 +3,18 @@ package icapa.cr;
 import icapa.Const;
 import icapa.Util;
 import icapa.models.JdbcReaderParams;
-import icapa.models.JdbcOntologyConnectionParams;
+import icapa.models.SqlConnectionParams;
 import icapa.services.CollectionReader;
 import icapa.services.JdbcReaderService;
-import icapa.services.JdbcOntologyConnection;
-import icapa.services.OntologyConnection;
+import icapa.services.JdbcSqlConnection;
+import icapa.services.SqlConnection;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
-import org.apache.uima.collection.CollectionException;
 import org.apache.uima.fit.component.JCasCollectionReader_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Progress;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.sql.Time;
 
 public class JdbcReader extends  JCasCollectionReader_ImplBase {
     private static Logger LOGGER = Logger.getLogger(JdbcReader.class.getName());
@@ -96,24 +90,24 @@ public class JdbcReader extends  JCasCollectionReader_ImplBase {
         _reader.initialize();
     }
 
-    private OntologyConnection getOntologyConnection() {
+    private SqlConnection getOntologyConnection() {
         // Set sql connection
-        JdbcOntologyConnectionParams jdbcSqlConnectionParams = new JdbcOntologyConnectionParams();
+        SqlConnectionParams jdbcSqlConnectionParams = new SqlConnectionParams();
         jdbcSqlConnectionParams.setDriverClassName(_driverClassName);
         jdbcSqlConnectionParams.setUrl(Util.decodeUrl(_url));
         jdbcSqlConnectionParams.setUsername(_username);
         jdbcSqlConnectionParams.setPassword(_password);
-        JdbcOntologyConnection sqlConnection = JdbcOntologyConnection.fromParams(jdbcSqlConnectionParams);
+        SqlConnection sqlConnection = JdbcSqlConnection.fromParams(jdbcSqlConnectionParams);
         return sqlConnection;
     }
 
     @Override
-    public void getNext(JCas jCas) throws IOException, CollectionException {
+    public void getNext(JCas jCas) {
         _reader.readNext(jCas);
     }
 
     @Override
-    public boolean hasNext() throws IOException, CollectionException {
+    public boolean hasNext() {
         return Util.hasNext(_reader);
     }
 
