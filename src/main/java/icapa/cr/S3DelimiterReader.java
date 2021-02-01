@@ -27,7 +27,6 @@ public class S3DelimiterReader extends AbstractDelimiterReader {
     static public final String PARAM_BUCKET = "Bucket";
     @ConfigurationParameter(
         name = PARAM_BUCKET,
-        description = "Bucket name",
         defaultValue = "*",
         mandatory = false
     )
@@ -36,7 +35,6 @@ public class S3DelimiterReader extends AbstractDelimiterReader {
     static public final String PARAM_KEY = "Key";
     @ConfigurationParameter(
         name = PARAM_KEY,
-        description = "key",
         defaultValue = "*",
         mandatory = false
     )

@@ -16,7 +16,6 @@ public abstract class AbstractFileOntologyWriter extends BaseWriter {
     // Configuration parameters
     @ConfigurationParameter(
         name = PARAM_DELIMITER,
-        description = "Delimiter",
         defaultValue = ",",
         mandatory = true
     )
@@ -24,7 +23,6 @@ public abstract class AbstractFileOntologyWriter extends BaseWriter {
 
     @ConfigurationParameter(
         name = Const.PARAM_KEEP_ALL,
-        description = Const.PARAM_KEEP_ALL_DESCRIPTION,
         defaultValue = "true",
         mandatory = false
     )

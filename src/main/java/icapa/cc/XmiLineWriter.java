@@ -20,7 +20,6 @@ public class XmiLineWriter extends BaseWriter {
     static public final String PARAM_OUTPUT_FILE = "OutputFile";
     @ConfigurationParameter(
             name = PARAM_OUTPUT_FILE,
-            description = "Output file",
             defaultValue = "*",
             mandatory = true
     )

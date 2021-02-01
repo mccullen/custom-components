@@ -24,8 +24,7 @@ public class JdbcReader extends  JCasCollectionReader_ImplBase {
      */
     public static final String PARAM_SQL = "SqlStatement";
     @ConfigurationParameter(
-        name = PARAM_SQL,
-        description = "SQL statement to retrieve the document."
+        name = PARAM_SQL
     )
     private String _sqlStatement;
 
@@ -35,40 +34,34 @@ public class JdbcReader extends  JCasCollectionReader_ImplBase {
      */
     public static final String PARAM_DOCTEXT_COL = "DocTextColName";
     @ConfigurationParameter(
-        name = PARAM_DOCTEXT_COL,
-        description = "Name of column from resultset that contains the document text."
+        name = PARAM_DOCTEXT_COL
     )
     private String _docTextColName;
 
     @ConfigurationParameter(
-        name = Const.PARAM_DRIVER_CLASS,
-        description = Const.PARAM_DRIVER_CLASS_DESCRIPTION
+        name = Const.PARAM_DRIVER_CLASS
     )
     private String _driverClassName;
 
     private static final String PARAM_DOCUMENT_ID_COLUMN = "DocumentIdColumnName";
     @ConfigurationParameter(
-        name = PARAM_DOCUMENT_ID_COLUMN,
-        description = "The name of the column used to identify the document. This should be unique for each document."
+        name = PARAM_DOCUMENT_ID_COLUMN
     )
     private String _documentIdCol;
 
     @ConfigurationParameter(
-        name = Const.PARAM_URL,
-        description = Const.PARAM_URL_DESCRIPTION
+        name = Const.PARAM_URL
     )
     private String _url;
 
     @ConfigurationParameter(
         name = Const.PARAM_USERNAME,
-        description = Const.PARAM_USERNAME_DESCRIPTION,
         mandatory = false
     )
     private String _username;
 
     @ConfigurationParameter(
         name = Const.PARAM_PASSWORD,
-        description = Const.PARAM_PASSWORD_DESCRIPTION,
         mandatory = false
     )
     private String _password;

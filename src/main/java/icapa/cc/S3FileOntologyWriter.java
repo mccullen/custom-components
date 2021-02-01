@@ -16,7 +16,6 @@ public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
     // Configuration parameters
     @ConfigurationParameter(
         name = PARAM_BUCKET,
-        description = "Bucket",
         defaultValue = "*",
         mandatory = true
     )
@@ -25,7 +24,6 @@ public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
     static public final String PARAM_KEY = "Key";
     @ConfigurationParameter(
         name = PARAM_KEY,
-        description = "Key",
         defaultValue = "*",
         mandatory = true
     )
