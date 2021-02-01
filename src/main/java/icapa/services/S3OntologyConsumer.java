@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
+import com.amazonaws.services.s3.transfer.Upload;
 import icapa.Util;
 import icapa.models.Ontology;
 import org.apache.log4j.Logger;
@@ -113,7 +114,10 @@ public class S3OntologyConsumer implements OntologyConsumer {
             thread.start();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(_byteArrayOutputStream.size());
-            tm.upload(_bucket, _key, in, metadata);
+            // TODO: This hangs. It finishes uploading, but never exists. Not sure why.
+            Upload upload = tm.upload(_bucket, _key, in, metadata);
+            //boolean d = upload.isDone();
+            //System.out.println(d);
         } catch (Exception e) {
             LOGGER.error("ERROR loading piped input stream", e);
         }
