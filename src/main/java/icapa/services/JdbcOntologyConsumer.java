@@ -25,7 +25,7 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
         result._params = params;
         Util.loadDriver(result._params.getDriverClassName());
         result.setConnection();
-        result.setPreparedStatement();
+        //result.setPreparedStatement();
         return result;
     }
 
@@ -76,6 +76,10 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
         if (!tableExists(_params.getTable())) {
             createAnnotationTable();
         }
+        // Now that the table is created, you can prepare the statement
+        // Note: If you try to prepare the statement beforehand, it COULD result in a
+        // null prepared statement and then you will get a null pointer exception
+        setPreparedStatement();
     }
 
     public boolean tableExists(String table) {
