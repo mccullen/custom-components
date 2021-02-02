@@ -3,6 +3,7 @@ package icapa.services;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.RFC4180ParserBuilder;
 import icapa.Util;
 import icapa.models.DelimiterReaderParams;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
@@ -38,7 +39,8 @@ public class DelimiterReaderService implements CollectionReader {
         result._rowEnd = params.getRowEnd();
         // TODO: Remove hard dependency on CSVReader. Create a wrapper class/interface
         result._csvReader = new CSVReaderBuilder(result._reader)
-            .withCSVParser(new CSVParserBuilder().withSeparator(params.getDelimiter()).build())
+            // Make sure to use RFC4180 parser. That is the standard. CSVParser came out before the standard. Don't use CSVParser
+            .withCSVParser(new RFC4180ParserBuilder().withSeparator(params.getDelimiter()).build())
             .build();
         // Skip to the right row
         String[] headers = new String[0];
