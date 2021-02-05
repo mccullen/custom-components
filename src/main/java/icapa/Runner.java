@@ -27,7 +27,7 @@ import java.util.stream.IntStream;
 public class Runner implements Serializable {
     static private final Logger LOGGER = Logger.getLogger(Runner.class.getName());
     public static final String CONFIG_FILENAME = "config.properties";
-    public static final String MAIN_PIPER = "C:/root/vdt/icapa/nlp/custom-components/src/main/resources/default-pipeline.piper";
+    public static final String MAIN_PIPER = "C:/root/vdt/icapa/nlp/custom-components/reference/piper-files/default-pipeline.piper";
     public static int n = 0;
     private icapa.models.ConfigurationSettings _config = new icapa.models.ConfigurationSettings();
 
@@ -145,11 +145,11 @@ public class Runner implements Serializable {
             piperReader.loadPipelineFile(_config.getPiperFile());
             // TODO S3 WRITER
             piperReader.parsePipelineLine("add icapa.cc.S3OntologyWriter Bucket=analysis Key=" + String.valueOf(rowStart) + ".csv");
-            //piperReader.parsePipelineLine("add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/" + String.valueOf(rowStart) + ".csv");
+            //piperReader.parsePipelineLine("add icapa.cc.OntologyWriter OutputFile=C:/root/vdt/icapa/nlp/test-data/annotations/" + String.valueOf(rowStart) + ".csv");
             // TODO: Uncomment if you want to try to write everything to same file. I have not had success with this yet
             // Currently, the OntologyWriter will write the header for each thread but otherwise works fine.
             // S3 doesn't allow appending so this is a low priority.
-            //piperReader.parsePipelineLine("add icapa.cc.OntologyWriter OutputFile=C:/root/tmp/mimiciii/ctakes-out/test.csv");
+            //piperReader.parsePipelineLine("add icapa.cc.OntologyWriter OutputFile=C:/root/vdt/icapa/nlp/test-data/annotations/test.csv");
             builder.run();
             System.out.println("****************** DONE *********************************");
         });

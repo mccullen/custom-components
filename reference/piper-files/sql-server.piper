@@ -1,5 +1,5 @@
 // Custom reader
-reader icapa.cr.DelimiterReader InputFile=C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv DocumentIdColumnName=note_id NoteColumnName=note DocumentIdColumnName=note_id
+reader icapa.cr.DelimiterReader InputFile=C:/root/vdt/icapa/nlp/test-data/notes/pyctakes_notes_in.mimiciii.top3.csv DocumentIdColumnName=note_id NoteColumnName=note DocumentIdColumnName=note_id
 load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
 add icapa.cc.JdbcOntologyWriter DocumentIdColAndDatatype="note_id INT" CreateTableSuffix="annotation_id INT NOT NULL IDENTITY(1,1), CONSTRAINT pk PRIMARY KEY (annotation_id)" BatchSize=100 Table="playground.dbo.annotation" KeepAll=true DriverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" URL="jdbc:sqlserver://localhost;integratedSecurity%3Dtrue;"
 

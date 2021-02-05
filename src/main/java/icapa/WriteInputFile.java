@@ -26,7 +26,7 @@ public class WriteInputFile {
         List<Bucket> buckets = s3Client.listBuckets();
         // Now write to the bucket
         String key = "input";
-        InputStream inputStream = new FileInputStream(new File("C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv"));
+        InputStream inputStream = new FileInputStream(new File("C:/root/vdt/icapa/nlp/test-data/notes/pyctakes_notes_in.mimiciii.top3.csv"));
         ObjectMetadata metadata = new ObjectMetadata();
         s3Client.putObject(bucketName, key, inputStream, metadata);
     }

@@ -3,12 +3,12 @@ reader icapa.cr.S3DelimiterReader Key=pyctakes_notes_in.mimiciii.top3.csv Bucket
 load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
 add icapa.cc.S3FileOntologyWriter KeepAll=true Key=ontology Bucket=analysis
 
-// RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\custom-components\src\main\resources\s3.piper --key <key>
+// RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\custom-components\reference\piper-files\s3.piper --key <key>
 
 // localstack start
 // aws configure (use any fake credentials and I used us-east-1 region)
 // aws --endpoint-url=http://localhost:4566 s3 mb s3://analysis
-// aws --endpoint-url=http://localhost:4566 s3 cp C:/root/tmp/mimiciii/pyctakes_notes_in.mimiciii.top3.csv s3://analysis
+// aws --endpoint-url=http://localhost:4566 s3 cp C:/root/vdt/icapa/nlp/test-data/notes/pyctakes_notes_in.mimiciii.top3.csv s3://analysis
 // Run the piper file...
-// aws --endpoint-url=http://localhost:4566 s3 cp s3://analysis C:/root/tmp --recursive
+// aws --endpoint-url=http://localhost:4566 s3 cp s3://analysis C:/root/vdt/icapa/nlp/test-data/ --recursive
 

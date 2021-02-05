@@ -8,6 +8,7 @@ import icapa.Util;
 import icapa.models.DelimiterReaderParams;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.log4j.Logger;
+import org.apache.uima.fit.util.LifeCycleUtil;
 import org.apache.uima.jcas.JCas;
 
 import java.io.IOException;

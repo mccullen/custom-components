@@ -1,0 +1,1 @@
+// NOTE: CLI commands only work for AE adds. It doesn't work on the readers for some reason
