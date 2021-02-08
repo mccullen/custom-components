@@ -25,7 +25,6 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
         result._params = params;
         Util.loadDriver(result._params.getDriverClassName());
         result.setConnection();
-        //result.setPreparedStatement();
         return result;
     }
 
@@ -41,11 +40,9 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
         setSupportsBatchUpdates();
         if (_supportsBatchUpdates) {
             // Batch updates supported, so set autocommit to false so you have to explicitly commit
-            // batches of queries. Also, create the batch statement that you will add batch queries to.
+            // batches of queries.
             try {
                 _connection.setAutoCommit(false);
-                //_batchStatement = _connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                //_connection.prepareStatement("",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             } catch (SQLException throwables) {
                 LOGGER.error("Error setting autocommit to false", throwables);
             }
@@ -125,10 +122,12 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
                 _preparedStatement.addBatch();
                 ++_batchIndex;
                 if (_batchIndex >= _params.getBatchSize()) {
+                    LOGGER.info("Executing batch update for ontologies");
                     _batchIndex = 0;
                     executeBatch();
                 }
             } else {
+                LOGGER.info("Executing update for ontology");
                 _preparedStatement.executeUpdate();
                 commit();
             }
@@ -150,7 +149,6 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
         try {
             int i = 1;
             for (HeaderProperties p : _headerProperties) {
-                //String datatype = p.getDataType().toLowerCase();
                 String column = p.getName();
                 switch (column) {
                     case Const.IDENTIFIED_ANNOTATION_ADDRESS_HEADER:

@@ -9,10 +9,12 @@ import java.sql.*;
 
 public class JdbcReaderService implements CollectionReader {
     private static final Logger LOGGER = Logger.getLogger(JdbcReaderService.class.getName());
+    public static final long PING_INTERVAL_IN_MILISECONDS = 3600000; // 1hr
 
     private JdbcReaderParams _params;
     private Statement _statement;
     private ResultSet _resultSet;
+    private long _startTime = System.nanoTime();
 
     public static CollectionReader fromParams(JdbcReaderParams params) {
         JdbcReaderService reader = new JdbcReaderService();
@@ -54,8 +56,18 @@ public class JdbcReaderService implements CollectionReader {
             docIdText = docIdText == null ? "" : docIdText;
             documentId.setDocumentID(docIdText);
             documentId.addToIndexes();
+            pingServerIfElapsedTime();
         } catch (SQLException throwables) {
             LOGGER.error("Error reading next document: ", throwables);
+        }
+    }
+
+    private void pingServerIfElapsedTime() {
+        long time = System.nanoTime();
+        long elapsedTimeInMiliseconds = (time - _startTime)/1000000;
+        if (elapsedTimeInMiliseconds > PING_INTERVAL_IN_MILISECONDS) {
+            LOGGER.info("Pinging server");
+            _startTime = time;
         }
     }
 
