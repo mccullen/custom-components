@@ -1,5 +1,6 @@
 package icapa.services;
 
+import icapa.Util;
 import icapa.models.JdbcReaderParams;
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.log4j.Logger;
@@ -9,7 +10,8 @@ import java.sql.*;
 
 public class JdbcReaderService implements CollectionReader {
     private static final Logger LOGGER = Logger.getLogger(JdbcReaderService.class.getName());
-    public static final long PING_INTERVAL_IN_MILISECONDS = 3600000; // 1hr
+    //public static final long PING_INTERVAL_IN_MILISECONDS = 3600000; // 1hr
+    public static final long PING_INTERVAL_IN_MILISECONDS = 60000;
 
     private JdbcReaderParams _params;
     private Statement _statement;
@@ -67,6 +69,13 @@ public class JdbcReaderService implements CollectionReader {
         long elapsedTimeInMiliseconds = (time - _startTime)/1000000;
         if (elapsedTimeInMiliseconds > PING_INTERVAL_IN_MILISECONDS) {
             LOGGER.info("Pinging server");
+            ResultSet rs = _params.getOntologyConnection().executeQuery("SELECT 1;");
+            try {
+                rs.getStatement().close();
+                rs.close();
+            } catch (SQLException throwables) {
+                Util.logExceptionChain(LOGGER, throwables);
+            }
             _startTime = time;
         }
     }
@@ -79,6 +88,7 @@ public class JdbcReaderService implements CollectionReader {
             result = _resultSet.next();
         } catch (SQLException throwables) {
             LOGGER.error("Error checking for next document", throwables);
+            Util.logExceptionChain(LOGGER, throwables);
         }
         return result;
     }

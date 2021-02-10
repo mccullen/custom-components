@@ -7,4 +7,4 @@ load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
 //add icapa.cc.LocalFileOntologyWriter OutputFile=C:/root/vdt/icapa/nlp/test-data/annotations/ontology-concepts.alpha Delimiter=\u2202
 add icapa.cc.LocalFileOntologyWriter OutputFile=C:/root/vdt/icapa/nlp/test-data/annotations/ontology-concepts.csv KeepAll=true
 //add org.apache.ctakes.core.cc.FileTreeXmiWriter OutputDirectory=C:/root/vdt/icapa/nlp/test-data/annotations
-// RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\custom-components\reference\piper-files\default-pipeline.piper --user jmccullen  --pass jrmWW133$
+// RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\custom-components-repos\custom-components\reference\piper-files\default-pipeline.piper --user jmccullen  --pass jrmWW133$

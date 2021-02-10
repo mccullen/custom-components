@@ -37,6 +37,7 @@ import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -743,16 +744,12 @@ public class Util {
         return next;
     }
 
-    public static void createAnnotationFileIfAbsent(Writer writer) {
-        /*
-        try {
-            _csvWriter = new CSVWriterBuilder(_writer).withSeparator(_delimiter).build();
-            _headers = Util.getOntologyConceptHeaders();
-            _headerToIndex = Util.getKeyToIndex(_headers);
-            _csvWriter.writeNext(_headers, false);
-        } catch (Exception e) {
-            LOGGER.error("Error initializing ontology writer service", e);
+    public static void logExceptionChain(Logger logger, SQLException ex) {
+        logger.error(ex);
+        SQLException nextException = ex.getNextException();
+        while (nextException != null) {
+            logger.error(nextException);
+            nextException = nextException.getNextException();
         }
-         */
     }
 }

@@ -3,7 +3,7 @@ reader icapa.cr.S3DelimiterReader Key=pyctakes_notes_in.mimiciii.top3.csv Bucket
 load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
 add icapa.cc.S3FileOntologyWriter KeepAll=true Key=ontology Bucket=analysis
 
-// RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\custom-components\reference\piper-files\s3.piper --key <key>
+// RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\custom-components-repos\custom-components\reference\piper-files\s3.piper --key <key>
 
 // localstack start
 // aws configure (use any fake credentials and I used us-east-1 region)
