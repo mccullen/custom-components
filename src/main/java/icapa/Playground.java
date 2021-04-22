@@ -1,21 +1,53 @@
 package icapa;
 
+import icapa.ae.MyAnnotator;
 import icapa.models.Ontology;
+import org.apache.ctakes.clinicalpipeline.ClinicalPipelineFactory;
+import org.apache.ctakes.core.pipeline.PipelineBuilder;
+import org.apache.ctakes.core.pipeline.PiperFileReader;
+import org.apache.ctakes.core.util.PropertyAeFactory;
+import org.apache.ctakes.dictionary.lookup2.util.UmlsUserApprover;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.fit.factory.AggregateBuilder;
+import org.apache.uima.fit.factory.JCasFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
+import org.apache.uima.jcas.JCas;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Test {
-    public Integer i;
-}
 public class Playground {
 
     public static void main(String[] args) throws Exception {
-        //Test t = new Test();
-        //System.out.println(t.i);
-        Integer i = null;
-        System.out.println(i instanceof Integer);
-        Integer j = 1;
-        System.out.println(j instanceof Integer);
+        System.setProperty(UmlsUserApprover.KEY_PARAM, "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
+        /*
+        System.setProperty("umls.key", "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
+        System.setProperty("ctakes.umls_apikey", "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
+        System.setProperty("ctakes.umlsaddr", "https://utslogin.nlm.nih.gov/cas/v1/api-key");
+        PropertyAeFactory.getInstance().addParameters(UmlsUserApprover.KEY_PARAM, "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
+
+         */
+
+        JCas jCas = JCasFactory.createJCas();
+        jCas.setDocumentText("The patient had traumatic brain injury. Reported headaches");
+        AnalysisEngineDescription aed = ClinicalPipelineFactory.getDefaultPipeline();
+        SimplePipeline.runPipeline(jCas, aed);
+/*
+        PipelineBuilder pipelineBuilder = new PipelineBuilder();
+        pipelineBuilder.set(UmlsUserApprover.KEY_PARAM, "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
+        AnalysisEngineDescription aed = ClinicalPipelineFactory.getDefaultPipeline();
+        pipelineBuilder.addDescription(aed);
+
+        //pipelineBuilder.add(MyAnnotator.class);
+        pipelineBuilder.run("The patient had tbi");
+ */
+        /*
+        PiperFileReader piperReader = new PiperFileReader();
+        PipelineBuilder builder = piperReader.getBuilder();
+        builder.set("umlsKey", "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
+        //piperReader.loadPipelineFile(Runner.MAIN_PIPER);
+        //piperReader.loadPipelineFile("C:/root/vdt/icapa/nlp/custom-components-repos/custom-components/reference/piper-files/default.piper");
+        builder.run("tesing on tbi paitent");
+         */
     }
 }

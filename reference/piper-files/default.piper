@@ -1,0 +1,2 @@
+// Default Clinical Pipeline
+load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
