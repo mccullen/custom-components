@@ -6,29 +6,31 @@
 
     <groupId>org.example</groupId>
     <artifactId>custom-components</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <mainClass>icapa.Main</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -40,41 +42,10 @@
                     <target>8</target>
                 </configuration>
             </plugin>
-
-            <!-- The teradata jdbc
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>3.0.0-M1</version>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>install-file</goal>
-                        </goals>
-                        <configuration>
-                            <file>lib/terajdbc4.jar</file>
-                            <version>1.0</version>
-                            <groupId>com</groupId>
-                            <artifactId>teradata-jdbc</artifactId>
-                            <packaging>jar</packaging>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin> -->
         </plugins>
-
-
     </build>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql_2.11</artifactId>
-            <version>2.1.1</version>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.ctakes</groupId>
             <artifactId>ctakes-core</artifactId>
@@ -111,34 +82,16 @@
             <version>5.3</version>
         </dependency>
 
-        <!-- IMPORTANT NOTE: You MUST use spark version 2 (not 3) -->
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.11</artifactId>
-            <version>2.1.1</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+        <!-- AWS dependencies for s3 -->
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-s3</artifactId>
             <version>1.11.924</version>
         </dependency>
-
         <dependency>
             <groupId>cloud.localstack</groupId>
             <artifactId>localstack-utils</artifactId>
             <version>0.2.2</version>
         </dependency>
-
-        <!--
-        <dependency>
-            <groupId>com</groupId>
-            <artifactId>teradata-jdbc</artifactId>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/terajdbc4.jar</systemPath>
-        </dependency>
-        -->
     </dependencies>
-
 </project>
