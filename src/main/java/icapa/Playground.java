@@ -20,19 +20,19 @@ public class Playground {
 
     public static void main(String[] args) throws Exception {
         System.setProperty(UmlsUserApprover.KEY_PARAM, "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
-        /*
-        System.setProperty("umls.key", "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
-        System.setProperty("ctakes.umls_apikey", "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
-        System.setProperty("ctakes.umlsaddr", "https://utslogin.nlm.nih.gov/cas/v1/api-key");
-        PropertyAeFactory.getInstance().addParameters(UmlsUserApprover.KEY_PARAM, "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
+        //test1();
+        //test2();
+        test3();
+    }
 
-         */
-
+    private static void test1() throws Exception {
+        //System.setProperty(UmlsUserApprover.KEY_PARAM, "my-umls-key");
         JCas jCas = JCasFactory.createJCas();
         jCas.setDocumentText("The patient had traumatic brain injury. Reported headaches");
         AnalysisEngineDescription aed = ClinicalPipelineFactory.getDefaultPipeline();
         SimplePipeline.runPipeline(jCas, aed);
-/*
+    }
+    private static void test2() throws Exception {
         PipelineBuilder pipelineBuilder = new PipelineBuilder();
         pipelineBuilder.set(UmlsUserApprover.KEY_PARAM, "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
         AnalysisEngineDescription aed = ClinicalPipelineFactory.getDefaultPipeline();
@@ -40,14 +40,14 @@ public class Playground {
 
         //pipelineBuilder.add(MyAnnotator.class);
         pipelineBuilder.run("The patient had tbi");
- */
-        /*
+    }
+
+    private static void test3() throws Exception {
+        // Works
         PiperFileReader piperReader = new PiperFileReader();
         PipelineBuilder builder = piperReader.getBuilder();
         builder.set("umlsKey", "08cde565-a6b0-4a50-8035-1a3d6ceb3835");
-        //piperReader.loadPipelineFile(Runner.MAIN_PIPER);
-        //piperReader.loadPipelineFile("C:/root/vdt/icapa/nlp/custom-components-repos/custom-components/reference/piper-files/default.piper");
+        piperReader.loadPipelineFile("C:/root/vdt/icapa/nlp/custom-components-repos/custom-components/reference/piper-files/default.piper");
         builder.run("tesing on tbi paitent");
-         */
     }
 }
