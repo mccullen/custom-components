@@ -5,7 +5,6 @@ import icapa.services.CollectionReader;
 import icapa.services.DelimiterReaderService;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
-import org.apache.uima.collection.CollectionException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -13,7 +12,6 @@ import org.apache.uima.util.Progress;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 
 public class DelimiterReader extends AbstractDelimiterReader {
     static private final Logger LOGGER = Logger.getLogger(DelimiterReader.class.getName());

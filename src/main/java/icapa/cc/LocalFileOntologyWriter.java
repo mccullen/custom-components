@@ -1,7 +1,9 @@
 package icapa.cc;
 
-import icapa.cc.AbstractFileOntologyWriter;
-import icapa.services.*;
+import icapa.services.AnalysisEngine;
+import icapa.services.FileOntologyConsumer;
+import icapa.services.OntologyConsumer;
+import icapa.services.OntologyWriterService;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;

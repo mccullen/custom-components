@@ -1,14 +1,16 @@
 package icapa.cc;
 
-import icapa.cc.AbstractFileOntologyWriter;
-import icapa.services.*;
+import icapa.services.AnalysisEngine;
+import icapa.services.OntologyConsumer;
+import icapa.services.OntologyWriterService;
+import icapa.services.S3OntologyConsumer;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import java.io.*;
+import java.io.IOException;
 
 public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
     static public final String PARAM_BUCKET = "Bucket";
