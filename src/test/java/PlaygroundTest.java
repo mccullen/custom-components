@@ -3,16 +3,34 @@ import org.apache.ctakes.core.pipeline.PiperFileReader;
 import org.apache.ctakes.dictionary.lookup2.util.UmlsUserApprover;
 import org.junit.Test;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class PlaygroundTest {
     @Test
-    public void test() throws Exception {
+    public void testPipeline() throws Exception {
         // set, load, build
         System.out.println(System.getProperty("user.dir"));
         PiperFileReader piperFileReader = new PiperFileReader();
         PipelineBuilder pipelineBuilder = piperFileReader.getBuilder();
-        pipelineBuilder.set(UmlsUserApprover.KEY_PARAM, "TODO");
-        piperFileReader.loadPipelineFile("TODO");
+        String umlsKey = getProperty("umls.key");
+        pipelineBuilder.set(UmlsUserApprover.KEY_PARAM, umlsKey);
+        piperFileReader.loadPipelineFile("./reference/piper-files/stress-test.piper");
         pipelineBuilder.run();
+    }
 
+    public static final String getProperty(String key) {
+        String property = "";
+        try {
+            InputStream input = new FileInputStream("config.properties");
+            Properties props = new Properties();
+            props.load(input);
+            property = props.getProperty(key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return property;
     }
 }
