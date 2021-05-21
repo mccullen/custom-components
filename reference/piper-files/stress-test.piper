@@ -1,3 +1,3 @@
 reader icapa.cr.StressTestReader NDocuments=10
-add icapa.cc.BaseWriter
+add icapa.ae.TimeAnnotator
 load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper

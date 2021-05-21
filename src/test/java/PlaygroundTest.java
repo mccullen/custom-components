@@ -12,7 +12,6 @@ public class PlaygroundTest {
     @Test
     public void testPipeline() throws Exception {
         // set, load, build
-        System.out.println(System.getProperty("user.dir"));
         PiperFileReader piperFileReader = new PiperFileReader();
         PipelineBuilder pipelineBuilder = piperFileReader.getBuilder();
         String umlsKey = getProperty("umls.key");

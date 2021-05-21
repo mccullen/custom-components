@@ -1,4 +1,4 @@
-package icapa.cc;
+package icapa.ae;
 
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
@@ -7,8 +7,8 @@ import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-public class BaseWriter  extends JCasAnnotator_ImplBase {
-    public static final Logger LOGGER = Logger.getLogger(BaseWriter.class.getName());
+public class TimeAnnotator extends JCasAnnotator_ImplBase {
+    public static final Logger LOGGER = Logger.getLogger(TimeAnnotator.class.getName());
 
     private long _startTime;
 

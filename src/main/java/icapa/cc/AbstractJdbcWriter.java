@@ -6,12 +6,13 @@ import icapa.models.JdbcWriterParams;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 // TODO
-public abstract class AbstractJdbcWriter extends BaseWriter {
+public abstract class AbstractJdbcWriter extends JCasAnnotator_ImplBase {
     private static final Logger LOGGER = Logger.getLogger(AbstractJdbcWriter.class.getName());
 
     @ConfigurationParameter(

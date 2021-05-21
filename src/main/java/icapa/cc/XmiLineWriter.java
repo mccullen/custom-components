@@ -2,6 +2,7 @@ package icapa.cc;
 
 import com.opencsv.CSVWriter;
 import icapa.Util;
+import icapa.ae.TimeAnnotator;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -18,7 +19,7 @@ import java.io.IOException;
 /**
  * For each document, write the XMI as a single line to the OutputFile
  * */
-public class XmiLineWriter extends BaseWriter {
+public class XmiLineWriter extends TimeAnnotator {
     static private final Logger LOGGER = Logger.getLogger(XmiLineWriter.class.getName());
 
     static public final String PARAM_OUTPUT_FILE = "OutputFile";

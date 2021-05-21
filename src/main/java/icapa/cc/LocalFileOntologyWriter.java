@@ -4,6 +4,7 @@ import icapa.services.AnalysisEngine;
 import icapa.services.FileOntologyConsumer;
 import icapa.services.OntologyConsumer;
 import icapa.services.OntologyWriterService;
+import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -17,6 +18,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class LocalFileOntologyWriter extends AbstractFileOntologyWriter {
+    private static final Logger LOGGER = Logger.getLogger(LocalFileOntologyWriter.class.getName());
+
     static public final String PARAM_OUTPUT_FILE = "OutputFile";
     @ConfigurationParameter(
         name = PARAM_OUTPUT_FILE,

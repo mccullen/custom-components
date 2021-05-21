@@ -4,6 +4,7 @@ import icapa.services.AnalysisEngine;
 import icapa.services.OntologyConsumer;
 import icapa.services.OntologyWriterService;
 import icapa.services.S3OntologyConsumer;
+import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -13,6 +14,8 @@ import org.apache.uima.resource.ResourceInitializationException;
 import java.io.IOException;
 
 public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
+    private static final Logger LOGGER = Logger.getLogger(S3FileOntologyWriter.class.getName());
+
     static public final String PARAM_BUCKET = "Bucket";
 
     // Configuration parameters
