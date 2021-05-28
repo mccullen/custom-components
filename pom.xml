@@ -46,10 +46,11 @@
     </build>
 
     <dependencies>
+        <!-- ctakes -->
         <dependency>
             <groupId>org.apache.ctakes</groupId>
             <artifactId>ctakes-core</artifactId>
-            <version>4.0.0.1</version>
+            <version>4.0.1-SNAPSHOT</version>
             <!-- Exclude from jar-with-dependencies because it is already in CTAKES_HOME/lib -->
             <!--<scope>provided</scope>-->
         </dependency>
@@ -60,6 +61,7 @@
             <!-- Exclude from jar-with-dependencies because it is already in CTAKES_HOME/lib -->
             <!--<scope>provided</scope>-->
         </dependency>
+
         <dependency>
             <groupId>org.apache.uima</groupId>
             <artifactId>uimafit-core</artifactId>
