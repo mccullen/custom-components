@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.FSArray;
 
 public class DisorderRegexAnnotator extends JCasAnnotator_ImplBase {
     public static final Logger LOGGER = Logger.getLogger(DisorderRegexAnnotator.class.getName());
-    public static final int NE_DISCOVERY_TECH_EXPLICIT_AE = 1;
+    public static final int NE_DISCOVERY_TECH_EXPLICIT_AE = 3;
 
     public static final String PARAM_REGEX = "Regex";
     @ConfigurationParameter(
