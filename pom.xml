@@ -44,39 +44,26 @@
             </plugin>
         </plugins>
     </build>
-
+    <properties>
+        <ctakes.version>4.0.0.1</ctakes.version>
+    </properties>
     <dependencies>
+
         <!-- ctakes -->
         <dependency>
             <groupId>org.apache.ctakes</groupId>
             <artifactId>ctakes-core</artifactId>
-            <version>4.0.1-SNAPSHOT</version>
+            <version>${ctakes.version}</version>
             <!-- Exclude from jar-with-dependencies because it is already in CTAKES_HOME/lib -->
             <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.apache.ctakes</groupId>
             <artifactId>ctakes-clinical-pipeline</artifactId>
-            <version>4.0.0.1</version>
+            <version>${ctakes.version}</version>
             <!-- Exclude from jar-with-dependencies because it is already in CTAKES_HOME/lib -->
             <!--<scope>provided</scope>-->
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.uima</groupId>
-            <artifactId>uimafit-core</artifactId>
-            <version>2.0.0</version>
-            <!-- Exclude from jar-with-dependencies because it is already in CTAKES_HOME/lib -->
-            <!--<scope>provided</scope>-->
-        </dependency>
-        <!--
-        Note: Don't use this newer version of uima-fit. See: http://mail-archives.apache.org/mod_mbox/ctakes-user/201804.mbox/%3C6ac8fa37-487e-290a-ad2f-e4bacb9964f4@clinacuity.com%3E
-        <dependency>
-            <groupId>org.apache.uima</groupId>
-            <artifactId>uimafit-core</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        -->
 
         <dependency>
             <groupId>com.opencsv</groupId>

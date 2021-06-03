@@ -1,6 +1,8 @@
+import org.apache.ctakes.core.config.ConfigParameterConstants;
 import org.apache.ctakes.core.pipeline.PipelineBuilder;
 import org.apache.ctakes.core.pipeline.PiperFileReader;
 import org.apache.ctakes.dictionary.lookup2.util.UmlsUserApprover;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.FileInputStream;
@@ -16,7 +18,9 @@ public class PlaygroundTest {
         PipelineBuilder pipelineBuilder = piperFileReader.getBuilder();
         String umlsKey = getProperty("umls.key");
         pipelineBuilder.set(UmlsUserApprover.KEY_PARAM, umlsKey);
-        piperFileReader.loadPipelineFile("./reference/piper-files/stress-test.piper");
+        pipelineBuilder.set(ConfigParameterConstants.PARAM_LOOKUP_XML, "org/apache/ctakes/dictionary/lookup/fast/icd.xml");
+        //piperFileReader.loadPipelineFile("./reference/piper-files/stress-test.piper");
+        piperFileReader.loadPipelineFile("./reference/piper-files/disorder-ae.piper");
         pipelineBuilder.run();
     }
 
@@ -32,4 +36,5 @@ public class PlaygroundTest {
         }
         return property;
     }
+
 }

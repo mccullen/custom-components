@@ -28,5 +28,6 @@ hs_err_pid*
 target/**/*
 
 out/ctakes.log
+out/**/*
 
 config.properties

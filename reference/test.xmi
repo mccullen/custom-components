@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI
+	xmlns:util="http:///org/apache/ctakes/typesystem/type/util.ecore"
+	xmlns:tcas="http:///uima/tcas.ecore"
+	xmlns:xmi="http://www.omg.org/XMI"
+	xmlns:cas="http:///uima/cas.ecore"
+	xmlns:type10="http:///org/cleartk/syntax/constituent/type.ecore"
+	xmlns:ne="http:///org/cleartk/type/ne.ecore"
+	xmlns:textsem="http:///org/apache/ctakes/typesystem/type/textsem.ecore"
+	xmlns:types2="http:///org/apache/ctakes/assertion/zoner/types.ecore"
+	xmlns:type6="http:///org/apache/ctakes/smokingstatus/i2b2/type.ecore"
+	xmlns:refsem="http:///org/apache/ctakes/typesystem/type/refsem.ecore"
+	xmlns:type11="http:///org/cleartk/syntax/dependency/type.ecore"
+	xmlns:type="http:///de/tudarmstadt/ukp/dkpro/core/api/metadata/type.ecore"
+	xmlns:type14="http:///org/cleartk/util/type.ecore"
+	xmlns:assertion="http:///org/apache/ctakes/typesystem/type/temporary/assertion.ecore"
+	xmlns:type8="http:///org/cleartk/score/type.ecore"
+	xmlns:syntax="http:///org/apache/ctakes/typesystem/type/syntax.ecore"
+	xmlns:type9="http:///org/cleartk/srl/type.ecore"
+	xmlns:type2="http:///org/apache/ctakes/constituency/parser/uima/type.ecore"
+	xmlns:types="http:///org/apache/ctakes/assertion/medfacts/types.ecore"
+	xmlns:type7="http:///org/apache/ctakes/smokingstatus/type.ecore"
+	xmlns:relation="http:///org/apache/ctakes/typesystem/type/relation.ecore"
+	xmlns:type12="http:///org/cleartk/timeml/type.ecore"
+	xmlns:type5="http:///org/apache/ctakes/sideeffect/type.ecore"
+	xmlns:type15="http:///org/cleartk/ne/type.ecore"
+	xmlns:type13="http:///org/cleartk/token/type.ecore"
+	xmlns:structured="http:///org/apache/ctakes/typesystem/type/structured.ecore"
+	xmlns:textspan="http:///org/apache/ctakes/typesystem/type/textspan.ecore"
+	xmlns:libsvm="http:///org/apache/ctakes/smokingstatus/type/libsvm.ecore"
+	xmlns:type3="http:///org/apache/ctakes/coreference/type.ecore"
+	xmlns:type4="http:///org/apache/ctakes/drugner/type.ecore" xmi:version="2.0">
+	<cas:NULL xmi:id="0"/>
+	<tcas:DocumentAnnotation xmi:id="8" sofa="1" begin="0" end="1149" language="x-unspecified"/>
+	<structured:DocumentID xmi:id="13" documentID="1"/>
+	<structured:DocumentIdPrefix xmi:id="15" documentIdPrefix=""/>
+	<structured:DocumentPath xmi:id="17" documentPath="C:\root\vdt\icapa\nlp\SparkStreamingCTK\test-files\1.txt"/>
+	<textspan:Segment xmi:id="19" sofa="1" begin="0" end="1149" id="SIMPLE_SEGMENT"/>
+	<textspan:Sentence xmi:id="25" sofa="1" begin="0" end="165" sentenceNumber="0"/>
+	<textspan:Sentence xmi:id="31" sofa="1" begin="166" end="351" sentenceNumber="1"/>
+	<textspan:Sentence xmi:id="37" sofa="1" begin="352" end="684" sentenceNumber="2"/>
+	<textspan:Sentence xmi:id="43" sofa="1" begin="685" end="858" sentenceNumber="3"/>
+	<textspan:Sentence xmi:id="49" sofa="1" begin="859" end="974" sentenceNumber="4"/>
+	<textspan:Sentence xmi:id="55" sofa="1" begin="975" end="1149" sentenceNumber="5"/>
+	<syntax:WordToken xmi:id="61" sofa="1" begin="0" end="8" tokenNumber="0" partOfSpeech="NN" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="81" sofa="1" begin="9" end="17" tokenNumber="2" partOfSpeech="NN" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="101" sofa="1" begin="19" end="23" tokenNumber="4" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="129" sofa="1" begin="26" end="27" tokenNumber="7" partOfSpeech="DT" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="141" sofa="1" begin="28" end="37" tokenNumber="8" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="153" sofa="1" begin="38" end="46" tokenNumber="9" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="165" sofa="1" begin="47" end="49" tokenNumber="10" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="177" sofa="1" begin="50" end="53" tokenNumber="11" partOfSpeech="DT" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="189" sofa="1" begin="54" end="56" tokenNumber="12" partOfSpeech="NN" capitalization="1" numPosition="3"/>
+	<syntax:WordToken xmi:id="201" sofa="1" begin="57" end="66" tokenNumber="13" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="213" sofa="1" begin="67" end="73" tokenNumber="14" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="225" sofa="1" begin="74" end="81" tokenNumber="15" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="237" sofa="1" begin="82" end="90" tokenNumber="16" partOfSpeech="NN" capitalization="2" numPosition="2"/>
+	<syntax:WordToken xmi:id="257" sofa="1" begin="92" end="94" tokenNumber="18" partOfSpeech="VBZ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="269" sofa="1" begin="95" end="98" tokenNumber="19" partOfSpeech="DT" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="281" sofa="1" begin="99" end="105" tokenNumber="20" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="293" sofa="1" begin="106" end="108" tokenNumber="21" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="305" sofa="1" begin="109" end="128" tokenNumber="22" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="317" sofa="1" begin="129" end="134" tokenNumber="23" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="329" sofa="1" begin="135" end="147" tokenNumber="24" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="341" sofa="1" begin="148" end="151" tokenNumber="25" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="353" sofa="1" begin="152" end="164" tokenNumber="26" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="373" sofa="1" begin="166" end="174" tokenNumber="28" partOfSpeech="RB" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="393" sofa="1" begin="176" end="178" tokenNumber="30" partOfSpeech="PRP" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="405" sofa="1" begin="179" end="182" tokenNumber="31" partOfSpeech="VBD" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="417" sofa="1" begin="183" end="195" tokenNumber="32" partOfSpeech="VBN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="429" sofa="1" begin="196" end="200" tokenNumber="33" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="441" sofa="1" begin="201" end="208" tokenNumber="34" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="453" sofa="1" begin="209" end="211" tokenNumber="35" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="465" sofa="1" begin="212" end="222" tokenNumber="36" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="477" sofa="1" begin="223" end="225" tokenNumber="37" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="489" sofa="1" begin="226" end="230" tokenNumber="38" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="501" sofa="1" begin="231" end="239" tokenNumber="39" partOfSpeech="VBZ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="513" sofa="1" begin="240" end="243" tokenNumber="40" partOfSpeech="DT" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="525" sofa="1" begin="244" end="258" tokenNumber="41" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="537" sofa="1" begin="259" end="262" tokenNumber="42" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="549" sofa="1" begin="263" end="273" tokenNumber="43" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="561" sofa="1" begin="274" end="285" tokenNumber="44" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="573" sofa="1" begin="286" end="288" tokenNumber="45" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="585" sofa="1" begin="289" end="292" tokenNumber="46" partOfSpeech="CD" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="597" sofa="1" begin="293" end="299" tokenNumber="47" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="609" sofa="1" begin="300" end="310" tokenNumber="48" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="629" sofa="1" begin="312" end="332" tokenNumber="50" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="641" sofa="1" begin="333" end="339" tokenNumber="51" partOfSpeech="NNP" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="653" sofa="1" begin="340" end="343" tokenNumber="52" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="665" sofa="1" begin="344" end="350" tokenNumber="53" partOfSpeech="NNP" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="685" sofa="1" begin="352" end="356" tokenNumber="55" partOfSpeech="RB" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="697" sofa="1" begin="357" end="359" tokenNumber="56" partOfSpeech="PRP" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="709" sofa="1" begin="360" end="366" tokenNumber="57" partOfSpeech="VBP" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="721" sofa="1" begin="367" end="371" tokenNumber="58" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="733" sofa="1" begin="372" end="375" tokenNumber="59" partOfSpeech="DT" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="745" sofa="1" begin="376" end="387" tokenNumber="60" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="757" sofa="1" begin="388" end="395" tokenNumber="61" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="769" sofa="1" begin="396" end="404" tokenNumber="62" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="781" sofa="1" begin="405" end="407" tokenNumber="63" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="818" sofa="1" begin="413" end="414" tokenNumber="67" partOfSpeech="DT" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="830" sofa="1" begin="415" end="418" tokenNumber="68" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="842" sofa="1" begin="419" end="427" tokenNumber="69" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="854" sofa="1" begin="428" end="440" tokenNumber="70" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="866" sofa="1" begin="441" end="452" tokenNumber="71" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="878" sofa="1" begin="453" end="460" tokenNumber="72" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="890" sofa="1" begin="461" end="469" tokenNumber="73" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="902" sofa="1" begin="470" end="475" tokenNumber="74" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="914" sofa="1" begin="476" end="480" tokenNumber="75" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="926" sofa="1" begin="481" end="484" tokenNumber="76" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="938" sofa="1" begin="485" end="493" tokenNumber="77" partOfSpeech="VBZ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="950" sofa="1" begin="494" end="505" tokenNumber="78" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="962" sofa="1" begin="506" end="508" tokenNumber="79" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="974" sofa="1" begin="509" end="515" tokenNumber="80" partOfSpeech="NNP" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="986" sofa="1" begin="516" end="519" tokenNumber="81" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="998" sofa="1" begin="520" end="526" tokenNumber="82" partOfSpeech="NNP" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="1010" sofa="1" begin="527" end="529" tokenNumber="83" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1022" sofa="1" begin="530" end="537" tokenNumber="84" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1034" sofa="1" begin="538" end="544" tokenNumber="85" partOfSpeech="JJ" capitalization="2" numPosition="0"/>
+	<syntax:WordToken xmi:id="1054" sofa="1" begin="545" end="549" tokenNumber="87" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1066" sofa="1" begin="550" end="558" tokenNumber="88" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1086" sofa="1" begin="560" end="565" tokenNumber="90" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="1106" sofa="1" begin="567" end="570" tokenNumber="92" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1118" sofa="1" begin="571" end="572" tokenNumber="93" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="1130" sofa="1" begin="573" end="578" tokenNumber="94" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1142" sofa="1" begin="579" end="581" tokenNumber="95" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1154" sofa="1" begin="582" end="587" tokenNumber="96" partOfSpeech="FW" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1174" sofa="1" begin="589" end="591" tokenNumber="98" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1186" sofa="1" begin="592" end="596" tokenNumber="99" partOfSpeech="FW" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1198" sofa="1" begin="597" end="600" tokenNumber="100" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1210" sofa="1" begin="601" end="603" tokenNumber="101" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1222" sofa="1" begin="604" end="612" tokenNumber="102" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1242" sofa="1" begin="614" end="623" tokenNumber="104" partOfSpeech="VBG" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1254" sofa="1" begin="624" end="626" tokenNumber="105" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1266" sofa="1" begin="627" end="631" tokenNumber="106" partOfSpeech="DT" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1278" sofa="1" begin="632" end="636" tokenNumber="107" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1290" sofa="1" begin="637" end="647" tokenNumber="108" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1302" sofa="1" begin="648" end="650" tokenNumber="109" partOfSpeech="RB" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1314" sofa="1" begin="651" end="655" tokenNumber="110" partOfSpeech="RB" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1326" sofa="1" begin="656" end="675" tokenNumber="111" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1338" sofa="1" begin="676" end="683" tokenNumber="112" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1358" sofa="1" begin="685" end="687" tokenNumber="114" partOfSpeech="IN" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="1370" sofa="1" begin="688" end="693" tokenNumber="115" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="1382" sofa="1" begin="694" end="698" tokenNumber="116" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1394" sofa="1" begin="699" end="704" tokenNumber="117" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1414" sofa="1" begin="706" end="708" tokenNumber="119" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="1451" sofa="1" begin="713" end="720" tokenNumber="123" partOfSpeech="VBN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1463" sofa="1" begin="721" end="732" tokenNumber="124" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1475" sofa="1" begin="733" end="735" tokenNumber="125" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1487" sofa="1" begin="736" end="741" tokenNumber="126" partOfSpeech="NN" capitalization="2" numPosition="0"/>
+	<syntax:WordToken xmi:id="1499" sofa="1" begin="742" end="750" tokenNumber="127" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1511" sofa="1" begin="751" end="760" tokenNumber="128" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1523" sofa="1" begin="761" end="769" tokenNumber="129" partOfSpeech="NN" capitalization="2" numPosition="0"/>
+	<syntax:WordToken xmi:id="1535" sofa="1" begin="770" end="773" tokenNumber="130" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1547" sofa="1" begin="774" end="780" tokenNumber="131" partOfSpeech="NNS" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="1559" sofa="1" begin="781" end="791" tokenNumber="132" partOfSpeech="VBZ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1571" sofa="1" begin="792" end="796" tokenNumber="133" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1583" sofa="1" begin="797" end="806" tokenNumber="134" partOfSpeech="VBN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1595" sofa="1" begin="807" end="820" tokenNumber="135" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1607" sofa="1" begin="821" end="823" tokenNumber="136" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1619" sofa="1" begin="824" end="834" tokenNumber="137" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1631" sofa="1" begin="835" end="845" tokenNumber="138" partOfSpeech="VBN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1643" sofa="1" begin="846" end="851" tokenNumber="139" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1663" sofa="1" begin="853" end="857" tokenNumber="141" partOfSpeech="NNS" capitalization="2" numPosition="0"/>
+	<syntax:WordToken xmi:id="1683" sofa="1" begin="859" end="870" tokenNumber="143" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1695" sofa="1" begin="871" end="883" tokenNumber="144" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1707" sofa="1" begin="884" end="894" tokenNumber="145" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1719" sofa="1" begin="895" end="898" tokenNumber="146" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1739" sofa="1" begin="899" end="901" tokenNumber="148" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1751" sofa="1" begin="902" end="911" tokenNumber="149" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1763" sofa="1" begin="912" end="915" tokenNumber="150" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1775" sofa="1" begin="916" end="923" tokenNumber="151" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1787" sofa="1" begin="924" end="926" tokenNumber="152" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1799" sofa="1" begin="927" end="936" tokenNumber="153" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1811" sofa="1" begin="937" end="939" tokenNumber="154" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1823" sofa="1" begin="940" end="944" tokenNumber="155" partOfSpeech="DT" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1835" sofa="1" begin="945" end="948" tokenNumber="156" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="1847" sofa="1" begin="949" end="952" tokenNumber="157" partOfSpeech="CC" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1859" sofa="1" begin="953" end="956" tokenNumber="158" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="1879" sofa="1" begin="957" end="962" tokenNumber="160" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="1891" sofa="1" begin="963" end="967" tokenNumber="161" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1903" sofa="1" begin="968" end="973" tokenNumber="162" partOfSpeech="NNS" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1923" sofa="1" begin="975" end="985" tokenNumber="164" partOfSpeech="NNS" capitalization="1" numPosition="0"/>
+	<syntax:WordToken xmi:id="1935" sofa="1" begin="986" end="993" tokenNumber="165" partOfSpeech="VBP" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1947" sofa="1" begin="994" end="1005" tokenNumber="166" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1959" sofa="1" begin="1006" end="1013" tokenNumber="167" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1971" sofa="1" begin="1014" end="1018" tokenNumber="168" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1983" sofa="1" begin="1019" end="1022" tokenNumber="169" partOfSpeech="DT" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="1995" sofa="1" begin="1023" end="1027" tokenNumber="170" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2007" sofa="1" begin="1028" end="1030" tokenNumber="171" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2019" sofa="1" begin="1031" end="1037" tokenNumber="172" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2031" sofa="1" begin="1038" end="1049" tokenNumber="173" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2043" sofa="1" begin="1050" end="1063" tokenNumber="174" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2055" sofa="1" begin="1064" end="1072" tokenNumber="175" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2067" sofa="1" begin="1073" end="1075" tokenNumber="176" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2079" sofa="1" begin="1076" end="1078" tokenNumber="177" partOfSpeech="NN" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="2116" sofa="1" begin="1084" end="1086" tokenNumber="181" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2128" sofa="1" begin="1087" end="1097" tokenNumber="182" partOfSpeech="VBG" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2140" sofa="1" begin="1098" end="1101" tokenNumber="183" partOfSpeech="DT" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2152" sofa="1" begin="1102" end="1105" tokenNumber="184" partOfSpeech="JJ" capitalization="3" numPosition="0"/>
+	<syntax:WordToken xmi:id="2164" sofa="1" begin="1106" end="1113" tokenNumber="185" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2176" sofa="1" begin="1114" end="1123" tokenNumber="186" partOfSpeech="JJ" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2188" sofa="1" begin="1124" end="1132" tokenNumber="187" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2200" sofa="1" begin="1133" end="1135" tokenNumber="188" partOfSpeech="IN" capitalization="0" numPosition="0"/>
+	<syntax:WordToken xmi:id="2212" sofa="1" begin="1136" end="1148" tokenNumber="189" partOfSpeech="NN" capitalization="0" numPosition="0"/>
+	<syntax:PunctuationToken xmi:id="73" sofa="1" begin="8" end="9" tokenNumber="1" partOfSpeech=":"/>
+	<syntax:PunctuationToken xmi:id="93" sofa="1" begin="18" end="19" tokenNumber="3" partOfSpeech="-LRB-"/>
+	<syntax:PunctuationToken xmi:id="113" sofa="1" begin="23" end="24" tokenNumber="5" partOfSpeech="-RRB-"/>
+	<syntax:PunctuationToken xmi:id="121" sofa="1" begin="24" end="25" tokenNumber="6" partOfSpeech=","/>
+	<syntax:PunctuationToken xmi:id="249" sofa="1" begin="90" end="91" tokenNumber="17" partOfSpeech=","/>
+	<syntax:PunctuationToken xmi:id="365" sofa="1" begin="164" end="165" tokenNumber="27" partOfSpeech="."/>
+	<syntax:PunctuationToken xmi:id="385" sofa="1" begin="174" end="175" tokenNumber="29" partOfSpeech=","/>
+	<syntax:PunctuationToken xmi:id="621" sofa="1" begin="310" end="311" tokenNumber="49" partOfSpeech=","/>
+	<syntax:PunctuationToken xmi:id="677" sofa="1" begin="350" end="351" tokenNumber="54" partOfSpeech="."/>
+	<syntax:PunctuationToken xmi:id="793" sofa="1" begin="407" end="408" tokenNumber="64" partOfSpeech="HYPH"/>
+	<syntax:PunctuationToken xmi:id="810" sofa="1" begin="411" end="412" tokenNumber="66" partOfSpeech=","/>
+	<syntax:PunctuationToken xmi:id="1046" sofa="1" begin="544" end="545" tokenNumber="86" partOfSpeech="HYPH"/>
+	<syntax:PunctuationToken xmi:id="1078" sofa="1" begin="559" end="560" tokenNumber="89" partOfSpeech="-LRB-"/>
+	<syntax:PunctuationToken xmi:id="1098" sofa="1" begin="565" end="566" tokenNumber="91" partOfSpeech="-RRB-"/>
+	<syntax:PunctuationToken xmi:id="1166" sofa="1" begin="587" end="588" tokenNumber="97" partOfSpeech=","/>
+	<syntax:PunctuationToken xmi:id="1234" sofa="1" begin="612" end="613" tokenNumber="103" partOfSpeech=","/>
+	<syntax:PunctuationToken xmi:id="1350" sofa="1" begin="683" end="684" tokenNumber="113" partOfSpeech="."/>
+	<syntax:PunctuationToken xmi:id="1406" sofa="1" begin="704" end="705" tokenNumber="118" partOfSpeech=","/>
+	<syntax:PunctuationToken xmi:id="1426" sofa="1" begin="708" end="709" tokenNumber="120" partOfSpeech="HYPH"/>
+	<syntax:PunctuationToken xmi:id="1443" sofa="1" begin="712" end="713" tokenNumber="122" partOfSpeech="HYPH"/>
+	<syntax:PunctuationToken xmi:id="1655" sofa="1" begin="852" end="853" tokenNumber="140" partOfSpeech="-LRB-"/>
+	<syntax:PunctuationToken xmi:id="1675" sofa="1" begin="857" end="858" tokenNumber="142" partOfSpeech="-RRB-"/>
+	<syntax:PunctuationToken xmi:id="1731" sofa="1" begin="898" end="899" tokenNumber="147" partOfSpeech="HYPH"/>
+	<syntax:PunctuationToken xmi:id="1871" sofa="1" begin="956" end="957" tokenNumber="159" partOfSpeech="HYPH"/>
+	<syntax:PunctuationToken xmi:id="1915" sofa="1" begin="973" end="974" tokenNumber="163" partOfSpeech="."/>
+	<syntax:PunctuationToken xmi:id="2091" sofa="1" begin="1078" end="1079" tokenNumber="178" partOfSpeech="HYPH"/>
+	<syntax:PunctuationToken xmi:id="2108" sofa="1" begin="1082" end="1083" tokenNumber="180" partOfSpeech=","/>
+	<syntax:PunctuationToken xmi:id="2224" sofa="1" begin="1148" end="1149" tokenNumber="190" partOfSpeech="."/>
+	<syntax:NumToken xmi:id="801" sofa="1" begin="408" end="411" tokenNumber="65" partOfSpeech="CD" numType="1"/>
+	<syntax:NumToken xmi:id="1434" sofa="1" begin="709" end="712" tokenNumber="121" partOfSpeech="CD" numType="1"/>
+	<syntax:NumToken xmi:id="2099" sofa="1" begin="1079" end="1082" tokenNumber="179" partOfSpeech="CD" numType="1"/>
+	<textsem:RomanNumeralAnnotation xmi:id="2232" sofa="1" begin="405" end="407" id="0" typeID="0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" generic="false" historyOf="0"/>
+	<textsem:RomanNumeralAnnotation xmi:id="2268" sofa="1" begin="706" end="708" id="0" typeID="0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" generic="false" historyOf="0"/>
+	<textsem:RomanNumeralAnnotation xmi:id="2304" sofa="1" begin="1076" end="1078" id="0" typeID="0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" generic="false" historyOf="0"/>
+	<textsem:RangeAnnotation xmi:id="2250" sofa="1" begin="405" end="411" id="0" typeID="0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" generic="false" historyOf="0"/>
+	<textsem:RangeAnnotation xmi:id="2286" sofa="1" begin="706" end="712" id="0" typeID="0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" generic="false" historyOf="0"/>
+	<textsem:RangeAnnotation xmi:id="2322" sofa="1" begin="1076" end="1082" id="0" typeID="0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" generic="false" historyOf="0"/>
+	<syntax:Chunk xmi:id="2340" sofa="1" begin="0" end="8" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2345" sofa="1" begin="8" end="9" chunkType="O"/>
+	<syntax:Chunk xmi:id="2350" sofa="1" begin="9" end="17" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2355" sofa="1" begin="18" end="19" chunkType="O"/>
+	<syntax:Chunk xmi:id="2360" sofa="1" begin="19" end="23" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2365" sofa="1" begin="23" end="24" chunkType="O"/>
+	<syntax:Chunk xmi:id="2370" sofa="1" begin="24" end="25" chunkType="O"/>
+	<syntax:Chunk xmi:id="2375" sofa="1" begin="26" end="90" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2380" sofa="1" begin="47" end="49" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2385" sofa="1" begin="50" end="90" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2390" sofa="1" begin="90" end="91" chunkType="O"/>
+	<syntax:Chunk xmi:id="2395" sofa="1" begin="92" end="94" chunkType="VP"/>
+	<syntax:Chunk xmi:id="2400" sofa="1" begin="95" end="147" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2405" sofa="1" begin="106" end="108" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2410" sofa="1" begin="109" end="147" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2415" sofa="1" begin="135" end="147" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2420" sofa="1" begin="148" end="151" chunkType="O"/>
+	<syntax:Chunk xmi:id="2425" sofa="1" begin="152" end="164" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2430" sofa="1" begin="166" end="174" chunkType="ADVP"/>
+	<syntax:Chunk xmi:id="2435" sofa="1" begin="174" end="175" chunkType="O"/>
+	<syntax:Chunk xmi:id="2440" sofa="1" begin="176" end="178" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2445" sofa="1" begin="179" end="195" chunkType="VP"/>
+	<syntax:Chunk xmi:id="2450" sofa="1" begin="196" end="200" chunkType="SBAR"/>
+	<syntax:Chunk xmi:id="2455" sofa="1" begin="201" end="230" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2460" sofa="1" begin="209" end="211" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2465" sofa="1" begin="212" end="222" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2470" sofa="1" begin="223" end="225" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2475" sofa="1" begin="226" end="230" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2480" sofa="1" begin="231" end="239" chunkType="VP"/>
+	<syntax:Chunk xmi:id="2485" sofa="1" begin="240" end="258" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2490" sofa="1" begin="259" end="262" chunkType="O"/>
+	<syntax:Chunk xmi:id="2495" sofa="1" begin="263" end="310" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2500" sofa="1" begin="286" end="288" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2505" sofa="1" begin="289" end="310" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2510" sofa="1" begin="310" end="311" chunkType="O"/>
+	<syntax:Chunk xmi:id="2515" sofa="1" begin="312" end="350" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2520" sofa="1" begin="352" end="356" chunkType="ADVP"/>
+	<syntax:Chunk xmi:id="2525" sofa="1" begin="357" end="359" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2530" sofa="1" begin="360" end="366" chunkType="VP"/>
+	<syntax:Chunk xmi:id="2535" sofa="1" begin="367" end="371" chunkType="SBAR"/>
+	<syntax:Chunk xmi:id="2540" sofa="1" begin="372" end="411" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2545" sofa="1" begin="411" end="412" chunkType="O"/>
+	<syntax:Chunk xmi:id="2550" sofa="1" begin="413" end="480" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2555" sofa="1" begin="481" end="484" chunkType="O"/>
+	<syntax:Chunk xmi:id="2560" sofa="1" begin="485" end="493" chunkType="VP"/>
+	<syntax:Chunk xmi:id="2565" sofa="1" begin="494" end="558" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2570" sofa="1" begin="506" end="508" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2575" sofa="1" begin="509" end="526" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2580" sofa="1" begin="527" end="529" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2585" sofa="1" begin="530" end="558" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2590" sofa="1" begin="544" end="558" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2595" sofa="1" begin="559" end="560" chunkType="O"/>
+	<syntax:Chunk xmi:id="2600" sofa="1" begin="560" end="565" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2605" sofa="1" begin="565" end="566" chunkType="O"/>
+	<syntax:Chunk xmi:id="2610" sofa="1" begin="567" end="570" chunkType="O"/>
+	<syntax:Chunk xmi:id="2615" sofa="1" begin="571" end="578" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2620" sofa="1" begin="573" end="596" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2625" sofa="1" begin="579" end="581" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2630" sofa="1" begin="582" end="588" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2635" sofa="1" begin="589" end="591" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2640" sofa="1" begin="592" end="596" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2645" sofa="1" begin="597" end="600" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2650" sofa="1" begin="601" end="603" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2655" sofa="1" begin="604" end="612" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2660" sofa="1" begin="612" end="613" chunkType="O"/>
+	<syntax:Chunk xmi:id="2665" sofa="1" begin="614" end="623" chunkType="VP"/>
+	<syntax:Chunk xmi:id="2670" sofa="1" begin="624" end="626" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2675" sofa="1" begin="627" end="683" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2680" sofa="1" begin="685" end="687" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2685" sofa="1" begin="688" end="704" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2690" sofa="1" begin="704" end="705" chunkType="O"/>
+	<syntax:Chunk xmi:id="2695" sofa="1" begin="706" end="732" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2700" sofa="1" begin="733" end="735" chunkType="O"/>
+	<syntax:Chunk xmi:id="2705" sofa="1" begin="736" end="780" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2710" sofa="1" begin="781" end="791" chunkType="VP"/>
+	<syntax:Chunk xmi:id="2715" sofa="1" begin="792" end="796" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2720" sofa="1" begin="797" end="851" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2725" sofa="1" begin="821" end="823" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2730" sofa="1" begin="824" end="851" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2735" sofa="1" begin="852" end="853" chunkType="O"/>
+	<syntax:Chunk xmi:id="2740" sofa="1" begin="853" end="857" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2745" sofa="1" begin="859" end="870" chunkType="ADJP"/>
+	<syntax:Chunk xmi:id="2750" sofa="1" begin="871" end="883" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2755" sofa="1" begin="884" end="899" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2760" sofa="1" begin="899" end="901" chunkType="O"/>
+	<syntax:Chunk xmi:id="2765" sofa="1" begin="902" end="911" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2770" sofa="1" begin="912" end="915" chunkType="O"/>
+	<syntax:Chunk xmi:id="2775" sofa="1" begin="916" end="948" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2780" sofa="1" begin="924" end="926" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2785" sofa="1" begin="927" end="936" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2790" sofa="1" begin="937" end="939" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2795" sofa="1" begin="940" end="948" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2800" sofa="1" begin="945" end="948" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2805" sofa="1" begin="949" end="952" chunkType="O"/>
+	<syntax:Chunk xmi:id="2810" sofa="1" begin="953" end="973" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2815" sofa="1" begin="975" end="985" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2820" sofa="1" begin="986" end="993" chunkType="VP"/>
+	<syntax:Chunk xmi:id="2825" sofa="1" begin="994" end="1082" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2830" sofa="1" begin="1014" end="1018" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2835" sofa="1" begin="1019" end="1027" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2840" sofa="1" begin="1028" end="1030" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2845" sofa="1" begin="1031" end="1072" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2850" sofa="1" begin="1073" end="1075" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2855" sofa="1" begin="1076" end="1082" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2860" sofa="1" begin="1082" end="1083" chunkType="O"/>
+	<syntax:Chunk xmi:id="2865" sofa="1" begin="1084" end="1086" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2870" sofa="1" begin="1087" end="1097" chunkType="VP"/>
+	<syntax:Chunk xmi:id="2875" sofa="1" begin="1098" end="1148" chunkType="NP"/>
+	<syntax:Chunk xmi:id="2880" sofa="1" begin="1133" end="1135" chunkType="PP"/>
+	<syntax:Chunk xmi:id="2885" sofa="1" begin="1136" end="1148" chunkType="NP"/>
+	<textsem:MedicationMention xmi:id="3131" sofa="1" begin="38" end="46" id="0" ontologyConceptArr="3118" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:MedicationMention xmi:id="3609" sofa="1" begin="54" end="73" id="0" ontologyConceptArr="3585 3595" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:MedicationMention xmi:id="3283" sofa="1" begin="57" end="66" id="0" ontologyConceptArr="3269 3259" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:MedicationMention xmi:id="3359" sofa="1" begin="67" end="73" id="0" ontologyConceptArr="3313 3333 3323 3343" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:MedicationMention xmi:id="3023" sofa="1" begin="129" end="134" id="0" ontologyConceptArr="3008 2998 2988" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:MedicationMention xmi:id="3555" sofa="1" begin="135" end="147" id="0" ontologyConceptArr="3537 3507 3527 3497 3517 3487" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:MedicationMention xmi:id="3457" sofa="1" begin="152" end="164" id="0" ontologyConceptArr="3409 3429 3399 3419 3389 3439" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:MedicationMention xmi:id="3088" sofa="1" begin="824" end="834" id="0" ontologyConceptArr="3073 3063 3053" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:MedicationMention xmi:id="3707" sofa="1" begin="945" end="948" id="0" ontologyConceptArr="3649 3669 3639 3689 3659 3679" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:MedicationMention xmi:id="3229" sofa="1" begin="1102" end="1105" id="0" ontologyConceptArr="3201 3171 3191 3161 3211 3181" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:MedicationMention xmi:id="2958" sofa="1" begin="1136" end="1148" id="0" ontologyConceptArr="2930 2900 2920 2890 2940 2910" typeID="1" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:DiseaseDisorderMention xmi:id="3992" sofa="1" begin="550" end="558" id="0" ontologyConceptArr="3957 3977 3967" typeID="2" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:DiseaseDisorderMention xmi:id="3761" sofa="1" begin="560" end="565" id="0" ontologyConceptArr="3747 3737" typeID="2" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:DiseaseDisorderMention xmi:id="3816" sofa="1" begin="688" end="693" id="0" ontologyConceptArr="3792 3802" typeID="2" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:DiseaseDisorderMention xmi:id="4047" sofa="1" begin="945" end="948" id="0" ontologyConceptArr="4033 4023" typeID="2" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:DiseaseDisorderMention xmi:id="3871" sofa="1" begin="957" end="962" id="0" ontologyConceptArr="3857 3847" typeID="2" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:DiseaseDisorderMention xmi:id="3926" sofa="1" begin="1102" end="1105" id="0" ontologyConceptArr="3912 3902" typeID="2" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:SignSymptomMention xmi:id="4500" sofa="1" begin="274" end="285" id="0" ontologyConceptArr="4487" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:SignSymptomMention xmi:id="4091" sofa="1" begin="494" end="505" id="0" ontologyConceptArr="4078" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:SignSymptomMention xmi:id="4414" sofa="1" begin="721" end="732" id="0" ontologyConceptArr="4401" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:SignSymptomMention xmi:id="4457" sofa="1" begin="807" end="820" id="0" ontologyConceptArr="4444" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:SignSymptomMention xmi:id="4231" sofa="1" begin="859" end="870" id="0" ontologyConceptArr="4218" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:SignSymptomMention xmi:id="4134" sofa="1" begin="927" end="936" id="0" ontologyConceptArr="4121" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:SignSymptomMention xmi:id="4371" sofa="1" begin="1006" end="1013" id="0" ontologyConceptArr="4358" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:SignSymptomMention xmi:id="4274" sofa="1" begin="1038" end="1049" id="0" ontologyConceptArr="4261" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:SignSymptomMention xmi:id="4328" sofa="1" begin="1064" end="1072" id="0" ontologyConceptArr="4304 4314" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:SignSymptomMention xmi:id="4188" sofa="1" begin="1124" end="1132" id="0" ontologyConceptArr="4164 4174" typeID="3" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:AnatomicalSiteMention xmi:id="4577" sofa="1" begin="545" end="549" id="0" ontologyConceptArr="4564" typeID="6" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:AnatomicalSiteMention xmi:id="4611" sofa="1" begin="571" end="578" id="0" ontologyConceptArr="4598" typeID="6" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:AnatomicalSiteMention xmi:id="4645" sofa="1" begin="573" end="578" id="0" ontologyConceptArr="4632" typeID="6" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:AnatomicalSiteMention xmi:id="4543" sofa="1" begin="632" end="636" id="0" ontologyConceptArr="4530" typeID="6" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:AnatomicalSiteMention xmi:id="4747" sofa="1" begin="694" end="698" id="0" ontologyConceptArr="4734" typeID="6" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:AnatomicalSiteMention xmi:id="4679" sofa="1" begin="963" end="967" id="0" ontologyConceptArr="4666" typeID="6" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<textsem:AnatomicalSiteMention xmi:id="4713" sofa="1" begin="1023" end="1027" id="0" ontologyConceptArr="4700" typeID="6" discoveryTechnique="1" confidence="0.0" polarity="1" uncertainty="0" conditional="false" generic="false" subject="patient" historyOf="0"/>
+	<syntax:ConllDependencyNode xmi:id="4768" sofa="1" begin="0" end="165" id="0"/>
+	<syntax:ConllDependencyNode xmi:id="4782" sofa="1" begin="0" end="8" id="1" form="Abstract" lemma="abstract" cpostag="NN" postag="NN" feats="_" head="4810" deprel="dep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4796" sofa="1" begin="8" end="9" id="2" form=":" lemma=":" cpostag=":" postag=":" feats="_" head="4810" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4810" sofa="1" begin="9" end="17" id="3" form="Cereblon" lemma="cereblon" cpostag="NN" postag="NN" feats="_" head="5034" deprel="nsubj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4824" sofa="1" begin="18" end="19" id="4" form="(" lemma="(" cpostag="-LRB-" postag="-LRB-" feats="_" head="4810" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4838" sofa="1" begin="19" end="23" id="5" form="CRBN" lemma="crbn" cpostag="NN" postag="NN" feats="_" head="4810" deprel="appos" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4852" sofa="1" begin="23" end="24" id="6" form=")" lemma=")" cpostag="-RRB-" postag="-RRB-" feats="_" head="4810" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4866" sofa="1" begin="24" end="25" id="7" form="," lemma="," cpostag="," postag="," feats="_" head="4810" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4880" sofa="1" begin="26" end="27" id="8" form="a" lemma="a" cpostag="DT" postag="DT" feats="_" head="4908" deprel="det" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4894" sofa="1" begin="28" end="37" id="9" form="substrate" lemma="substrate" cpostag="JJ" postag="JJ" feats="_" head="4908" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4908" sofa="1" begin="38" end="46" id="10" form="receptor" lemma="receptor" cpostag="NN" postag="NN" feats="_" head="4810" deprel="appos" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4922" sofa="1" begin="47" end="49" id="11" form="of" lemma="of" cpostag="IN" postag="IN" feats="_" head="4908" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4936" sofa="1" begin="50" end="53" id="12" form="the" lemma="the" cpostag="DT" postag="DT" feats="_" head="5006" deprel="det" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4950" sofa="1" begin="54" end="56" id="13" form="E3" lemma="e0" cpostag="NN" postag="NN" feats="_" head="5006" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4964" sofa="1" begin="57" end="66" id="14" form="ubiquitin" lemma="ubiquitin" cpostag="NN" postag="NN" feats="_" head="4978" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4978" sofa="1" begin="67" end="73" id="15" form="ligase" lemma="ligase" cpostag="NN" postag="NN" feats="_" head="5006" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="4992" sofa="1" begin="74" end="81" id="16" form="complex" lemma="complex" cpostag="JJ" postag="JJ" feats="_" head="5006" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5006" sofa="1" begin="82" end="90" id="17" form="CRL4CRBN" lemma="crl0crbn" cpostag="NN" postag="NN" feats="_" head="4922" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5020" sofa="1" begin="90" end="91" id="18" form="," lemma="," cpostag="," postag="," feats="_" head="5034" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5034" sofa="1" begin="92" end="94" id="19" form="is" lemma="be" cpostag="VBZ" postag="VBZ" feats="_" head="4768" deprel="root" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5048" sofa="1" begin="95" end="98" id="20" form="the" lemma="the" cpostag="DT" postag="DT" feats="_" head="5062" deprel="det" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5062" sofa="1" begin="99" end="105" id="21" form="target" lemma="target" cpostag="NN" postag="NN" feats="_" head="5034" deprel="attr" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5076" sofa="1" begin="106" end="108" id="22" form="of" lemma="of" cpostag="IN" postag="IN" feats="_" head="5062" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5090" sofa="1" begin="109" end="128" id="23" form="theimmunomodulatory" lemma="theimmunomodulatory" cpostag="NN" postag="NN" feats="_" head="5104" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5104" sofa="1" begin="129" end="134" id="24" form="drugs" lemma="drug" cpostag="NNS" postag="NNS" feats="_" head="5118" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5118" sofa="1" begin="135" end="147" id="25" form="lenalidomide" lemma="lenalidomide" cpostag="NN" postag="NN" feats="_" head="5076" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5132" sofa="1" begin="148" end="151" id="26" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="5118" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5146" sofa="1" begin="152" end="164" id="27" form="pomalidomide" lemma="pomalidomide" cpostag="NN" postag="NN" feats="_" head="5118" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5160" sofa="1" begin="164" end="165" id="28" form="." lemma="." cpostag="." postag="." feats="_" head="5034" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5174" sofa="1" begin="166" end="351" id="0"/>
+	<syntax:ConllDependencyNode xmi:id="5188" sofa="1" begin="166" end="174" id="1" form="Recently" lemma="recently" cpostag="RB" postag="RB" feats="_" head="5244" deprel="advmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5202" sofa="1" begin="174" end="175" id="2" form="," lemma="," cpostag="," postag="," feats="_" head="5244" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5216" sofa="1" begin="176" end="178" id="3" form="it" lemma="it" cpostag="PRP" postag="PRP" feats="_" head="5244" deprel="nsubjpass" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5230" sofa="1" begin="179" end="182" id="4" form="was" lemma="be" cpostag="VBD" postag="VBD" feats="_" head="5244" deprel="auxpass" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5244" sofa="1" begin="183" end="195" id="5" form="demonstrated" lemma="demonstrate" cpostag="VBN" postag="VBN" feats="_" head="5174" deprel="root" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5258" sofa="1" begin="196" end="200" id="6" form="that" lemma="that" cpostag="IN" postag="IN" feats="_" head="5342" deprel="complm" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5272" sofa="1" begin="201" end="208" id="7" form="binding" lemma="binding" cpostag="NN" postag="NN" feats="_" head="5342" deprel="nsubj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5286" sofa="1" begin="209" end="211" id="8" form="of" lemma="of" cpostag="IN" postag="IN" feats="_" head="5272" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5300" sofa="1" begin="212" end="222" id="9" form="thesedrugs" lemma="thesedrugs" cpostag="NNS" postag="NNS" feats="_" head="5286" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5314" sofa="1" begin="223" end="225" id="10" form="to" lemma="to" cpostag="IN" postag="IN" feats="_" head="5300" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5328" sofa="1" begin="226" end="230" id="11" form="CRBN" lemma="crbn" cpostag="NN" postag="NN" feats="_" head="5314" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5342" sofa="1" begin="231" end="239" id="12" form="promotes" lemma="promote" cpostag="VBZ" postag="VBZ" feats="_" head="5244" deprel="ccomp" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5356" sofa="1" begin="240" end="243" id="13" form="the" lemma="the" cpostag="DT" postag="DT" feats="_" head="5370" deprel="det" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5370" sofa="1" begin="244" end="258" id="14" form="ubiquitination" lemma="ubiquitination" cpostag="NN" postag="NN" feats="_" head="5342" deprel="dobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5384" sofa="1" begin="259" end="262" id="15" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="5370" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5398" sofa="1" begin="263" end="273" id="16" form="subsequent" lemma="subsequent" cpostag="JJ" postag="JJ" feats="_" head="5412" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5412" sofa="1" begin="274" end="285" id="17" form="degradation" lemma="degradation" cpostag="NN" postag="NN" feats="_" head="5370" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5426" sofa="1" begin="286" end="288" id="18" form="of" lemma="of" cpostag="IN" postag="IN" feats="_" head="5412" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5440" sofa="1" begin="289" end="292" id="19" form="two" lemma="#crd#" cpostag="CD" postag="CD" feats="_" head="5468" deprel="num" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5454" sofa="1" begin="293" end="299" id="20" form="common" lemma="common" cpostag="JJ" postag="JJ" feats="_" head="5468" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5468" sofa="1" begin="300" end="310" id="21" form="substrates" lemma="substrate" cpostag="NNS" postag="NNS" feats="_" head="5426" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5482" sofa="1" begin="310" end="311" id="22" form="," lemma="," cpostag="," postag="," feats="_" head="5468" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5496" sofa="1" begin="312" end="332" id="23" form="transcriptionfactors" lemma="transcriptionfactors" cpostag="NNS" postag="NNS" feats="_" head="5468" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5510" sofa="1" begin="333" end="339" id="24" form="Aiolos" lemma="aiolos" cpostag="NNP" postag="NNP" feats="_" head="5496" deprel="dobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5524" sofa="1" begin="340" end="343" id="25" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="5510" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5538" sofa="1" begin="344" end="350" id="26" form="Ikaros" lemma="ikaros" cpostag="NNP" postag="NNP" feats="_" head="5510" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5552" sofa="1" begin="350" end="351" id="27" form="." lemma="." cpostag="." postag="." feats="_" head="5244" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5566" sofa="1" begin="352" end="684" id="0"/>
+	<syntax:ConllDependencyNode xmi:id="5580" sofa="1" begin="352" end="356" id="1" form="Here" lemma="here" cpostag="RB" postag="RB" feats="_" head="5608" deprel="advmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5594" sofa="1" begin="357" end="359" id="2" form="we" lemma="we" cpostag="PRP" postag="PRP" feats="_" head="5608" deprel="nsubj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5608" sofa="1" begin="360" end="366" id="3" form="report" lemma="report" cpostag="VBP" postag="VBP" feats="_" head="5566" deprel="root" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5622" sofa="1" begin="367" end="371" id="4" form="that" lemma="that" cpostag="IN" postag="IN" feats="_" head="6322" deprel="complm" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5636" sofa="1" begin="372" end="375" id="5" form="the" lemma="the" cpostag="DT" postag="DT" feats="_" head="5860" deprel="det" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5650" sofa="1" begin="376" end="387" id="6" form="pleiotropic" lemma="pleiotropic" cpostag="JJ" postag="JJ" feats="_" head="5860" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5664" sofa="1" begin="388" end="395" id="7" form="pathway" lemma="pathway" cpostag="NN" postag="NN" feats="_" head="5678" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5678" sofa="1" begin="396" end="404" id="8" form="modifier" lemma="modifier" cpostag="NN" postag="NN" feats="_" head="5860" deprel="dep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5692" sofa="1" begin="405" end="407" id="9" form="CC" lemma="cc" cpostag="NN" postag="NN" feats="_" head="5720" deprel="hmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5706" sofa="1" begin="407" end="408" id="10" form="-" lemma="-" cpostag="HYPH" postag="HYPH" feats="_" head="5720" deprel="hyph" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5720" sofa="1" begin="408" end="411" id="11" form="122" lemma="0" cpostag="CD" postag="CD" feats="_" head="5678" deprel="npadvmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5734" sofa="1" begin="411" end="412" id="12" form="," lemma="," cpostag="," postag="," feats="_" head="5860" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5748" sofa="1" begin="413" end="414" id="13" form="a" lemma="a" cpostag="DT" postag="DT" feats="_" head="5846" deprel="det" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5762" sofa="1" begin="415" end="418" id="14" form="new" lemma="new" cpostag="JJ" postag="JJ" feats="_" head="5846" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5776" sofa="1" begin="419" end="427" id="15" form="chemical" lemma="chemical" cpostag="JJ" postag="JJ" feats="_" head="5846" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5790" sofa="1" begin="428" end="440" id="16" form="entitytermed" lemma="entitytermed" cpostag="JJ" postag="JJ" feats="_" head="5846" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5804" sofa="1" begin="441" end="452" id="17" form="pleiotropic" lemma="pleiotropic" cpostag="JJ" postag="JJ" feats="_" head="5846" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5818" sofa="1" begin="453" end="460" id="18" form="pathway" lemma="pathway" cpostag="NN" postag="NN" feats="_" head="5846" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5832" sofa="1" begin="461" end="469" id="19" form="modifier" lemma="modifier" cpostag="NN" postag="NN" feats="_" head="5846" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5846" sofa="1" begin="470" end="475" id="20" form="binds" lemma="bind" cpostag="NNS" postag="NNS" feats="_" head="5860" deprel="nsubj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5860" sofa="1" begin="476" end="480" id="21" form="CRBN" lemma="crbn" cpostag="NN" postag="NN" feats="_" head="6378" deprel="nsubj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5874" sofa="1" begin="481" end="484" id="22" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="5860" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5888" sofa="1" begin="485" end="493" id="23" form="promotes" lemma="promote" cpostag="VBZ" postag="VBZ" feats="_" head="5860" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5902" sofa="1" begin="494" end="505" id="24" form="degradation" lemma="degradation" cpostag="NN" postag="NN" feats="_" head="5888" deprel="dobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5916" sofa="1" begin="506" end="508" id="25" form="of" lemma="of" cpostag="IN" postag="IN" feats="_" head="5902" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5930" sofa="1" begin="509" end="515" id="26" form="Aiolos" lemma="aiolos" cpostag="NNP" postag="NNP" feats="_" head="5916" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5944" sofa="1" begin="516" end="519" id="27" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="5930" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5958" sofa="1" begin="520" end="526" id="28" form="Ikaros" lemma="ikaros" cpostag="NNP" postag="NNP" feats="_" head="5930" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5972" sofa="1" begin="527" end="529" id="29" form="in" lemma="in" cpostag="IN" postag="IN" feats="_" head="5888" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="5986" sofa="1" begin="530" end="537" id="30" form="diffuse" lemma="diffuse" cpostag="JJ" postag="JJ" feats="_" head="6042" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6000" sofa="1" begin="538" end="544" id="31" form="largeB" lemma="largeb" cpostag="JJ" postag="JJ" feats="_" head="6028" deprel="hmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6014" sofa="1" begin="544" end="545" id="32" form="-" lemma="-" cpostag="HYPH" postag="HYPH" feats="_" head="6028" deprel="hyph" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6028" sofa="1" begin="545" end="549" id="33" form="cell" lemma="cell" cpostag="NN" postag="NN" feats="_" head="6042" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6042" sofa="1" begin="550" end="558" id="34" form="lymphoma" lemma="lymphoma" cpostag="NN" postag="NN" feats="_" head="5972" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6056" sofa="1" begin="559" end="560" id="35" form="(" lemma="(" cpostag="-LRB-" postag="-LRB-" feats="_" head="6070" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6070" sofa="1" begin="560" end="565" id="36" form="DLBCL" lemma="dlbcl" cpostag="NN" postag="NN" feats="_" head="5888" deprel="parataxis" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6084" sofa="1" begin="565" end="566" id="37" form=")" lemma=")" cpostag="-RRB-" postag="-RRB-" feats="_" head="6070" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6098" sofa="1" begin="567" end="570" id="38" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="5888" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6112" sofa="1" begin="571" end="572" id="39" form="T" lemma="t" cpostag="NN" postag="NN" feats="_" head="6126" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6126" sofa="1" begin="573" end="578" id="40" form="cells" lemma="cell" cpostag="NNS" postag="NNS" feats="_" head="5888" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6140" sofa="1" begin="579" end="581" id="41" form="in" lemma="in" cpostag="IN" postag="IN" feats="_" head="6126" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6154" sofa="1" begin="582" end="587" id="42" form="vitro" lemma="vitro" cpostag="FW" postag="FW" feats="_" head="6140" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6168" sofa="1" begin="587" end="588" id="43" form="," lemma="," cpostag="," postag="," feats="_" head="6378" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6182" sofa="1" begin="589" end="591" id="44" form="in" lemma="in" cpostag="IN" postag="IN" feats="_" head="6196" deprel="advmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6196" sofa="1" begin="592" end="596" id="45" form="vivo" lemma="vivo" cpostag="FW" postag="FW" feats="_" head="5860" deprel="advmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6210" sofa="1" begin="597" end="600" id="46" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="5622" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6224" sofa="1" begin="601" end="603" id="47" form="in" lemma="in" cpostag="IN" postag="IN" feats="_" head="6378" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6238" sofa="1" begin="604" end="612" id="48" form="patients" lemma="patient" cpostag="NNS" postag="NNS" feats="_" head="6224" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6252" sofa="1" begin="612" end="613" id="49" form="," lemma="," cpostag="," postag="," feats="_" head="5860" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6266" sofa="1" begin="614" end="623" id="50" form="resulting" lemma="result" cpostag="VBG" postag="VBG" feats="_" head="6378" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6280" sofa="1" begin="624" end="626" id="51" form="in" lemma="in" cpostag="IN" postag="IN" feats="_" head="6266" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6294" sofa="1" begin="627" end="631" id="52" form="both" lemma="both" cpostag="DT" postag="DT" feats="_" head="6308" deprel="det" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6308" sofa="1" begin="632" end="636" id="53" form="cell" lemma="cell" cpostag="NN" postag="NN" feats="_" head="6280" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6322" sofa="1" begin="637" end="647" id="54" form="autonomous" lemma="autonomous" cpostag="JJ" postag="JJ" feats="_" head="6378" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6336" sofa="1" begin="648" end="650" id="55" form="as" lemma="as" cpostag="RB" postag="RB" feats="_" head="6364" deprel="advmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6350" sofa="1" begin="651" end="655" id="56" form="well" lemma="well" cpostag="RB" postag="RB" feats="_" head="6364" deprel="advmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6364" sofa="1" begin="656" end="675" id="57" form="asimmunostimulatory" lemma="asimmunostimulatory" cpostag="JJ" postag="JJ" feats="_" head="6378" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6378" sofa="1" begin="676" end="683" id="58" form="effects" lemma="effect" cpostag="NNS" postag="NNS" feats="_" head="5566" deprel="root" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6392" sofa="1" begin="683" end="684" id="59" form="." lemma="." cpostag="." postag="." feats="_" head="5608" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6406" sofa="1" begin="685" end="858" id="0"/>
+	<syntax:ConllDependencyNode xmi:id="6420" sofa="1" begin="685" end="687" id="1" form="In" lemma="in" cpostag="IN" postag="IN" feats="_" head="6672" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6434" sofa="1" begin="688" end="693" id="2" form="DLBCL" lemma="dlbcl" cpostag="NN" postag="NN" feats="_" head="6448" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6448" sofa="1" begin="694" end="698" id="3" form="cell" lemma="cell" cpostag="NN" postag="NN" feats="_" head="6462" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6462" sofa="1" begin="699" end="704" id="4" form="lines" lemma="line" cpostag="NNS" postag="NNS" feats="_" head="6420" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6476" sofa="1" begin="704" end="705" id="5" form="," lemma="," cpostag="," postag="," feats="_" head="6672" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6490" sofa="1" begin="706" end="708" id="6" form="CC" lemma="cc" cpostag="NN" postag="NN" feats="_" head="6518" deprel="hmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6504" sofa="1" begin="708" end="709" id="7" form="-" lemma="-" cpostag="HYPH" postag="HYPH" feats="_" head="6518" deprel="hyph" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6518" sofa="1" begin="709" end="712" id="8" form="122" lemma="0" cpostag="CD" postag="CD" feats="_" head="6546" deprel="hmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6532" sofa="1" begin="712" end="713" id="9" form="-" lemma="-" cpostag="HYPH" postag="HYPH" feats="_" head="6546" deprel="hyph" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6546" sofa="1" begin="713" end="720" id="10" form="induced" lemma="induce" cpostag="VBN" postag="VBN" feats="_" head="6560" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6560" sofa="1" begin="721" end="732" id="11" form="degradation" lemma="degradation" cpostag="NN" postag="NN" feats="_" head="6630" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6574" sofa="1" begin="733" end="735" id="12" form="or" lemma="or" cpostag="CC" postag="CC" feats="_" head="6560" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6588" sofa="1" begin="736" end="741" id="13" form="shRNA" lemma="shrna" cpostag="NN" postag="NN" feats="_" head="6560" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6602" sofa="1" begin="742" end="750" id="14" form="mediated" lemma="mediated" cpostag="JJ" postag="JJ" feats="_" head="6630" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6616" sofa="1" begin="751" end="760" id="15" form="knockdown" lemma="knockdown" cpostag="JJ" postag="JJ" feats="_" head="6630" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6630" sofa="1" begin="761" end="769" id="16" form="ofAiolos" lemma="ofaiolos" cpostag="NN" postag="NN" feats="_" head="6672" deprel="nsubj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6644" sofa="1" begin="770" end="773" id="17" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="6630" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6658" sofa="1" begin="774" end="780" id="18" form="Ikaros" lemma="ikaros" cpostag="NNS" postag="NNS" feats="_" head="6630" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6672" sofa="1" begin="781" end="791" id="19" form="correlates" lemma="correlate" cpostag="VBZ" postag="VBZ" feats="_" head="6406" deprel="root" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6686" sofa="1" begin="792" end="796" id="20" form="with" lemma="with" cpostag="IN" postag="IN" feats="_" head="6672" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6700" sofa="1" begin="797" end="806" id="21" form="increased" lemma="increase" cpostag="VBN" postag="VBN" feats="_" head="6714" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6714" sofa="1" begin="807" end="820" id="22" form="transcription" lemma="transcription" cpostag="NN" postag="NN" feats="_" head="6686" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6728" sofa="1" begin="821" end="823" id="23" form="of" lemma="of" cpostag="IN" postag="IN" feats="_" head="6714" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6742" sofa="1" begin="824" end="834" id="24" form="interferon" lemma="interferon" cpostag="NN" postag="NN" feats="_" head="6756" deprel="npadvmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6756" sofa="1" begin="835" end="845" id="25" form="stimulated" lemma="stimulate" cpostag="VBN" postag="VBN" feats="_" head="6770" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6770" sofa="1" begin="846" end="851" id="26" form="genes" lemma="gene" cpostag="NNS" postag="NNS" feats="_" head="6728" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6784" sofa="1" begin="852" end="853" id="27" form="(" lemma="(" cpostag="-LRB-" postag="-LRB-" feats="_" head="6770" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6798" sofa="1" begin="853" end="857" id="28" form="ISGs" lemma="isgs" cpostag="NNS" postag="NNS" feats="_" head="6770" deprel="appos" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6812" sofa="1" begin="857" end="858" id="29" form=")" lemma=")" cpostag="-RRB-" postag="-RRB-" feats="_" head="6770" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6826" sofa="1" begin="859" end="974" id="0"/>
+	<syntax:ConllDependencyNode xmi:id="6840" sofa="1" begin="859" end="870" id="1" form="independent" lemma="independent" cpostag="JJ" postag="JJ" feats="_" head="6826" deprel="root" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6854" sofa="1" begin="871" end="883" id="2" form="ofinterferon" lemma="ofinterferon" cpostag="IN" postag="IN" feats="_" head="6840" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6868" sofa="1" begin="884" end="894" id="3" form="production" lemma="production" cpostag="NN" postag="NN" feats="_" head="6854" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6882" sofa="1" begin="895" end="898" id="4" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="6868" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6896" sofa="1" begin="898" end="899" id="5" form="/" lemma="/" cpostag="HYPH" postag="HYPH" feats="_" head="6882" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6910" sofa="1" begin="899" end="901" id="6" form="or" lemma="or" cpostag="CC" postag="CC" feats="_" head="6882" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6924" sofa="1" begin="902" end="911" id="7" form="secretion" lemma="secretion" cpostag="NN" postag="NN" feats="_" head="6868" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6938" sofa="1" begin="912" end="915" id="8" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="6868" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6952" sofa="1" begin="916" end="923" id="9" form="results" lemma="result" cpostag="NNS" postag="NNS" feats="_" head="6868" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6966" sofa="1" begin="924" end="926" id="10" form="in" lemma="in" cpostag="IN" postag="IN" feats="_" head="6840" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6980" sofa="1" begin="927" end="936" id="11" form="apoptosis" lemma="apoptosis" cpostag="NN" postag="NN" feats="_" head="6966" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="6994" sofa="1" begin="937" end="939" id="12" form="in" lemma="in" cpostag="IN" postag="IN" feats="_" head="6840" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7008" sofa="1" begin="940" end="944" id="13" form="both" lemma="both" cpostag="DT" postag="DT" feats="_" head="7022" deprel="preconj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7022" sofa="1" begin="945" end="948" id="14" form="ABC" lemma="abc" cpostag="NN" postag="NN" feats="_" head="6994" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7036" sofa="1" begin="949" end="952" id="15" form="and" lemma="and" cpostag="CC" postag="CC" feats="_" head="7022" deprel="cc" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7050" sofa="1" begin="953" end="956" id="16" form="GCB" lemma="gcb" cpostag="NN" postag="NN" feats="_" head="7078" deprel="hmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7064" sofa="1" begin="956" end="957" id="17" form="-" lemma="-" cpostag="HYPH" postag="HYPH" feats="_" head="7078" deprel="hyph" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7078" sofa="1" begin="957" end="962" id="18" form="DLBCL" lemma="dlbcl" cpostag="NN" postag="NN" feats="_" head="7092" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7092" sofa="1" begin="963" end="967" id="19" form="cell" lemma="cell" cpostag="NN" postag="NN" feats="_" head="7106" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7106" sofa="1" begin="968" end="973" id="20" form="lines" lemma="line" cpostag="NNS" postag="NNS" feats="_" head="7022" deprel="conj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7120" sofa="1" begin="973" end="974" id="21" form="." lemma="." cpostag="." postag="." feats="_" head="6840" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7134" sofa="1" begin="975" end="1149" id="0"/>
+	<syntax:ConllDependencyNode xmi:id="7148" sofa="1" begin="975" end="985" id="1" form="Ourresults" lemma="ourresults" cpostag="NNS" postag="NNS" feats="_" head="7162" deprel="nsubj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7162" sofa="1" begin="986" end="993" id="2" form="provide" lemma="provide" cpostag="VBP" postag="VBP" feats="_" head="7134" deprel="root" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7176" sofa="1" begin="994" end="1005" id="3" form="mechanistic" lemma="mechanistic" cpostag="JJ" postag="JJ" feats="_" head="7190" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7190" sofa="1" begin="1006" end="1013" id="4" form="insight" lemma="insight" cpostag="NN" postag="NN" feats="_" head="7162" deprel="dobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7204" sofa="1" begin="1014" end="1018" id="5" form="into" lemma="into" cpostag="IN" postag="IN" feats="_" head="7162" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7218" sofa="1" begin="1019" end="1022" id="6" form="the" lemma="the" cpostag="DT" postag="DT" feats="_" head="7232" deprel="det" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7232" sofa="1" begin="1023" end="1027" id="7" form="cell" lemma="cell" cpostag="NN" postag="NN" feats="_" head="7204" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7246" sofa="1" begin="1028" end="1030" id="8" form="of" lemma="of" cpostag="IN" postag="IN" feats="_" head="7232" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7260" sofa="1" begin="1031" end="1037" id="9" form="origin" lemma="origin" cpostag="NN" postag="NN" feats="_" head="7246" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7274" sofa="1" begin="1038" end="1049" id="10" form="independent" lemma="independent" cpostag="JJ" postag="JJ" feats="_" head="7302" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7288" sofa="1" begin="1050" end="1063" id="11" form="anti-lymphoma" lemma="anti-lymphoma" cpostag="NN" postag="NN" feats="_" head="7302" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7302" sofa="1" begin="1064" end="1072" id="12" form="activity" lemma="activity" cpostag="NN" postag="NN" feats="_" head="7246" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7316" sofa="1" begin="1073" end="1075" id="13" form="of" lemma="of" cpostag="IN" postag="IN" feats="_" head="7302" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7330" sofa="1" begin="1076" end="1078" id="14" form="CC" lemma="cc" cpostag="NN" postag="NN" feats="_" head="7358" deprel="hmod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7344" sofa="1" begin="1078" end="1079" id="15" form="-" lemma="-" cpostag="HYPH" postag="HYPH" feats="_" head="7358" deprel="hyph" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7358" sofa="1" begin="1079" end="1082" id="16" form="122" lemma="0" cpostag="CD" postag="CD" feats="_" head="7316" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7372" sofa="1" begin="1082" end="1083" id="17" form="," lemma="," cpostag="," postag="," feats="_" head="7162" deprel="punct" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7386" sofa="1" begin="1084" end="1086" id="18" form="in" lemma="in" cpostag="IN" postag="IN" feats="_" head="7232" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7400" sofa="1" begin="1087" end="1097" id="19" form="contrastto" lemma="contrastto" cpostag="VBG" postag="VBG" feats="_" head="7386" deprel="pcomp" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7414" sofa="1" begin="1098" end="1101" id="20" form="the" lemma="the" cpostag="DT" postag="DT" feats="_" head="7470" deprel="det" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7428" sofa="1" begin="1102" end="1105" id="21" form="ABC" lemma="abc" cpostag="JJ" postag="JJ" feats="_" head="7442" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7442" sofa="1" begin="1106" end="1113" id="22" form="subtype" lemma="subtype" cpostag="NN" postag="NN" feats="_" head="7470" deprel="nn" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7456" sofa="1" begin="1114" end="1123" id="23" form="selective" lemma="selective" cpostag="JJ" postag="JJ" feats="_" head="7470" deprel="amod" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7470" sofa="1" begin="1124" end="1132" id="24" form="activity" lemma="activity" cpostag="NN" postag="NN" feats="_" head="7400" deprel="dobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7484" sofa="1" begin="1133" end="1135" id="25" form="of" lemma="of" cpostag="IN" postag="IN" feats="_" head="7470" deprel="prep" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7498" sofa="1" begin="1136" end="1148" id="26" form="lenalidomide" lemma="lenalidomide" cpostag="NN" postag="NN" feats="_" head="7484" deprel="pobj" pdeprel="_"/>
+	<syntax:ConllDependencyNode xmi:id="7512" sofa="1" begin="1148" end="1149" id="27" form="." lemma="." cpostag="." postag="." feats="_" head="7162" deprel="punct" pdeprel="_"/>
+	<textsem:Predicate xmi:id="7526" sofa="1" begin="92" end="94" relations="7545 7555" frameSet="be.01"/>
+	<textsem:Predicate xmi:id="7572" sofa="1" begin="179" end="182" relations="" frameSet="be.03"/>
+	<textsem:Predicate xmi:id="7579" sofa="1" begin="183" end="195" relations="7644 7654" frameSet="demonstrate.01"/>
+	<textsem:Predicate xmi:id="7586" sofa="1" begin="231" end="239" relations="7617 7627" frameSet="promote.02"/>
+	<textsem:Predicate xmi:id="7671" sofa="1" begin="360" end="366" relations="7761 7771 7781" frameSet="report.01"/>
+	<textsem:Predicate xmi:id="7678" sofa="1" begin="485" end="493" relations="7801 7811" frameSet="promote.02"/>
+	<textsem:Predicate xmi:id="7685" sofa="1" begin="614" end="623" relations="7734 7744" frameSet="result.01"/>
+	<textsem:Predicate xmi:id="7828" sofa="1" begin="713" end="720" relations="7918 7928" frameSet="induce.01"/>
+	<textsem:Predicate xmi:id="7835" sofa="1" begin="781" end="791" relations="7972 7982 7992" frameSet="correlate.01"/>
+	<textsem:Predicate xmi:id="7842" sofa="1" begin="797" end="806" relations="7904" frameSet="increase.01"/>
+	<textsem:Predicate xmi:id="7849" sofa="1" begin="835" end="845" relations="7945 7955" frameSet="stimulate.01"/>
+	<textsem:Predicate xmi:id="8012" sofa="1" begin="986" end="993" relations="8058 8068" frameSet="provide.01"/>
+	<textsem:Predicate xmi:id="8019" sofa="1" begin="1087" end="1097" relations="8044" frameSet="contrastto.01"/>
+	<textsem:SemanticArgument xmi:id="7533" sofa="1" begin="9" end="17" relation="7545" label="A1"/>
+	<textsem:SemanticArgument xmi:id="7539" sofa="1" begin="99" end="105" relation="7555" label="A2"/>
+	<textsem:SemanticArgument xmi:id="7593" sofa="1" begin="166" end="174" relation="7644" label="AM-TMP"/>
+	<textsem:SemanticArgument xmi:id="7599" sofa="1" begin="176" end="178" relation="7654" label="A1"/>
+	<textsem:SemanticArgument xmi:id="7605" sofa="1" begin="201" end="208" relation="7617" label="A0"/>
+	<textsem:SemanticArgument xmi:id="7611" sofa="1" begin="244" end="258" relation="7627" label="A1"/>
+	<textsem:SemanticArgument xmi:id="7692" sofa="1" begin="352" end="356" relation="7761" label="AM-DIS"/>
+	<textsem:SemanticArgument xmi:id="7698" sofa="1" begin="357" end="359" relation="7771" label="A0"/>
+	<textsem:SemanticArgument xmi:id="7704" sofa="1" begin="470" end="475" relation="7801" label="A0"/>
+	<textsem:SemanticArgument xmi:id="7710" sofa="1" begin="494" end="505" relation="7811" label="A1"/>
+	<textsem:SemanticArgument xmi:id="7716" sofa="1" begin="624" end="626" relation="7734" label="A2"/>
+	<textsem:SemanticArgument xmi:id="7722" sofa="1" begin="676" end="683" relation="7781" label="A1"/>
+	<textsem:SemanticArgument xmi:id="7728" sofa="1" begin="676" end="683" relation="7744" label="A1"/>
+	<textsem:SemanticArgument xmi:id="7856" sofa="1" begin="685" end="687" relation="7972" label="AM-LOC"/>
+	<textsem:SemanticArgument xmi:id="7862" sofa="1" begin="709" end="712" relation="7918" label="A0"/>
+	<textsem:SemanticArgument xmi:id="7868" sofa="1" begin="721" end="732" relation="7928" label="A1"/>
+	<textsem:SemanticArgument xmi:id="7874" sofa="1" begin="761" end="769" relation="7982" label="A1"/>
+	<textsem:SemanticArgument xmi:id="7880" sofa="1" begin="792" end="796" relation="7992" label="A2"/>
+	<textsem:SemanticArgument xmi:id="7886" sofa="1" begin="807" end="820" relation="7904" label="A1"/>
+	<textsem:SemanticArgument xmi:id="7892" sofa="1" begin="824" end="834" relation="7945" label="A2"/>
+	<textsem:SemanticArgument xmi:id="7898" sofa="1" begin="846" end="851" relation="7955" label="A1"/>
+	<textsem:SemanticArgument xmi:id="8026" sofa="1" begin="975" end="985" relation="8058" label="A0"/>
+	<textsem:SemanticArgument xmi:id="8032" sofa="1" begin="1006" end="1013" relation="8068" label="A1"/>
+	<textsem:SemanticArgument xmi:id="8038" sofa="1" begin="1124" end="1132" relation="8044" label="A1"/>
+	<textsem:SemanticRoleRelation xmi:id="7545" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7526" argument="7533"/>
+	<textsem:SemanticRoleRelation xmi:id="7555" id="0" category="A2" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7526" argument="7539"/>
+	<textsem:SemanticRoleRelation xmi:id="7617" id="0" category="A0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7586" argument="7605"/>
+	<textsem:SemanticRoleRelation xmi:id="7627" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7586" argument="7611"/>
+	<textsem:SemanticRoleRelation xmi:id="7644" id="0" category="AM-TMP" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7579" argument="7593"/>
+	<textsem:SemanticRoleRelation xmi:id="7654" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7579" argument="7599"/>
+	<textsem:SemanticRoleRelation xmi:id="7734" id="0" category="A2" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7685" argument="7716"/>
+	<textsem:SemanticRoleRelation xmi:id="7744" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7685" argument="7728"/>
+	<textsem:SemanticRoleRelation xmi:id="7761" id="0" category="AM-DIS" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7671" argument="7692"/>
+	<textsem:SemanticRoleRelation xmi:id="7771" id="0" category="A0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7671" argument="7698"/>
+	<textsem:SemanticRoleRelation xmi:id="7781" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7671" argument="7722"/>
+	<textsem:SemanticRoleRelation xmi:id="7801" id="0" category="A0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7678" argument="7704"/>
+	<textsem:SemanticRoleRelation xmi:id="7811" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7678" argument="7710"/>
+	<textsem:SemanticRoleRelation xmi:id="7904" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7842" argument="7886"/>
+	<textsem:SemanticRoleRelation xmi:id="7918" id="0" category="A0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7828" argument="7862"/>
+	<textsem:SemanticRoleRelation xmi:id="7928" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7828" argument="7868"/>
+	<textsem:SemanticRoleRelation xmi:id="7945" id="0" category="A2" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7849" argument="7892"/>
+	<textsem:SemanticRoleRelation xmi:id="7955" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7849" argument="7898"/>
+	<textsem:SemanticRoleRelation xmi:id="7972" id="0" category="AM-LOC" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7835" argument="7856"/>
+	<textsem:SemanticRoleRelation xmi:id="7982" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7835" argument="7874"/>
+	<textsem:SemanticRoleRelation xmi:id="7992" id="0" category="A2" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="7835" argument="7880"/>
+	<textsem:SemanticRoleRelation xmi:id="8044" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="8019" argument="8038"/>
+	<textsem:SemanticRoleRelation xmi:id="8058" id="0" category="A0" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="8012" argument="8026"/>
+	<textsem:SemanticRoleRelation xmi:id="8068" id="0" category="A1" discoveryTechnique="0" confidence="0.0" polarity="0" uncertainty="0" conditional="false" predicate="8012" argument="8032"/>
+	<cas:NonEmptyFSList xmi:id="7565" head="7545" tail="7568"/>
+	<cas:NonEmptyFSList xmi:id="7568" head="7555" tail="7571"/>
+	<cas:NonEmptyFSList xmi:id="7637" head="7617" tail="7640"/>
+	<cas:NonEmptyFSList xmi:id="7640" head="7627" tail="7643"/>
+	<cas:NonEmptyFSList xmi:id="7664" head="7644" tail="7667"/>
+	<cas:NonEmptyFSList xmi:id="7667" head="7654" tail="7670"/>
+	<cas:NonEmptyFSList xmi:id="7754" head="7734" tail="7757"/>
+	<cas:NonEmptyFSList xmi:id="7757" head="7744" tail="7760"/>
+	<cas:NonEmptyFSList xmi:id="7791" head="7761" tail="7794"/>
+	<cas:NonEmptyFSList xmi:id="7794" head="7771" tail="7797"/>
+	<cas:NonEmptyFSList xmi:id="7797" head="7781" tail="7800"/>
+	<cas:NonEmptyFSList xmi:id="7821" head="7801" tail="7824"/>
+	<cas:NonEmptyFSList xmi:id="7824" head="7811" tail="7827"/>
+	<cas:NonEmptyFSList xmi:id="7914" head="7904" tail="7917"/>
+	<cas:NonEmptyFSList xmi:id="7938" head="7918" tail="7941"/>
+	<cas:NonEmptyFSList xmi:id="7941" head="7928" tail="7944"/>
+	<cas:NonEmptyFSList xmi:id="7965" head="7945" tail="7968"/>
+	<cas:NonEmptyFSList xmi:id="7968" head="7955" tail="7971"/>
+	<cas:NonEmptyFSList xmi:id="8002" head="7972" tail="8005"/>
+	<cas:NonEmptyFSList xmi:id="8005" head="7982" tail="8008"/>
+	<cas:NonEmptyFSList xmi:id="8008" head="7992" tail="8011"/>
+	<cas:NonEmptyFSList xmi:id="8054" head="8044" tail="8057"/>
+	<cas:NonEmptyFSList xmi:id="8078" head="8058" tail="8081"/>
+	<cas:NonEmptyFSList xmi:id="8081" head="8068" tail="8084"/>
+	<cas:Sofa xmi:id="1" sofaNum="1" sofaID="_InitialView" mimeType="text" sofaString="Abstract:Cereblon (CRBN), a substrate receptor of the E3 ubiquitin ligase complex CRL4CRBN, is the target of theimmunomodulatory drugs lenalidomide and pomalidomide. Recently, it was demonstrated that binding of thesedrugs to CRBN promotes the ubiquitination and subsequent degradation of two common substrates, transcriptionfactors Aiolos and Ikaros. Here we report that the pleiotropic pathway modifier CC-122, a new chemical entitytermed pleiotropic pathway modifier binds CRBN and promotes degradation of Aiolos and Ikaros in diffuse largeB-cell lymphoma (DLBCL) and T cells in vitro, in vivo and in patients, resulting in both cell autonomous as well asimmunostimulatory effects. In DLBCL cell lines, CC-122-induced degradation or shRNA mediated knockdown ofAiolos and Ikaros correlates with increased transcription of interferon stimulated genes (ISGs) independent ofinterferon production and/or secretion and results in apoptosis in both ABC and GCB-DLBCL cell lines. Ourresults provide mechanistic insight into the cell of origin independent anti-lymphoma activity of CC-122, in contrastto the ABC subtype selective activity of lenalidomide."/>
+	<refsem:UmlsConcept xmi:id="3118" codingScheme="SNOMEDCT_US" code="116647005" score="0.0" disambiguated="false" cui="C0597357" tui="T116" preferredText="receptor"/>
+	<refsem:UmlsConcept xmi:id="3585" codingScheme="SNOMEDCT_US" code="130923003" score="0.0" disambiguated="false" cui="C0077678" tui="T116" preferredText="ubiquitin-protein ligase"/>
+	<refsem:UmlsConcept xmi:id="3595" codingScheme="SNOMEDCT_US" code="130923003" score="0.0" disambiguated="false" cui="C0077678" tui="T126" preferredText="ubiquitin-protein ligase"/>
+	<refsem:UmlsConcept xmi:id="3269" codingScheme="SNOMEDCT_US" code="32969006" score="0.0" disambiguated="false" cui="C0041538" tui="T123" preferredText="Ubiquitin"/>
+	<refsem:UmlsConcept xmi:id="3259" codingScheme="SNOMEDCT_US" code="32969006" score="0.0" disambiguated="false" cui="C0041538" tui="T116" preferredText="Ubiquitin"/>
+	<refsem:UmlsConcept xmi:id="3313" codingScheme="SNOMEDCT_US" code="1672007" score="0.0" disambiguated="false" cui="C0023689" tui="T116" preferredText="Ligase"/>
+	<refsem:UmlsConcept xmi:id="3333" codingScheme="SNOMEDCT_US" code="1672007" score="0.0" disambiguated="false" cui="C0023689" tui="T126" preferredText="Ligase"/>
+	<refsem:UmlsConcept xmi:id="3323" codingScheme="SNOMEDCT_US" code="87222001" score="0.0" disambiguated="false" cui="C0023689" tui="T116" preferredText="Ligase"/>
+	<refsem:UmlsConcept xmi:id="3343" codingScheme="SNOMEDCT_US" code="87222001" score="0.0" disambiguated="false" cui="C0023689" tui="T126" preferredText="Ligase"/>
+	<refsem:UmlsConcept xmi:id="3008" codingScheme="SNOMEDCT_US" code="373873005" score="0.0" disambiguated="false" cui="C0013227" tui="T121" preferredText="Pharmaceutical Preparations"/>
+	<refsem:UmlsConcept xmi:id="2998" codingScheme="SNOMEDCT_US" code="105903003" score="0.0" disambiguated="false" cui="C0013227" tui="T121" preferredText="Pharmaceutical Preparations"/>
+	<refsem:UmlsConcept xmi:id="2988" codingScheme="SNOMEDCT_US" code="410942007" score="0.0" disambiguated="false" cui="C0013227" tui="T121" preferredText="Pharmaceutical Preparations"/>
+	<refsem:UmlsConcept xmi:id="3537" codingScheme="SNOMEDCT_US" code="421737001" score="0.0" disambiguated="false" cui="C1144149" tui="T121" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="3507" codingScheme="SNOMEDCT_US" code="421737001" score="0.0" disambiguated="false" cui="C1144149" tui="T109" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="3527" codingScheme="SNOMEDCT_US" code="421471009" score="0.0" disambiguated="false" cui="C1144149" tui="T121" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="3497" codingScheme="SNOMEDCT_US" code="421471009" score="0.0" disambiguated="false" cui="C1144149" tui="T109" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="3517" codingScheme="RXNORM" code="342369" score="0.0" disambiguated="false" cui="C1144149" tui="T121" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="3487" codingScheme="RXNORM" code="342369" score="0.0" disambiguated="false" cui="C1144149" tui="T109" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="3409" codingScheme="SNOMEDCT_US" code="703790009" score="0.0" disambiguated="false" cui="C2347624" tui="T109" preferredText="pomalidomide"/>
+	<refsem:UmlsConcept xmi:id="3429" codingScheme="SNOMEDCT_US" code="703789000" score="0.0" disambiguated="false" cui="C2347624" tui="T121" preferredText="pomalidomide"/>
+	<refsem:UmlsConcept xmi:id="3399" codingScheme="SNOMEDCT_US" code="703789000" score="0.0" disambiguated="false" cui="C2347624" tui="T109" preferredText="pomalidomide"/>
+	<refsem:UmlsConcept xmi:id="3419" codingScheme="RXNORM" code="1369713" score="0.0" disambiguated="false" cui="C2347624" tui="T121" preferredText="pomalidomide"/>
+	<refsem:UmlsConcept xmi:id="3389" codingScheme="RXNORM" code="1369713" score="0.0" disambiguated="false" cui="C2347624" tui="T109" preferredText="pomalidomide"/>
+	<refsem:UmlsConcept xmi:id="3439" codingScheme="SNOMEDCT_US" code="703790009" score="0.0" disambiguated="false" cui="C2347624" tui="T121" preferredText="pomalidomide"/>
+	<refsem:UmlsConcept xmi:id="3073" codingScheme="SNOMEDCT_US" code="49327004" score="0.0" disambiguated="false" cui="C0021747" tui="T121" preferredText="Interferons"/>
+	<refsem:UmlsConcept xmi:id="3063" codingScheme="SNOMEDCT_US" code="49327004" score="0.0" disambiguated="false" cui="C0021747" tui="T116" preferredText="Interferons"/>
+	<refsem:UmlsConcept xmi:id="3053" codingScheme="SNOMEDCT_US" code="49327004" score="0.0" disambiguated="false" cui="C0021747" tui="T129" preferredText="Interferons"/>
+	<refsem:UmlsConcept xmi:id="3649" codingScheme="SNOMEDCT_US" code="387005008" score="0.0" disambiguated="false" cui="C0663655" tui="T114" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3669" codingScheme="RXNORM" code="190521" score="0.0" disambiguated="false" cui="C0663655" tui="T121" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3639" codingScheme="RXNORM" code="190521" score="0.0" disambiguated="false" cui="C0663655" tui="T114" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3689" codingScheme="SNOMEDCT_US" code="116084008" score="0.0" disambiguated="false" cui="C0663655" tui="T121" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3659" codingScheme="SNOMEDCT_US" code="116084008" score="0.0" disambiguated="false" cui="C0663655" tui="T114" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3679" codingScheme="SNOMEDCT_US" code="387005008" score="0.0" disambiguated="false" cui="C0663655" tui="T121" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3201" codingScheme="SNOMEDCT_US" code="387005008" score="0.0" disambiguated="false" cui="C0663655" tui="T121" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3171" codingScheme="SNOMEDCT_US" code="387005008" score="0.0" disambiguated="false" cui="C0663655" tui="T114" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3191" codingScheme="RXNORM" code="190521" score="0.0" disambiguated="false" cui="C0663655" tui="T121" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3161" codingScheme="RXNORM" code="190521" score="0.0" disambiguated="false" cui="C0663655" tui="T114" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3211" codingScheme="SNOMEDCT_US" code="116084008" score="0.0" disambiguated="false" cui="C0663655" tui="T121" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="3181" codingScheme="SNOMEDCT_US" code="116084008" score="0.0" disambiguated="false" cui="C0663655" tui="T114" preferredText="abacavir"/>
+	<refsem:UmlsConcept xmi:id="2930" codingScheme="SNOMEDCT_US" code="421471009" score="0.0" disambiguated="false" cui="C1144149" tui="T121" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="2900" codingScheme="SNOMEDCT_US" code="421471009" score="0.0" disambiguated="false" cui="C1144149" tui="T109" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="2920" codingScheme="RXNORM" code="342369" score="0.0" disambiguated="false" cui="C1144149" tui="T121" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="2890" codingScheme="RXNORM" code="342369" score="0.0" disambiguated="false" cui="C1144149" tui="T109" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="2940" codingScheme="SNOMEDCT_US" code="421737001" score="0.0" disambiguated="false" cui="C1144149" tui="T121" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="2910" codingScheme="SNOMEDCT_US" code="421737001" score="0.0" disambiguated="false" cui="C1144149" tui="T109" preferredText="lenalidomide"/>
+	<refsem:UmlsConcept xmi:id="3957" codingScheme="SNOMEDCT_US" code="21964009" score="0.0" disambiguated="false" cui="C0024299" tui="T191" preferredText="Lymphoma"/>
+	<refsem:UmlsConcept xmi:id="3977" codingScheme="SNOMEDCT_US" code="188676008" score="0.0" disambiguated="false" cui="C0024299" tui="T191" preferredText="Lymphoma"/>
+	<refsem:UmlsConcept xmi:id="3967" codingScheme="SNOMEDCT_US" code="118600007" score="0.0" disambiguated="false" cui="C0024299" tui="T191" preferredText="Lymphoma"/>
+	<refsem:UmlsConcept xmi:id="3747" codingScheme="SNOMEDCT_US" code="109969005" score="0.0" disambiguated="false" cui="C0079744" tui="T191" preferredText="Diffuse Large B-Cell Lymphoma"/>
+	<refsem:UmlsConcept xmi:id="3737" codingScheme="SNOMEDCT_US" code="46732000" score="0.0" disambiguated="false" cui="C0079744" tui="T191" preferredText="Diffuse Large B-Cell Lymphoma"/>
+	<refsem:UmlsConcept xmi:id="3792" codingScheme="SNOMEDCT_US" code="46732000" score="0.0" disambiguated="false" cui="C0079744" tui="T191" preferredText="Diffuse Large B-Cell Lymphoma"/>
+	<refsem:UmlsConcept xmi:id="3802" codingScheme="SNOMEDCT_US" code="109969005" score="0.0" disambiguated="false" cui="C0079744" tui="T191" preferredText="Diffuse Large B-Cell Lymphoma"/>
+	<refsem:UmlsConcept xmi:id="4033" codingScheme="SNOMEDCT_US" code="203468000" score="0.0" disambiguated="false" cui="C0152244" tui="T047" preferredText="Bone Cysts, Aneurysmal"/>
+	<refsem:UmlsConcept xmi:id="4023" codingScheme="SNOMEDCT_US" code="76000001" score="0.0" disambiguated="false" cui="C0152244" tui="T047" preferredText="Bone Cysts, Aneurysmal"/>
+	<refsem:UmlsConcept xmi:id="3857" codingScheme="SNOMEDCT_US" code="109969005" score="0.0" disambiguated="false" cui="C0079744" tui="T191" preferredText="Diffuse Large B-Cell Lymphoma"/>
+	<refsem:UmlsConcept xmi:id="3847" codingScheme="SNOMEDCT_US" code="46732000" score="0.0" disambiguated="false" cui="C0079744" tui="T191" preferredText="Diffuse Large B-Cell Lymphoma"/>
+	<refsem:UmlsConcept xmi:id="3912" codingScheme="SNOMEDCT_US" code="203468000" score="0.0" disambiguated="false" cui="C0152244" tui="T047" preferredText="Bone Cysts, Aneurysmal"/>
+	<refsem:UmlsConcept xmi:id="3902" codingScheme="SNOMEDCT_US" code="76000001" score="0.0" disambiguated="false" cui="C0152244" tui="T047" preferredText="Bone Cysts, Aneurysmal"/>
+	<refsem:UmlsConcept xmi:id="4487" codingScheme="SNOMEDCT_US" code="40091007" score="0.0" disambiguated="false" cui="C0699900" tui="T040" preferredText="Catabolism"/>
+	<refsem:UmlsConcept xmi:id="4078" codingScheme="SNOMEDCT_US" code="40091007" score="0.0" disambiguated="false" cui="C0699900" tui="T040" preferredText="Catabolism"/>
+	<refsem:UmlsConcept xmi:id="4401" codingScheme="SNOMEDCT_US" code="40091007" score="0.0" disambiguated="false" cui="C0699900" tui="T040" preferredText="Catabolism"/>
+	<refsem:UmlsConcept xmi:id="4444" codingScheme="SNOMEDCT_US" code="10589004" score="0.0" disambiguated="false" cui="C0040649" tui="T045" preferredText="Transcription, Genetic"/>
+	<refsem:UmlsConcept xmi:id="4218" codingScheme="SNOMEDCT_US" code="371153006" score="0.0" disambiguated="false" cui="C1299583" tui="T033" preferredText="Independently able"/>
+	<refsem:UmlsConcept xmi:id="4121" codingScheme="SNOMEDCT_US" code="20663007" score="0.0" disambiguated="false" cui="C0162638" tui="T043" preferredText="Apoptosis"/>
+	<refsem:UmlsConcept xmi:id="4358" codingScheme="SNOMEDCT_US" code="27026000" score="0.0" disambiguated="false" cui="C0233820" tui="T041" preferredText="Insight"/>
+	<refsem:UmlsConcept xmi:id="4261" codingScheme="SNOMEDCT_US" code="371153006" score="0.0" disambiguated="false" cui="C1299583" tui="T033" preferredText="Independently able"/>
+	<refsem:UmlsConcept xmi:id="4304" codingScheme="SNOMEDCT_US" code="68130003" score="0.0" disambiguated="false" cui="C0026606" tui="T056" preferredText="Physical activity"/>
+	<refsem:UmlsConcept xmi:id="4314" codingScheme="SNOMEDCT_US" code="48761009" score="0.0" disambiguated="false" cui="C0026606" tui="T056" preferredText="Physical activity"/>
+	<refsem:UmlsConcept xmi:id="4164" codingScheme="SNOMEDCT_US" code="68130003" score="0.0" disambiguated="false" cui="C0026606" tui="T056" preferredText="Physical activity"/>
+	<refsem:UmlsConcept xmi:id="4174" codingScheme="SNOMEDCT_US" code="48761009" score="0.0" disambiguated="false" cui="C0026606" tui="T056" preferredText="Physical activity"/>
+	<refsem:UmlsConcept xmi:id="4564" codingScheme="SNOMEDCT_US" code="4421005" score="0.0" disambiguated="false" cui="C0007634" tui="T025" preferredText="Cells"/>
+	<refsem:UmlsConcept xmi:id="4598" codingScheme="SNOMEDCT_US" code="57184004" score="0.0" disambiguated="false" cui="C0039194" tui="T025" preferredText="T-Lymphocyte"/>
+	<refsem:UmlsConcept xmi:id="4632" codingScheme="SNOMEDCT_US" code="4421005" score="0.0" disambiguated="false" cui="C0007634" tui="T025" preferredText="Cells"/>
+	<refsem:UmlsConcept xmi:id="4530" codingScheme="SNOMEDCT_US" code="4421005" score="0.0" disambiguated="false" cui="C0007634" tui="T025" preferredText="Cells"/>
+	<refsem:UmlsConcept xmi:id="4734" codingScheme="SNOMEDCT_US" code="4421005" score="0.0" disambiguated="false" cui="C0007634" tui="T025" preferredText="Cells"/>
+	<refsem:UmlsConcept xmi:id="4666" codingScheme="SNOMEDCT_US" code="4421005" score="0.0" disambiguated="false" cui="C0007634" tui="T025" preferredText="Cells"/>
+	<refsem:UmlsConcept xmi:id="4700" codingScheme="SNOMEDCT_US" code="4421005" score="0.0" disambiguated="false" cui="C0007634" tui="T025" preferredText="Cells"/>
+	<cas:EmptyFSList xmi:id="7571"/>
+	<cas:EmptyFSList xmi:id="7643"/>
+	<cas:EmptyFSList xmi:id="7670"/>
+	<cas:EmptyFSList xmi:id="7760"/>
+	<cas:EmptyFSList xmi:id="7800"/>
+	<cas:EmptyFSList xmi:id="7827"/>
+	<cas:EmptyFSList xmi:id="7917"/>
+	<cas:EmptyFSList xmi:id="7944"/>
+	<cas:EmptyFSList xmi:id="7971"/>
+	<cas:EmptyFSList xmi:id="8011"/>
+	<cas:EmptyFSList xmi:id="8057"/>
+	<cas:EmptyFSList xmi:id="8084"/>
+	<cas:View sofa="1" members="8 13 15 17 19 25 31 37 43 49 55 61 81 101 129 141 153 165 177 189 201 213 225 237 257 269 281 293 305 317 329 341 353 373 393 405 417 429 441 453 465 477 489 501 513 525 537 549 561 573 585 597 609 629 641 653 665 685 697 709 721 733 745 757 769 781 818 830 842 854 866 878 890 902 914 926 938 950 962 974 986 998 1010 1022 1034 1054 1066 1086 1106 1118 1130 1142 1154 1174 1186 1198 1210 1222 1242 1254 1266 1278 1290 1302 1314 1326 1338 1358 1370 1382 1394 1414 1451 1463 1475 1487 1499 1511 1523 1535 1547 1559 1571 1583 1595 1607 1619 1631 1643 1663 1683 1695 1707 1719 1739 1751 1763 1775 1787 1799 1811 1823 1835 1847 1859 1879 1891 1903 1923 1935 1947 1959 1971 1983 1995 2007 2019 2031 2043 2055 2067 2079 2116 2128 2140 2152 2164 2176 2188 2200 2212 73 93 113 121 249 365 385 621 677 793 810 1046 1078 1098 1166 1234 1350 1406 1426 1443 1655 1675 1731 1871 1915 2091 2108 2224 801 1434 2099 2232 2268 2304 2250 2286 2322 2340 2345 2350 2355 2360 2365 2370 2375 2380 2385 2390 2395 2400 2405 2410 2415 2420 2425 2430 2435 2440 2445 2450 2455 2460 2465 2470 2475 2480 2485 2490 2495 2500 2505 2510 2515 2520 2525 2530 2535 2540 2545 2550 2555 2560 2565 2570 2575 2580 2585 2590 2595 2600 2605 2610 2615 2620 2625 2630 2635 2640 2645 2650 2655 2660 2665 2670 2675 2680 2685 2690 2695 2700 2705 2710 2715 2720 2725 2730 2735 2740 2745 2750 2755 2760 2765 2770 2775 2780 2785 2790 2795 2800 2805 2810 2815 2820 2825 2830 2835 2840 2845 2850 2855 2860 2865 2870 2875 2880 2885 3131 3609 3283 3359 3023 3555 3457 3088 3707 3229 2958 3992 3761 3816 4047 3871 3926 4500 4091 4414 4457 4231 4134 4371 4274 4328 4188 4577 4611 4645 4543 4747 4679 4713 4768 4782 4796 4810 4824 4838 4852 4866 4880 4894 4908 4922 4936 4950 4964 4978 4992 5006 5020 5034 5048 5062 5076 5090 5104 5118 5132 5146 5160 5174 5188 5202 5216 5230 5244 5258 5272 5286 5300 5314 5328 5342 5356 5370 5384 5398 5412 5426 5440 5454 5468 5482 5496 5510 5524 5538 5552 5566 5580 5594 5608 5622 5636 5650 5664 5678 5692 5706 5720 5734 5748 5762 5776 5790 5804 5818 5832 5846 5860 5874 5888 5902 5916 5930 5944 5958 5972 5986 6000 6014 6028 6042 6056 6070 6084 6098 6112 6126 6140 6154 6168 6182 6196 6210 6224 6238 6252 6266 6280 6294 6308 6322 6336 6350 6364 6378 6392 6406 6420 6434 6448 6462 6476 6490 6504 6518 6532 6546 6560 6574 6588 6602 6616 6630 6644 6658 6672 6686 6700 6714 6728 6742 6756 6770 6784 6798 6812 6826 6840 6854 6868 6882 6896 6910 6924 6938 6952 6966 6980 6994 7008 7022 7036 7050 7064 7078 7092 7106 7120 7134 7148 7162 7176 7190 7204 7218 7232 7246 7260 7274 7288 7302 7316 7330 7344 7358 7372 7386 7400 7414 7428 7442 7456 7470 7484 7498 7512 7526 7572 7579 7586 7671 7678 7685 7828 7835 7842 7849 8012 8019 7533 7539 7593 7599 7605 7611 7692 7698 7704 7710 7716 7722 7728 7856 7862 7868 7874 7880 7886 7892 7898 8026 8032 8038 7545 7555 7617 7627 7644 7654 7734 7744 7761 7771 7781 7801 7811 7904 7918 7928 7945 7955 7972 7982 7992 8044 8058 8068 7565 7568 7637 7640 7664 7667 7754 7757 7791 7794 7797 7821 7824 7914 7938 7941 7965 7968 8002 8005 8008 8054 8078 8081"/>
+</xmi:XMI>

@@ -1,0 +1,5 @@
+reader icapa.cr.StressTestReader NDocuments=10 Text="The patient had TBI"
+add icapa.ae.TimeAnnotator
+load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
+add icapa.ae.DisorderRegexAnnotator Regex="TBI" Cui="12345"
+add FileTreeXmiWriter OutputDirectory="./out/"
