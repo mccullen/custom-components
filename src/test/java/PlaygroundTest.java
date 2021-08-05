@@ -2,6 +2,8 @@ import org.apache.ctakes.core.config.ConfigParameterConstants;
 import org.apache.ctakes.core.pipeline.PipelineBuilder;
 import org.apache.ctakes.core.pipeline.PiperFileReader;
 import org.apache.ctakes.dictionary.lookup2.util.UmlsUserApprover;
+import org.apache.uima.analysis_engine.AnalysisEngine;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -35,6 +37,17 @@ public class PlaygroundTest {
             e.printStackTrace();
         }
         return property;
+    }
+
+    @Test
+    public void testRuta() throws Exception {
+        AnalysisEngine rutaEngine = AnalysisEngineFactory.createEngine(
+            RutaEngine.class, //
+            RutaEngine.PARAM_RESOURCE_PATHS,
+            "src/main/resources/ruta/resources",//
+            RutaEngine.PARAM_SCRIPT_PATHS,
+            "src/main/resources/ruta/scripts",
+            RutaEngine.PARAM_MAIN_SCRIPT, "Example");
     }
 
 }

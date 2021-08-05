@@ -149,7 +149,7 @@ public class Util {
         AmazonS3ClientBuilder builder = AmazonS3ClientBuilder.standard()
             .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:4566", "us-east-1"))
             .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("test", "test")));
-        builder.setPathStyleAccessEnabled(true);
+        //builder.setPathStyleAccessEnabled(true); // Not sure if you need this?
         AmazonS3 s3Client = builder.build();
         return s3Client;
     }
