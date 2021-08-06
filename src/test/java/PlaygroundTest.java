@@ -20,9 +20,9 @@ public class PlaygroundTest {
         PipelineBuilder pipelineBuilder = piperFileReader.getBuilder();
         String umlsKey = getProperty("umls.key");
         pipelineBuilder.set(UmlsUserApprover.KEY_PARAM, umlsKey);
-        pipelineBuilder.set(ConfigParameterConstants.PARAM_LOOKUP_XML, "org/apache/ctakes/dictionary/lookup/fast/icd.xml");
+        //pipelineBuilder.set(ConfigParameterConstants.PARAM_LOOKUP_XML, "org/apache/ctakes/dictionary/lookup/fast/icd.xml");
         //piperFileReader.loadPipelineFile("./reference/piper-files/stress-test.piper");
-        piperFileReader.loadPipelineFile("./reference/piper-files/disorder-ae.piper");
+        piperFileReader.loadPipelineFile("./reference/piper-files/s3-bucket-reader.piper");
         pipelineBuilder.run();
     }
 
@@ -38,16 +38,4 @@ public class PlaygroundTest {
         }
         return property;
     }
-
-    @Test
-    public void testRuta() throws Exception {
-        AnalysisEngine rutaEngine = AnalysisEngineFactory.createEngine(
-            RutaEngine.class, //
-            RutaEngine.PARAM_RESOURCE_PATHS,
-            "src/main/resources/ruta/resources",//
-            RutaEngine.PARAM_SCRIPT_PATHS,
-            "src/main/resources/ruta/scripts",
-            RutaEngine.PARAM_MAIN_SCRIPT, "Example");
-    }
-
 }

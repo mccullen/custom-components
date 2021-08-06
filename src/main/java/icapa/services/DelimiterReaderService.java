@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DelimiterReaderService implements CollectionReader {
-    public static String[] currentLine;
     static private final Logger LOGGER = Logger.getLogger(DelimiterReaderService.class.getName());
+
+    public static String[] currentLine;
     private Reader _reader;
     private int _rowStart = 0;
     private int _rowEnd = 0;
@@ -53,7 +54,7 @@ public class DelimiterReaderService implements CollectionReader {
             result._documentIdIndex = result._headerToIndex.get(params.getDocumentIdColumnName());
             result._csvReader.skip(result._rowStart);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error reading next header line", e);
         }
         return result;
     }
@@ -86,7 +87,7 @@ public class DelimiterReaderService implements CollectionReader {
                 jCas.setDocumentText("");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error reading next delimiter line", e);
         }
         ++_currentRow;
     }
@@ -112,7 +113,7 @@ public class DelimiterReaderService implements CollectionReader {
         try {
             _csvReader.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error destroying delimiter reader", e);
         }
     }
 }

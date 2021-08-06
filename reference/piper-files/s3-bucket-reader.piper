@@ -1,0 +1,16 @@
+// Custom reader
+reader icapa.cr.S3BucketReader Bucket=analysis Test=true
+load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
+//add icapa.cc.S3FileOntologyWriter KeepAll=true Key=ontology Bucket=analysis
+add FileTreeXmiWriter OutputDirectory="./out/"
+
+// RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\custom-components-repos\custom-components\reference\piper-files\s3.piper --key <key>
+
+// localstack start
+// aws configure (use any fake credentials and I used us-east-1 region)
+// aws --endpoint-url=http://localhost:4566 s3 mb s3://analysis
+// aws --endpoint-url=http://localhost:4566 s3 cp C:/root/vdt/icapa/nlp/test-data/notes/stress-test.txt s3://analysis
+// aws --endpoint-url=http://localhost:4566 s3 cp C:/root/vdt/icapa/nlp/test-data/notes/stress-test-2.txt s3://analysis
+// Run the piper file...
+// aws --endpoint-url=http://localhost:4566 s3 cp s3://analysis C:/root/vdt/icapa/nlp/test-data/ --recursive
+

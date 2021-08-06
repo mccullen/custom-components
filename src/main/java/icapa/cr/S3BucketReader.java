@@ -4,7 +4,10 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.iterable.S3Objects;
 import com.amazonaws.services.s3.model.*;
+import icapa.Util;
+import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
@@ -28,44 +31,47 @@ public class S3BucketReader extends JCasCollectionReader_ImplBase {
     @ConfigurationParameter(
         name = PARAM_BUCKET,
         description = "Bucket from which to read documents",
-        mandatory = false,
-        defaultValue = "0"
+        mandatory = true,
+        defaultValue = ""
     )
     private String _bucket;
 
-    /*
-    static public final String PARAM_SERVICE_ENDPOINT = "ServiceEndpoint";
+    static public final String PARAM_PREFIX = "Prefix";
     @ConfigurationParameter(
-        name = PARAM_SERVICE_ENDPOINT,
-        description = "Service endpoint where bucket resides",
+        name = PARAM_PREFIX,
+        description = "Prefix to use for getting notes from the given bucket",
         mandatory = false,
-        defaultValue = "0"
+        defaultValue = ""
     )
-    private int _serviceEndpoint;
+    private String _prefix;
 
-    static public final String PARAM_SIGNING_REGION = "SigningRegion";
+    static public final String PARAM_TEST = "Test";
     @ConfigurationParameter(
-        name = PARAM_BUCKET,
-        description = "Region where bucket is located",
+        name = PARAM_TEST,
+        description = "Set to true if testing on localstack for testing",
         mandatory = false,
-        defaultValue = "0"
+        defaultValue = "false"
     )
-    private int _signingRegion;
-     */
+    private boolean _test;
 
     private AmazonS3 _s3Client;
-    private ListObjectsV2Result _result;
-    private ListObjectsV2Request _req;
     private Iterator<S3ObjectSummary> _objectSummaries;
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        _s3Client = AmazonS3ClientBuilder.defaultClient();
-
-        // maxKeys is set to 1000 to demonstrate the use of
-        // ListObjectsV2Result.getNextContinuationToken()
-        _req = new ListObjectsV2Request().withBucketName(_bucket).withMaxKeys(1000);
+        if (_test) {
+            _s3Client = Util.getS3Client();
+        } else {
+            _s3Client = AmazonS3ClientBuilder.defaultClient();
+        }
+        S3Objects s3Objects;
+        if (_prefix != null && !_prefix.equals("")) {
+            s3Objects = S3Objects.withPrefix(_s3Client, _bucket, _prefix);
+        } else {
+            s3Objects = S3Objects.inBucket(_s3Client, _bucket);
+        }
+        _objectSummaries = s3Objects.iterator();
     }
 
     @Override
@@ -78,23 +84,15 @@ public class S3BucketReader extends JCasCollectionReader_ImplBase {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String documentText = bufferedReader.lines().collect(Collectors.joining("\n"));
         jCas.setDocumentText(documentText);
+        DocumentID documentID = new DocumentID(jCas);
+        String id = objectSummary.getKey();
+        documentID.setDocumentID(id);
+        documentID.addToIndexes();
     }
 
     @Override
     public boolean hasNext() {
-        if (_objectSummaries == null || !_objectSummaries.hasNext()) {
-            // No more objects on this page, so get next page
-
-            _result = _s3Client.listObjectsV2(_req);
-            _objectSummaries = _result.getObjectSummaries().iterator();
-
-            // If there are more than maxKeys keys in the bucket, get a continuation token
-            // and list the next objects.
-            String token = _result.getNextContinuationToken();
-            System.out.println("Next Continuation Token: " + token);
-            _req.setContinuationToken(token);
-        }
-        return (_objectSummaries != null && _objectSummaries.hasNext()) || _result.isTruncated();
+        return _objectSummaries.hasNext();
     }
 
     @Override
