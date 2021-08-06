@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 public class S3BucketReader extends JCasCollectionReader_ImplBase {
@@ -55,6 +56,8 @@ public class S3BucketReader extends JCasCollectionReader_ImplBase {
     private AmazonS3 _s3Client;
     private ListObjectsV2Result _result;
     private ListObjectsV2Request _req;
+    private Iterator<S3ObjectSummary> _objectSummaries;
+
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
@@ -62,31 +65,36 @@ public class S3BucketReader extends JCasCollectionReader_ImplBase {
 
         // maxKeys is set to 1000 to demonstrate the use of
         // ListObjectsV2Result.getNextContinuationToken()
-        ListObjectsV2Request _req = new ListObjectsV2Request().withBucketName(_bucket).withMaxKeys(1000);
+        _req = new ListObjectsV2Request().withBucketName(_bucket).withMaxKeys(1000);
     }
 
     @Override
     public void getNext(JCas jCas) {
-        _result = _s3Client.listObjectsV2(_req);
+        S3ObjectSummary objectSummary = _objectSummaries.next();
 
-        for (S3ObjectSummary objectSummary : _result.getObjectSummaries()) {
-            System.out.printf(" - %s (size: %d)\n", objectSummary.getKey(), objectSummary.getSize());
-            S3Object object = _s3Client.getObject(new GetObjectRequest(objectSummary.getBucketName(), objectSummary.getKey()));
-            InputStream inputStream = object.getObjectContent();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String documentText = bufferedReader.lines().collect(Collectors.joining("\n"));
-            jCas.setDocumentText(documentText);
-        }
-        // If there are more than maxKeys keys in the bucket, get a continuation token
-        // and list the next objects.
-        String token = _result.getNextContinuationToken();
-        System.out.println("Next Continuation Token: " + token);
-        _req.setContinuationToken(token);
+        System.out.printf(" - %s (size: %d)\n", objectSummary.getKey(), objectSummary.getSize());
+        S3Object object = _s3Client.getObject(new GetObjectRequest(objectSummary.getBucketName(), objectSummary.getKey()));
+        InputStream inputStream = object.getObjectContent();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String documentText = bufferedReader.lines().collect(Collectors.joining("\n"));
+        jCas.setDocumentText(documentText);
     }
 
     @Override
     public boolean hasNext() {
-        return _result.isTruncated();
+        if (_objectSummaries == null || !_objectSummaries.hasNext()) {
+            // No more objects on this page, so get next page
+
+            _result = _s3Client.listObjectsV2(_req);
+            _objectSummaries = _result.getObjectSummaries().iterator();
+
+            // If there are more than maxKeys keys in the bucket, get a continuation token
+            // and list the next objects.
+            String token = _result.getNextContinuationToken();
+            System.out.println("Next Continuation Token: " + token);
+            _req.setContinuationToken(token);
+        }
+        return (_objectSummaries != null && _objectSummaries.hasNext()) || _result.isTruncated();
     }
 
     @Override
