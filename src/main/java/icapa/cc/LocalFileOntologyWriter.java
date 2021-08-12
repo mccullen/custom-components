@@ -28,6 +28,14 @@ public class LocalFileOntologyWriter extends AbstractFileOntologyWriter {
     )
     private String _outputFile;
 
+    static public final String PARAM_APPEND = "Append";
+    @ConfigurationParameter(
+        name = PARAM_APPEND,
+        defaultValue = "true",
+        mandatory = false
+    )
+    private boolean _append;
+
     private AnalysisEngine _writer;
 
     public LocalFileOntologyWriter() {
@@ -43,7 +51,8 @@ public class LocalFileOntologyWriter extends AbstractFileOntologyWriter {
     private void setWriter() {
         try {
             boolean append = false;
-            if (Files.exists(Paths.get(_outputFile))) {
+            if (Files.exists(Paths.get(_outputFile)) && _append) {
+                // Only set to true if file exists and they specified to append
                 append = true;
             } else {
                 append = false;

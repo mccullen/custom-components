@@ -235,12 +235,14 @@ public class Util {
         // Set segment
         String segmentId = identifiedAnnotation.getSegmentID();
         if (segmentId != null) {
-            Collection<Segment> segments = JCasUtil.select(jCas, Segment.class);
-            for (Segment segment : segments) {
-                if (segmentId.equals(segment.getId())) {
-                    ontology.setSegment(segment.getPreferredText());
-                    break; // Meh. Don't like the break here. May be better to do an old-fashioned Iterator, but that would be ugly too
-                }
+            Optional<Segment> segment = JCasUtil
+                .select(jCas, Segment.class)
+                .stream()
+                .filter(s -> s.getId().equals(segmentId))
+                .findFirst();
+
+            if (segment.isPresent()) {
+                ontology.setSegment(segment.get().getPreferredText());
             }
         }
 
