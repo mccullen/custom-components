@@ -11,8 +11,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 public class PlaygroundTest {
+
     @Test
     public void testPipeline() throws Exception {
         // set, load, build
@@ -22,7 +24,10 @@ public class PlaygroundTest {
         pipelineBuilder.set(UmlsUserApprover.KEY_PARAM, umlsKey);
         //pipelineBuilder.set(ConfigParameterConstants.PARAM_LOOKUP_XML, "org/apache/ctakes/dictionary/lookup/fast/icd.xml");
         //piperFileReader.loadPipelineFile("./reference/piper-files/stress-test.piper");
-        piperFileReader.loadPipelineFile("./reference/piper-files/s3-bucket-reader.piper");
+        //piperFileReader.loadPipelineFile("./reference/piper-files/s3-bucket-reader.piper");
+        String home = System.getenv("CTAKES_HOME");
+        String path = home + "\\sectionizer.piper";
+        piperFileReader.loadPipelineFile(path);
         pipelineBuilder.run();
     }
 
@@ -37,5 +42,9 @@ public class PlaygroundTest {
             e.printStackTrace();
         }
         return property;
+    }
+
+    public void testPattern() throws Exception {
+        //Pattern pattern = Pattern.compile("(?<!\\*\\*\\*([\\s\\S]+))^\\s*finding(s|\\(s\\))?\\s*(?!\\*\\*\\*END)");
     }
 }
