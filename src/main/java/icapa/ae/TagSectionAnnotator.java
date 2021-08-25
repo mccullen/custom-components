@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TagSectionizer extends JCasAnnotator_ImplBase {
+public class TagSectionAnnotator extends JCasAnnotator_ImplBase {
     public static final String PARAM_START_REGEX = "StartRegex";
     @ConfigurationParameter(
         name = PARAM_START_REGEX,
@@ -50,6 +50,7 @@ public class TagSectionizer extends JCasAnnotator_ImplBase {
         _endPattern = Pattern.compile(_endRegex);
     }
 
+    // Utility class to mark the start/end of the section tag
     private class Position {
         public int _start;
         public int _end;
@@ -92,10 +93,15 @@ public class TagSectionizer extends JCasAnnotator_ImplBase {
             }
         };
 
-        List<Position> positions = new ArrayList<>();
-        while (startMatcher.find()) {
-            if (endMatcher.find(startMatcher.start())) {
-                positions.add(new Position(startMatcher.end(), endMatcher.start()));
+        List<Position> tags = new ArrayList<>();
+        // Add all positions to mark the start and end of each tagged section
+        while (startMatcher.find()) { // find a match to the start tag
+            if (endMatcher.find(startMatcher.start())) { // From the start tag match, find an end tag match
+                // Add the position. The start/end indexes of the position are set to everything in between, but
+                // not including, the match.
+                tags.add(new Position(startMatcher.end(), endMatcher.start()));
+
+                // Add the segment to the cas
                 Segment segment = new Segment(jCas);
                 segment.setId(_header);
                 segment.setPreferredText(_header);
@@ -103,24 +109,38 @@ public class TagSectionizer extends JCasAnnotator_ImplBase {
             }
         }
 
-        if (positions.size() > 0) {
-            Collection<IdentifiedAnnotation> as = JCasUtil.select(jCas, IdentifiedAnnotation.class);
+        if (tags.size() > 0) {
+            // There are tagged sections, so set the segmentId for all identified annotations that are FULLY
+            // in between (inclusive) the start and end of the position index
             JCasUtil.select(jCas, IdentifiedAnnotation.class).forEach(ia -> {
-                Position position = new Position(ia.getBegin(), ia.getEnd());
-                int index = Collections.binarySearch(positions, position, comparator); // -insert - 1
-                if (index < 0) { // 0 -> -1  3 -> -4
-                    index = Math.abs(index) - 2;
+                // Get the position of the identified annotation
+                Position iaPosition = new Position(ia.getBegin(), ia.getEnd());
+
+                // Search the positions of the tagged sections and return the index of the matching section (where
+                // the start/end indexes are the same. If there is no such position (likely), then return the index where
+                // it would be inserted minus 1.
+                // We are going to reset this index so that it indexes to the first
+                // position which has a start that is on or before the start of the identified annotation
+                int index = Collections.binarySearch(tags, iaPosition, comparator); // -insert - 1
+                if (index < 0) { // if index would be 0, then it would return -1, if index would be  3, -4 would return
+                    index = Math.abs(index) - 1; // gets the index it would be
+                    // Now, you need to go to the previous position.
+                    // if it would be inserted at a position before all the tags, index would be 0 right now, meaning
+                    // this identified annotation is before any tag starts. So it is okay to skip over it in the
+                    // conditional below. If it starts after the first tag's start position (say, index = 1), then
+                    // you would need to check the the start/end of the tag before (index-1) that index to see
+                    // if it falls w/i its bounds. So, we are subtracting 1 here because we need to get the index
+                    // of the first possible tag which COULD contain this annotation. Recall our comparator compares
+                    // the start of the position, so the tag at the index just before the annotation would be inserted
+                    // would have a start < the start of the annotation.
+                    index = index - 1;
                 }
-                if (index < positions.size() && index >= 0) {
-                    Position tag = positions.get(index);
+                if (index < tags.size() && index >= 0) {
+                    Position tag = tags.get(index);
                     if (ia.getBegin() >= tag._start && ia.getEnd() <= tag._end) {
                         ia.setSegmentID(_header);
-                        ia.setSubject("TEST");
                     }
                 }
-            });
-            JCasUtil.select(jCas, IdentifiedAnnotation.class).forEach(ia -> {
-                System.out.println(ia.getSegmentID());
             });
         }
     }

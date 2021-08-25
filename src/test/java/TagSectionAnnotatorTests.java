@@ -1,22 +1,18 @@
-import icapa.ae.DisorderRegexAnnotator;
-import icapa.ae.TagSectionizer;
-import org.apache.ctakes.typesystem.type.refsem.UmlsConcept;
+import icapa.ae.TagSectionAnnotator;
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
 import org.apache.uima.analysis_engine.AnalysisEngine;
-import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSArray;
 import org.junit.Test;
 
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
-public class TagSectionizerTests {
+public class TagSectionAnnotatorTests {
 
     @Test
     public void testSectionizer() throws Exception {
@@ -50,10 +46,10 @@ public class TagSectionizerTests {
         a.addToIndexes();
 
         AnalysisEngine ae = AnalysisEngineFactory.createEngine(
-            TagSectionizer.class,
-            TagSectionizer.PARAM_HEADER, "Test",
-            TagSectionizer.PARAM_START_REGEX, "XXX",
-            TagSectionizer.PARAM_END_REGEX, "YYY");
+            TagSectionAnnotator.class,
+            TagSectionAnnotator.PARAM_HEADER, "Test",
+            TagSectionAnnotator.PARAM_START_REGEX, "XXX",
+            TagSectionAnnotator.PARAM_END_REGEX, "YYY");
 
         SimplePipeline.runPipeline(jCas, ae);
 

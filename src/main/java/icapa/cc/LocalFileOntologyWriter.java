@@ -4,10 +4,12 @@ import icapa.services.AnalysisEngine;
 import icapa.services.FileOntologyConsumer;
 import icapa.services.OntologyConsumer;
 import icapa.services.OntologyWriterService;
+import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
