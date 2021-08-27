@@ -1,24 +1,19 @@
 package icapa.ae;
 
-import javafx.geometry.Pos;
-import javafx.util.Pair;
-import org.apache.ctakes.typesystem.type.textsem.DiseaseDisorderMention;
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
 import org.apache.ctakes.typesystem.type.textspan.Segment;
 import org.apache.uima.UimaContext;
-import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TagSectionAnnotator extends JCasAnnotator_ImplBase {
+public class RegexSegmentAnnotator extends JCasAnnotator_ImplBase {
     public static final String PARAM_START_REGEX = "StartRegex";
     @ConfigurationParameter(
         name = PARAM_START_REGEX,
@@ -33,12 +28,21 @@ public class TagSectionAnnotator extends JCasAnnotator_ImplBase {
     )
     private String _endRegex;
 
-    public static final String PARAM_HEADER = "Header";
+    public static final String PARAM_SEGMENT_ID = "SegmentId";
     @ConfigurationParameter(
-        name = PARAM_HEADER,
-        description = "Header"
+        name = PARAM_SEGMENT_ID,
+        description = "Segment id"
     )
-    private String _header;
+    private String _segmentId;
+
+    public static final String PARAM_PREFERRED_TEXT = "PreferredText";
+    @ConfigurationParameter(
+        name = PARAM_PREFERRED_TEXT,
+        description = "Tag name",
+        mandatory = false,
+        defaultValue = ""
+    )
+    private String _preferredText;
 
     private Pattern _startPattern;
     private Pattern _endPattern;
@@ -48,6 +52,8 @@ public class TagSectionAnnotator extends JCasAnnotator_ImplBase {
         super.initialize(context);
         _startPattern = Pattern.compile(_startRegex);
         _endPattern = Pattern.compile(_endRegex);
+        // If preferred text is not set, default to segment id
+        _preferredText = _preferredText.equals("") ? _segmentId : _preferredText;
     }
 
     // Utility class to mark the start/end of the section tag
@@ -103,8 +109,10 @@ public class TagSectionAnnotator extends JCasAnnotator_ImplBase {
 
                 // Add the segment to the cas
                 Segment segment = new Segment(jCas);
-                segment.setId(_header);
-                segment.setPreferredText(_header);
+                segment.setId(_segmentId);
+                segment.setPreferredText(_preferredText);
+                segment.setBegin(startMatcher.end());
+                segment.setEnd(endMatcher.start());
                 segment.addToIndexes();
             }
         }
@@ -138,7 +146,7 @@ public class TagSectionAnnotator extends JCasAnnotator_ImplBase {
                 if (index < tags.size() && index >= 0) {
                     Position tag = tags.get(index);
                     if (ia.getBegin() >= tag._start && ia.getEnd() <= tag._end) {
-                        ia.setSegmentID(_header);
+                        ia.setSegmentID(_segmentId);
                     }
                 }
             });

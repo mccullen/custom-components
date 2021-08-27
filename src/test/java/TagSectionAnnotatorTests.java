@@ -1,4 +1,4 @@
-import icapa.ae.TagSectionAnnotator;
+import icapa.ae.RegexSegmentAnnotator;
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
@@ -46,10 +46,10 @@ public class TagSectionAnnotatorTests {
         a.addToIndexes();
 
         AnalysisEngine ae = AnalysisEngineFactory.createEngine(
-            TagSectionAnnotator.class,
-            TagSectionAnnotator.PARAM_HEADER, "Test",
-            TagSectionAnnotator.PARAM_START_REGEX, "XXX",
-            TagSectionAnnotator.PARAM_END_REGEX, "YYY");
+            RegexSegmentAnnotator.class,
+            RegexSegmentAnnotator.PARAM_PREFERRED_TEXT, "Test",
+            RegexSegmentAnnotator.PARAM_START_REGEX, "XXX",
+            RegexSegmentAnnotator.PARAM_END_REGEX, "YYY");
 
         SimplePipeline.runPipeline(jCas, ae);
 
