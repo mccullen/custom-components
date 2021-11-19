@@ -26,7 +26,8 @@ public class PlaygroundTest {
         //piperFileReader.loadPipelineFile("./reference/piper-files/stress-test.piper");
         //piperFileReader.loadPipelineFile("./reference/piper-files/s3-bucket-reader.piper");
         String home = System.getenv("CTAKES_HOME");
-        String path = home + "\\sectionizer.piper";
+        //String path = home + "\\sectionizer.piper";
+        String path = home + "\\mip-radiology.piper";
         piperFileReader.loadPipelineFile(path);
         pipelineBuilder.run();
     }

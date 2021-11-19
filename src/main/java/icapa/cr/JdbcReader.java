@@ -8,6 +8,7 @@ import icapa.services.CollectionReader;
 import icapa.services.JdbcReaderService;
 import icapa.services.JdbcSqlConnection;
 import icapa.services.SqlConnection;
+import org.apache.ctakes.core.pipeline.PiperFileReader;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.fit.component.JCasCollectionReader_ImplBase;
@@ -71,8 +72,13 @@ public class JdbcReader extends  JCasCollectionReader_ImplBase {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
+        setReader();
         LOGGER.info("Initializing Jdbc Reader");
 
+    }
+
+    private void setReader() {
+        LOGGER.info("Initializing reader");
         JdbcReaderParams params = new JdbcReaderParams();
         params.setDocumentTextColName(_docTextColName);
         params.setDocumentIdColName(_documentIdCol);

@@ -32,7 +32,7 @@ public class Const {
     public static final String SEGMENT_HEADER = "segment";
     public static final String DISCOVERY_TECHNIQUE_HEADER = "discovery_technique";
     public static final String HISTORY_OF_HEADER = "history_of";
-    public static final String OID_HEADER = "oid";
+    public static final String OID_HEADER = "ontology_id";
     public static final String OUI_HEADER = "oui";
     public static final String DISAMBIGUATED_HEADER = "disambiguated_flag";
     public static final String ONTOLOGY_ADDRESS_HEADER = "ontology_concept_address";

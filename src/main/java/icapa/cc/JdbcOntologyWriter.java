@@ -50,14 +50,21 @@ public class JdbcOntologyWriter extends AbstractJdbcWriter {
 
     private AnalysisEngine _writer;
     private JdbcOntologyWriterParams _params = new JdbcOntologyWriterParams();
+    private UimaContext _context;
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
+        _context = context;
         setParams();
+        setWriter();
+    }
+
+    private void setWriter() {
+        LOGGER.info("Setting writer");
         OntologyConsumer ontologyConsumer = getOntologyConsumer();
         _writer = OntologyWriterService.fromParams(ontologyConsumer, _params.isKeepAll());
-        _writer.initialize(context);
+        _writer.initialize(_context);
     }
 
     private void setParams() {
@@ -94,6 +101,7 @@ public class JdbcOntologyWriter extends AbstractJdbcWriter {
 
     @Override
     public void process(JCas jCas) throws AnalysisEngineProcessException {
+        LOGGER.info("Processing jcas");
         _writer.process(jCas);
     }
 

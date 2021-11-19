@@ -21,6 +21,7 @@ public class JdbcSqlConnection implements SqlConnection {
     }
 
     private void setConnection() {
+        LOGGER.info("Setting connection");
         if (_params.getUsername() != null && _params.getPassword() != null) {
             _connection = Util.getConnection(
                 _params.getUsername(),
@@ -29,6 +30,7 @@ public class JdbcSqlConnection implements SqlConnection {
         } else {
             _connection = Util.getConnection(_params.getUrl());
         }
+        LOGGER.info("Connection set");
     }
 
     @Override

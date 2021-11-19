@@ -340,10 +340,17 @@ public class Util {
      * */
     public static Connection getConnection(String url) {
         Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(url);
-        } catch (Exception e) {
-            LOGGER.error("Could not connect to url: " + url, e);
+        DriverManager.setLoginTimeout(0);
+        boolean connected = false;
+        while (!connected) {
+            try {
+                LOGGER.info("Attempting to connect");
+                connection = DriverManager.getConnection(url);
+                connected = true;
+                LOGGER.info("Connection successful");
+            } catch (Exception e) {
+                LOGGER.error("Could not connect to url: " + url, e);
+            }
         }
         return connection;
     }
