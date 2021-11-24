@@ -582,7 +582,7 @@ public class Util {
                 query.append(", ");
             }
         }
-        query.append(");");
+        query.append(");\n");
         return query.toString();
     }
 
@@ -754,11 +754,16 @@ public class Util {
     }
 
     public static void logExceptionChain(Logger logger, SQLException ex) {
+        System.out.println("******** Logging Exception Chain ***********");
         logger.error(ex);
         SQLException nextException = ex.getNextException();
         while (nextException != null) {
+            System.out.println("Stack trace: ");
+            nextException.printStackTrace();
+            System.out.println("Exception: ");
             logger.error(nextException);
             nextException = nextException.getNextException();
         }
+        System.out.println("******** Done Logging Exception Chain ***********");
     }
 }

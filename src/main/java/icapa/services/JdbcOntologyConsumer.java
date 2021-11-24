@@ -38,7 +38,7 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
             _connection = Util.getConnection(_params.getUrl());
         }
         setSupportsBatchUpdates();
-        if (_supportsBatchUpdates) {
+        if (_supportsBatchUpdates && _params.getBatchSize() > 1) {
             // Batch updates supported, so set autocommit to false so you have to explicitly commit
             // batches of queries.
             try {
@@ -142,6 +142,8 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
             commit();
         } catch (SQLException throwables) {
             LOGGER.error("Error executing batch", throwables);
+            LOGGER.error("Other errors:");
+            Util.logExceptionChain(LOGGER, throwables);
         }
     }
 
