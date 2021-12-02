@@ -120,6 +120,7 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
         try {
             if (_supportsBatchUpdates && _params.getBatchSize() > 1) {
                 _preparedStatement.addBatch();
+                _preparedStatement.clearParameters();
                 ++_batchIndex;
                 if (_batchIndex >= _params.getBatchSize()) {
                     LOGGER.info("Executing batch update for ontologies");
