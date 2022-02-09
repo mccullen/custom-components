@@ -20,10 +20,18 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <!--
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>org.apache.ctakes:*</exclude>
+                                </excludes>
+                            </artifactSet>
+                            -->
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
                                     <excludes>
+                                        <!-- Exclude manafests for all artifacts, we don't need them -->
                                         <exclude>META-INF/*.SF</exclude>
                                         <exclude>META-INF/*.DSA</exclude>
                                         <exclude>META-INF/*.RSA</exclude>
@@ -82,12 +90,5 @@
             <artifactId>localstack-utils</artifactId>
             <version>0.2.2</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.apache.uima</groupId>
-            <artifactId>ruta-core</artifactId>
-            <version>2.8.1</version>
-        </dependency>
-        -->
     </dependencies>
 </project>
