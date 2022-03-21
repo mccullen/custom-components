@@ -37,6 +37,15 @@ public class Const {
     public static final String DISAMBIGUATED_HEADER = "disambiguated_flag";
     public static final String ONTOLOGY_ADDRESS_HEADER = "ontology_concept_address";
 
+    // Recommendation headers
+    public static final String SENTENCE_NUMBER_HEADER = "sentence_number";
+    public static final String SENTENCE_ADDRESS_HEADER = "sentence_address";
+    public static final String MATCH_HEADER = "match";
+    public static final String STRENGTH_HEADER = "strength";
+    public static final String SENTENCE_HEADER = "sentence";
+    public static final String TIMEFRAME_HEADER = "timeframe";
+    public static final String RECOMMENDATION_TYPE_HEADER = "recommendation_type";
+
     public static final String PARAM_DRIVER_CLASS = "DriverClassName";
     public static final String PARAM_URL = "URL";
     public static final String PARAM_USERNAME = "Username";

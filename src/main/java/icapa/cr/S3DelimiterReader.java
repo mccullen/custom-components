@@ -34,6 +34,14 @@ public class S3DelimiterReader extends AbstractDelimiterReader {
     )
     private String _key;
 
+    static public final String PARAM_PROD = "Prod";
+    @ConfigurationParameter(
+        name = PARAM_PROD,
+        defaultValue = "true",
+        mandatory = false
+    )
+    private boolean _prod;
+
     // Private fields
     private CollectionReader _reader;
 
@@ -41,7 +49,7 @@ public class S3DelimiterReader extends AbstractDelimiterReader {
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
         //AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
-        AmazonS3 s3Client = Util.getS3Client();
+        AmazonS3 s3Client = Util.getS3Client(_prod);
 
         S3Object s3Object = s3Client.getObject(_bucket, _key);
         InputStream inputStream = s3Object.getObjectContent();

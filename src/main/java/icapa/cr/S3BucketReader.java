@@ -45,6 +45,15 @@ public class S3BucketReader extends JCasCollectionReader_ImplBase {
     )
     private String _prefix;
 
+    static public final String PARAM_PROD = "Prod";
+    @ConfigurationParameter(
+        name = PARAM_PROD,
+        mandatory = false,
+        defaultValue = "true"
+    )
+    private boolean _prod;
+
+
     static public final String PARAM_TEST = "Test";
     @ConfigurationParameter(
         name = PARAM_TEST,
@@ -61,7 +70,7 @@ public class S3BucketReader extends JCasCollectionReader_ImplBase {
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
         if (_test) {
-            _s3Client = Util.getS3Client();
+            _s3Client = Util.getS3Client(_prod);
         } else {
             _s3Client = AmazonS3ClientBuilder.defaultClient();
         }

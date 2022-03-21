@@ -20,11 +20,13 @@ public class S3OntologyConsumer implements OntologyConsumer {
     private Writer _writer;
     private boolean _append;
     private ByteArrayOutputStream _byteArrayOutputStream;
+    private boolean _prod;
 
-    public static S3OntologyConsumer from(String bucket, String key, char delimiter) {
+    public static S3OntologyConsumer from(String bucket, String key, char delimiter, boolean prod) {
         S3OntologyConsumer result = new S3OntologyConsumer();
         result._bucket = bucket;
         result._key = key;
+        result._prod = prod;
         result.setWriter();
         result.setAppendAndCreateBucketIfAbsent();
         result._ontologyConsumer = FileOntologyConsumer.from(result._writer, delimiter, result._append);
@@ -44,7 +46,7 @@ public class S3OntologyConsumer implements OntologyConsumer {
 
     private void setAppendAndCreateBucketIfAbsent() {
         //AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
-        AmazonS3 s3Client = Util.getS3Client();
+        AmazonS3 s3Client = Util.getS3Client(_prod);
         if (s3Client.doesObjectExist(_bucket, _key)) {
             // If you wanted to delete the bucket and recreate you could do this
             // But you could really shoot yourself in the foot if you delete by accident so it
@@ -91,7 +93,7 @@ public class S3OntologyConsumer implements OntologyConsumer {
 
         // TODO: This may need to be refactored to work with large files. Maybe do a multipart upload somehow?
         try {
-            AmazonS3 s3Client = Util.getS3Client();
+            AmazonS3 s3Client = Util.getS3Client(_prod);
             TransferManager tm = TransferManagerBuilder.standard().withS3Client(s3Client).build();
             PipedOutputStream out = new PipedOutputStream();
             PipedInputStream in = new PipedInputStream(out);

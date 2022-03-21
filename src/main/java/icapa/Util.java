@@ -5,11 +5,11 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.opencsv.CSVWriterBuilder;
 import icapa.models.HeaderProperties;
 import icapa.models.Ontology;
-import icapa.services.AnalysisEngine;
+import icapa.models.Recommendation;
 import icapa.services.CollectionReader;
+import org.apache.ctakes.core.ae.SentenceDetectorAnnotatorBIO;
 import org.apache.ctakes.core.cc.XMISerializer;
 import org.apache.ctakes.typesystem.type.constants.CONST;
 import org.apache.ctakes.typesystem.type.refsem.OntologyConcept;
@@ -23,7 +23,6 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.cas.impl.XmiCasSerializer;
-import org.apache.uima.collection.CollectionException;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
@@ -32,7 +31,6 @@ import org.xml.sax.SAXException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.sql.Connection;
@@ -145,12 +143,17 @@ public class Util {
         return durationInMilliseconds;
     }
 
-    public static AmazonS3 getS3Client() {
-        AmazonS3ClientBuilder builder = AmazonS3ClientBuilder.standard()
-            .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:4566", "us-east-1"))
-            .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("test", "test")));
-        builder.setPathStyleAccessEnabled(true); // Need this to get it to find localhost for some reason...
-        AmazonS3 s3Client = builder.build();
+    public static AmazonS3 getS3Client(boolean prod) {
+        AmazonS3 s3Client = null;
+        if (prod) {
+            s3Client = AmazonS3ClientBuilder.defaultClient();
+        } else {
+            AmazonS3ClientBuilder builder = AmazonS3ClientBuilder.standard()
+                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:4566", "us-east-1"))
+                .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("test", "test")));
+            builder.setPathStyleAccessEnabled(true); // Need this to get it to find localhost for some reason...
+            s3Client = builder.build();
+        }
         return s3Client;
     }
 
@@ -426,6 +429,22 @@ public class Util {
         putInRow(row, Const.OUI_HEADER, ontology.getOui(), headerToIndex);
         putInRow(row, Const.DISAMBIGUATED_HEADER, String.valueOf(ontology.getDisambiguated()), headerToIndex);
         putInRow(row, Const.ONTOLOGY_ADDRESS_HEADER, String.valueOf(ontology.getOntologyConceptAddress()), headerToIndex);
+        return row;
+    }
+
+    public static String[] getRecommendationAsStringArray(Recommendation recommendation, Map<String, Integer> headerToIndex) {
+        String[] row = new String[headerToIndex.size()];
+        putInRow(row, Const.DOCUMENT_ID_HEADER, recommendation.getDocumentId(), headerToIndex);
+        putInRow(row, Const.BEGIN_HEADER, String.valueOf(recommendation.getBeginIndex()), headerToIndex);
+        putInRow(row, Const.END_HEADER, String.valueOf(recommendation.getEndIndex()), headerToIndex);
+        putInRow(row, Const.SENTENCE_NUMBER_HEADER, String.valueOf(recommendation.getSentenceNumber()), headerToIndex);
+        putInRow(row, Const.SENTENCE_ADDRESS_HEADER, String.valueOf(recommendation.getSentenceAddress()), headerToIndex);
+        putInRow(row, Const.MATCH_HEADER, recommendation.getMatch(), headerToIndex);
+        putInRow(row, Const.SEGMENT_HEADER, recommendation.getSegment(), headerToIndex);
+        putInRow(row, Const.STRENGTH_HEADER, recommendation.getStrength(), headerToIndex);
+        putInRow(row, Const.TIMEFRAME_HEADER, recommendation.getTimeframe(), headerToIndex);
+        putInRow(row, Const.RECOMMENDATION_TYPE_HEADER, recommendation.getRecommendationType(), headerToIndex);
+        putInRow(row, Const.SENTENCE_HEADER, recommendation.getSentence(), headerToIndex);
         return row;
     }
 
@@ -765,5 +784,21 @@ public class Util {
             nextException = nextException.getNextException();
         }
         System.out.println("******** Done Logging Exception Chain ***********");
+    }
+
+    public static String[] getRecommendationHeaders() {
+        return new String[] {
+            Const.DOCUMENT_ID_HEADER,
+            Const.BEGIN_HEADER,
+            Const.END_HEADER,
+            Const.SENTENCE_NUMBER_HEADER,
+            Const.SENTENCE_ADDRESS_HEADER,
+            Const.MATCH_HEADER,
+            Const.SEGMENT_HEADER,
+            Const.STRENGTH_HEADER,
+            Const.TIMEFRAME_HEADER,
+            Const.RECOMMENDATION_TYPE_HEADER,
+            Const.SENTENCE_HEADER
+        };
     }
 }

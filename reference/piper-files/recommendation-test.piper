@@ -1,0 +1,29 @@
+reader icapa.cr.StressTestReader NDocuments=10 Text="CHIEF COMPLAINT:\nPatient presents with cough.\n\n Recommended follow up for the patient within 6 months on April 1st, 2021 (04/01/2021). It is also recommended that he take some time to rest. \n\n Patient has been experiencing productive cough\nfor two weeks. Has treated at home with Tylenol.\n\nCONCLUSION:\nPatient has pneumonia."
+add icapa.ae.TimeAnnotator
+// *** Default Clinical Pipeline (w/ BsvRegexSectionizer and SentenceDetectorAnnotatorBIO instead) ***
+// Replace SimpleSegmentAnnotator w/ BSVRegexSectionizer
+// Commenting out the simple segment annotator so we use the BSVRegexSectionizer instead
+//add SimpleSegmentAnnotator
+add BsvRegexSectionizer SectionsBsv=./icapa-sections.bsv
+
+// Commenting out SentenceDetector to use SentenceDetectorAnnotatorBIO instead
+//add SentenceDetector
+add SentenceDetectorAnnotatorBIO classifierJarPath=/org/apache/ctakes/core/sentdetect/model.jar
+add TokenizerAnnotatorPTB
+
+// Add non-core annotators
+add ContextDependentTokenizerAnnotator
+addDescription POSTagger
+
+// Add Chunkers
+load ChunkerSubPipe.piper
+
+// Default fast dictionary lookup
+add DefaultJCasTermAnnotator
+
+// Add Cleartk Entity Attribute annotators
+load AttributeCleartkSubPipe.piper
+
+
+add icapa.cc.FileRecommendationWriter OutputFile="./out/recommendation.csv"
+add FileTreeXmiWriter OutputDirectory="./out/"

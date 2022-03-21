@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -25,10 +26,13 @@ public class PlaygroundTest {
         //pipelineBuilder.set(ConfigParameterConstants.PARAM_LOOKUP_XML, "org/apache/ctakes/dictionary/lookup/fast/icd.xml");
         //piperFileReader.loadPipelineFile("./reference/piper-files/stress-test.piper");
         //piperFileReader.loadPipelineFile("./reference/piper-files/s3-bucket-reader.piper");
+        piperFileReader.loadPipelineFile("./reference/piper-files/recommendation-test.piper");
+        /*
         String home = System.getenv("CTAKES_HOME");
         //String path = home + "\\sectionizer.piper";
-        String path = home + "\\mip-radiology.piper";
-        piperFileReader.loadPipelineFile(path);
+        //String path = home + "\\mip-radiology.piper";
+        //piperFileReader.loadPipelineFile(path);
+         */
         pipelineBuilder.run();
     }
 

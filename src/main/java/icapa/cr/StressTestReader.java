@@ -30,7 +30,7 @@ public class StressTestReader extends JCasCollectionReader_ImplBase {
 
     @Override
     public void getNext(JCas jCas) {
-        jCas.setDocumentText(_text);
+        jCas.setDocumentText(_text.replace("\\n", "\n"));
         DocumentID documentID = new DocumentID(jCas);
         documentID.setDocumentID(String.valueOf(_currentDocument));
         documentID.addToIndexes();

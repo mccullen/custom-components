@@ -34,6 +34,15 @@ public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
     )
     private String _key;
 
+    static public final String PARAM_PROD = "Prod";
+    @ConfigurationParameter(
+        name = PARAM_PROD,
+        defaultValue = "true",
+        mandatory = false
+    )
+    private boolean _prod;
+
+
     // Private variables
     private AnalysisEngine _writer;
 
@@ -48,7 +57,7 @@ public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
     }
 
     private void setWriter() {
-        OntologyConsumer ontologyConsumer = S3OntologyConsumer.from(_bucket, _key, getParams().getDelimiter());
+        OntologyConsumer ontologyConsumer = S3OntologyConsumer.from(_bucket, _key, getParams().getDelimiter(), _prod);
         _writer = OntologyWriterService.fromParams(ontologyConsumer, getParams().isKeepAll());
     }
 
