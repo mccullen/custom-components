@@ -1,4 +1,4 @@
-reader icapa.cr.StressTestReader NDocuments=10 Text="CHIEF COMPLAINT:\nPatient presents with cough.\n\n Recommended follow up for the patient within 6 months on April 1st, 2021 (04/01/2021). It is also recommended that he take some time to rest. \n\n Patient has been experiencing productive cough\nfor two weeks. Has treated at home with Tylenol.\n\nCONCLUSION:\nPatient has pneumonia."
+reader icapa.cr.StressTestReader NDocuments=10 Text="CHIEF COMPLAINT:\nPatient presents with cough.\n\n I strongly recommended follow up for the patient within 6 months on April 1st, 2021 (04/01/2021). It is also recommended that he take some time to rest to prevent nausea. \n\n Patient has been experiencing productive cough\nfor two weeks. No followup necessary. Has treated at home with Tylenol.\n\nCONCLUSION:\nPatient has pneumonia."
 add icapa.ae.TimeAnnotator
 // *** Default Clinical Pipeline (w/ BsvRegexSectionizer and SentenceDetectorAnnotatorBIO instead) ***
 // Replace SimpleSegmentAnnotator w/ BSVRegexSectionizer

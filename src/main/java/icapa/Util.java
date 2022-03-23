@@ -444,6 +444,7 @@ public class Util {
         putInRow(row, Const.STRENGTH_HEADER, recommendation.getStrength(), headerToIndex);
         putInRow(row, Const.TIMEFRAME_HEADER, recommendation.getTimeframe(), headerToIndex);
         putInRow(row, Const.RECOMMENDATION_TYPE_HEADER, recommendation.getRecommendationType(), headerToIndex);
+        putInRow(row, Const.POLARITY_HEADER, String.valueOf(recommendation.getPolarity()), headerToIndex);
         putInRow(row, Const.SENTENCE_HEADER, recommendation.getSentence(), headerToIndex);
         return row;
     }
@@ -798,6 +799,7 @@ public class Util {
             Const.STRENGTH_HEADER,
             Const.TIMEFRAME_HEADER,
             Const.RECOMMENDATION_TYPE_HEADER,
+            Const.POLARITY_HEADER,
             Const.SENTENCE_HEADER
         };
     }

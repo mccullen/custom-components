@@ -1,8 +1,11 @@
 package icapa.cc;
 
+import cc.mallet.util.CommandOption;
 import icapa.Util;
+import icapa.models.Ontology;
 import icapa.models.Recommendation;
 import icapa.services.RecommendationWriterService;
+import org.apache.ctakes.typesystem.type.refsem.UmlsConcept;
 import org.apache.ctakes.typesystem.type.textsem.EntityMention;
 import org.apache.ctakes.typesystem.type.textspan.Sentence;
 import org.apache.log4j.Logger;
@@ -14,6 +17,8 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,7 +60,9 @@ public abstract class AbstractRecommendationWriter extends JCasAnnotator_ImplBas
 
 
     private Pattern _timeframePattern;
-    private Pattern _pattern;
+    private Pattern _pattern; // pattern for recommendation
+    private Pattern _polarityPattern;
+    private String _polarityRegex = "^\\s*no \\s*";
     private int _nDocumentsProcessed = 0;
 
     public abstract void writeHeaderLine();
@@ -74,6 +81,7 @@ public abstract class AbstractRecommendationWriter extends JCasAnnotator_ImplBas
         super.initialize(context);
         _pattern = Pattern.compile(_regex, Pattern.CASE_INSENSITIVE);
         _timeframePattern = Pattern.compile(_timeframeRegex, Pattern.CASE_INSENSITIVE);
+        _polarityPattern = Pattern.compile(_polarityRegex, Pattern.CASE_INSENSITIVE);
     }
 
     @Override
@@ -96,15 +104,52 @@ public abstract class AbstractRecommendationWriter extends JCasAnnotator_ImplBas
                 recommendation.setDocumentId(Util.getDocumentId(jCas));
                 recommendation.setSentence(sentence);
                 recommendation.setTimeframe(getTimeframe(sentence));
-                // TODO
-                recommendation.setStrength("");
-                recommendation.setRecommendationType("");
-                recommendation.setPolarity(0);
+                recommendation.setRecommendationType(getRecommendationType(jCas, s.getBegin(), s.getEnd()));
+                recommendation.setStrength(getRecommendationStrength(sentence));
+                recommendation.setPolarity(getRecommendationPolarity(sentence));
 
                 writeRecommendationLine(recommendation);
             }
         });
         ++_nDocumentsProcessed;
+    }
+
+    private String getRecommendationStrength(String sentence) {
+        String strength = "";
+        String lowerCase = sentence.toLowerCase();
+        if (lowerCase.contains("strongly")) {
+            strength = "strong";
+        } else if (lowerCase.contains("probable")) {
+            strength = "probable";
+        }
+        return strength;
+    }
+
+    private int getRecommendationPolarity(String sentence) {
+        int polarity = 1;
+        String lowerCase = sentence.toLowerCase();
+        Matcher matcher = _polarityPattern.matcher(lowerCase);
+        if (matcher.find()) {
+            polarity = -1;
+        }
+        return polarity;
+    }
+
+    private String getRecommendationType(JCas jCas, int beginIndex, int endIndex) {
+        StringBuilder recommendationTypeBuilder = new StringBuilder("");
+        List<Ontology> ontologies = Util.getOntologies(jCas);
+        int i = 0;
+        for (Ontology o : ontologies) {
+            if (o.getPreferredText() != null && o.getBegin() >= beginIndex && o.getEnd() <= endIndex) {
+                if (i > 0) {
+                    recommendationTypeBuilder.append("|");
+                }
+                recommendationTypeBuilder.append(o.getPreferredText());
+                ++i;
+            }
+        }
+        String recommendationType = recommendationTypeBuilder.toString();
+        return recommendationType;
     }
 
     private String getTimeframe(String sentence) {
