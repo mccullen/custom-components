@@ -6,6 +6,7 @@ import icapa.models.Ontology;
 import icapa.models.Recommendation;
 import icapa.services.RecommendationWriterService;
 import org.apache.ctakes.typesystem.type.refsem.UmlsConcept;
+import org.apache.ctakes.typesystem.type.syntax.NumToken;
 import org.apache.ctakes.typesystem.type.textsem.EntityMention;
 import org.apache.ctakes.typesystem.type.textspan.Sentence;
 import org.apache.log4j.Logger;
@@ -24,7 +25,7 @@ import java.util.regex.Pattern;
 
 public abstract class AbstractRecommendationWriter extends JCasAnnotator_ImplBase {
     private static final Logger LOGGER = Logger.getLogger(FileRecommendationWriter.class.getName());
-    private static final String TIMEFRAME_REGEX = "\\w*-?\\w*\\s((years?)|(months?)|(days?)|(weeks?))";
+    private static final String TIMEFRAME_REGEX = "yearly|monthly|daily|weekly|\\w*-?\\w*\\s*((year(?!ly)s?)|(month(?!ly)s?)|(day(?!ly)s?)|(week(?!ly)s?))";
 
     public static final String PARAM_REGEX = "Regex";
     @ConfigurationParameter(
@@ -156,7 +157,51 @@ public abstract class AbstractRecommendationWriter extends JCasAnnotator_ImplBas
         String timeframe = "";
         Matcher matcher = _timeframePattern.matcher(sentence.toLowerCase());
         if (matcher.find()) {
-            timeframe = sentence.substring(matcher.start(), matcher.end());
+            timeframe = sentence.substring(matcher.start(), matcher.end()).trim().toLowerCase().replaceAll("\\s+", " ");
+            String[] split = timeframe.split(" ");
+            if (split.length > 0) {
+                String number = split[0];
+                switch(number) {
+                    case "one":
+                        number = "1";
+                        break;
+                    case "two":
+                        number = "2";
+                        break;
+                    case "three":
+                        number = "3";
+                        break;
+                    case "four":
+                        number = "4";
+                        break;
+                    case "five":
+                        number = "5";
+                        break;
+                    case "six":
+                        number = "6";
+                        break;
+                    case "seven":
+                        number = "7";
+                        break;
+                    case "eight":
+                        number = "8";
+                        break;
+                    case "nine":
+                        number = "9";
+                        break;
+                    case "ten":
+                        number = "10";
+                        break;
+                    case "eleven":
+                        number = "11";
+                        break;
+                    case "twelve":
+                        number = "12";
+                        break;
+                }
+                split[0] = number;
+                timeframe = String.join(" ", split);
+            }
         }
         return timeframe;
     }
