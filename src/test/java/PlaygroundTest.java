@@ -23,16 +23,24 @@ public class PlaygroundTest {
         PipelineBuilder pipelineBuilder = piperFileReader.getBuilder();
         String umlsKey = getProperty("umls.key");
         pipelineBuilder.set(UmlsUserApprover.KEY_PARAM, umlsKey);
+        // Set dictionary, if necessary
         //pipelineBuilder.set(ConfigParameterConstants.PARAM_LOOKUP_XML, "org/apache/ctakes/dictionary/lookup/fast/icd.xml");
+        //pipelineBuilder.set(ConfigParameterConstants.PARAM_LOOKUP_XML, "org/apache/ctakes/dictionary/lookup/fast/cpt_icd_21ab.xml");
+
+        // Set piper file
         //piperFileReader.loadPipelineFile("./reference/piper-files/stress-test.piper");
         //piperFileReader.loadPipelineFile("./reference/piper-files/s3-bucket-reader.piper");
-        piperFileReader.loadPipelineFile("./reference/piper-files/recommendation-test.piper");
+        //piperFileReader.loadPipelineFile("./reference/piper-files/s3-bucket-reader.piper");
+        piperFileReader.loadPipelineFile("./reference/piper-files/bsv.piper");
+        //piperFileReader.loadPipelineFile("./reference/piper-files/recommendation-test.piper");
+
         /*
         String home = System.getenv("CTAKES_HOME");
         //String path = home + "\\sectionizer.piper";
         //String path = home + "\\mip-radiology.piper";
         //piperFileReader.loadPipelineFile(path);
          */
+
         pipelineBuilder.run();
     }
 

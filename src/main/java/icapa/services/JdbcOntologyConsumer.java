@@ -53,7 +53,8 @@ public class JdbcOntologyConsumer implements OntologyConsumer {
         _headerProperties = Util.getHeaderPropertiesWithDocumentIdOverride(_params.getDocumentIdColAndDatatype());
         String template = Util.getInsertTemplate(_params.getTable(), _headerProperties);
         try {
-            _preparedStatement = _connection.prepareStatement(template, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            //_preparedStatement = _connection.prepareStatement(template, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            _preparedStatement = _connection.prepareStatement(template);
         } catch (SQLException throwables) {
             LOGGER.error("Error preparing statement " + template, throwables);
         }

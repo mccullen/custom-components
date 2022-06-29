@@ -25,3 +25,4 @@ aws --endpoint-url=http://localhost:4566 s3 cp s3://<bucket> C:/<dest> --recursi
 aws --endpoint-url=http://localhost:4566 s3 rm <s3://bucket/key>
 ### Remove everything in bucket
 aws --endpoint-url=http://localhost:4566 s3 rm <s3://bucket> --recursive
+

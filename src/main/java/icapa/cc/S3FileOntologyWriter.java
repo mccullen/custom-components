@@ -52,6 +52,10 @@ public class S3FileOntologyWriter extends AbstractFileOntologyWriter {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
+        LOGGER.info("Initializing S3FileOntology Writer");
+        LOGGER.info("Bucket: " + _bucket);
+        LOGGER.info("Key: " + _key);
+        LOGGER.info("Prod: " + _prod);
         setWriter();
         _writer.initialize(context);
     }

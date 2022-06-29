@@ -2,9 +2,6 @@ package icapa.services;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.transfer.TransferManager;
-import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
-import com.amazonaws.services.s3.transfer.Upload;
 import icapa.Util;
 import icapa.models.Ontology;
 import org.apache.log4j.Logger;
@@ -28,7 +25,8 @@ public class S3OntologyConsumer implements OntologyConsumer {
         result._key = key;
         result._prod = prod;
         result.setWriter();
-        result.setAppendAndCreateBucketIfAbsent();
+        result._append = false; // you can't append to s3 buckets, so just hard code it to false
+        result.createBucketIfAbsent();
         result._ontologyConsumer = FileOntologyConsumer.from(result._writer, delimiter, result._append);
         return result;
     }
@@ -44,24 +42,10 @@ public class S3OntologyConsumer implements OntologyConsumer {
 
     }
 
-    private void setAppendAndCreateBucketIfAbsent() {
-        //AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
+    private void createBucketIfAbsent() {
         AmazonS3 s3Client = Util.getS3Client(_prod);
-        if (s3Client.doesObjectExist(_bucket, _key)) {
-            // If you wanted to delete the bucket and recreate you could do this
-            // But you could really shoot yourself in the foot if you delete by accident so it
-            // is better to have the user explictly delete on their own. Instead, we will append.
-            //s3Client.deleteObject(_bucket, _key);
-
-            // Object exists, so you want to append to it
-            _append = true;
-        } else {
-            // Object does NOT exist, so check if bucket exists
-            _append = false;
-            if (!s3Client.doesBucketExistV2(_bucket)) {
-                // Bucket does NOT exist, so create it
-                s3Client.createBucket(_bucket);
-            }
+        if (!s3Client.doesObjectExist(_bucket, _key) && !s3Client.doesBucketExistV2(_bucket)) {
+            s3Client.createBucket(_bucket);
         }
     }
 
@@ -77,28 +61,31 @@ public class S3OntologyConsumer implements OntologyConsumer {
 
     @Override
     public void close() {
+        LOGGER.info("Closing s3 ontology writer");
         _ontologyConsumer.close();
         // S3 only allows you to upload using an InputStream (not an OutputStream) so we have to copy our
         // OutputStream to an InputStream.
         // Credit for this conversion strategy: https://stackoverflow.com/questions/5778658/how-to-convert-outputstream-to-inputstream
 
-        //AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
-        /*
-        Alternative (less efficient) conversion strategy
+        //Alternative (less efficient) conversion strategy
+        AmazonS3 s3Client = Util.getS3Client(_prod);
         byte[] bytes = _byteArrayOutputStream.toByteArray();
         InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(bytes));
         ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(bytes.length);
         s3Client.putObject(_bucket, _key, inputStream, metadata);
-         */
 
+        /*
         // TODO: This may need to be refactored to work with large files. Maybe do a multipart upload somehow?
         try {
+            LOGGER.info("trying to write file to output");
             AmazonS3 s3Client = Util.getS3Client(_prod);
             TransferManager tm = TransferManagerBuilder.standard().withS3Client(s3Client).build();
             PipedOutputStream out = new PipedOutputStream();
             PipedInputStream in = new PipedInputStream(out);
             Thread thread = new Thread(() -> {
                 try {
+                    LOGGER.info("Writing to output stream");
                     _byteArrayOutputStream.writeTo(out);
                 } catch (IOException e) {
                     LOGGER.error("Error writing byte array output stream to piped output", e);
@@ -113,16 +100,19 @@ public class S3OntologyConsumer implements OntologyConsumer {
                     }
                 }
             });
+            LOGGER.info("starting thread");
             thread.start();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(_byteArrayOutputStream.size());
             // TODO: This hangs. It finishes uploading, but never exists. Not sure why.
+            LOGGER.info("Uploading...");
             Upload upload = tm.upload(_bucket, _key, in, metadata);
             //boolean d = upload.isDone();
             //System.out.println(d);
         } catch (Exception e) {
             LOGGER.error("ERROR loading piped input stream", e);
         }
+        */
         /*
         ((Runnable)() -> {
 

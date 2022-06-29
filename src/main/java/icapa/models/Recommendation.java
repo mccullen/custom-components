@@ -14,6 +14,15 @@ public class Recommendation {
     private String recommendationType;
     private String sentence;
     private Integer polarity;
+    private String recommendationGroup;
+
+    public String getRecommendationGroup() {
+        return recommendationGroup;
+    }
+
+    public void setRecommendationGroup(String recommendationGroup) {
+        this.recommendationGroup = recommendationGroup;
+    }
 
     public Integer getPolarity() {
         return polarity;

@@ -2,9 +2,11 @@ package icapa.cr;
 
 import org.apache.ctakes.typesystem.type.structured.DocumentID;
 import org.apache.log4j.Logger;
+import org.apache.uima.UimaContext;
 import org.apache.uima.fit.component.JCasCollectionReader_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Progress;
 
 public class StressTestReader extends JCasCollectionReader_ImplBase {
@@ -27,6 +29,12 @@ public class StressTestReader extends JCasCollectionReader_ImplBase {
     private String _text;
 
     private int _currentDocument = 0;
+
+    @Override
+    public void initialize(UimaContext context) throws ResourceInitializationException {
+        LOGGER.info("Initializing StressTestReader");
+        super.initialize(context);
+    }
 
     @Override
     public void getNext(JCas jCas) {

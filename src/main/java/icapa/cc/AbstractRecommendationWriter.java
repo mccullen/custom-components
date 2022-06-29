@@ -19,13 +19,15 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class AbstractRecommendationWriter extends JCasAnnotator_ImplBase {
     private static final Logger LOGGER = Logger.getLogger(FileRecommendationWriter.class.getName());
-    private static final String TIMEFRAME_REGEX = "yearly|monthly|daily|weekly|\\w*-?\\w*\\s*((year(?!ly)s?)|(month(?!ly)s?)|(day(?!ly)s?)|(week(?!ly)s?))";
+    private static final String TIMEFRAME_REGEX = "annual(ly)?|yearly|monthly|daily|weekly|\\w*-?\\w*\\s*((year(?!ly)s?)|(month(?!ly)s?)|(day(?!ly)s?)|(week(?!ly)s?))";
 
     public static final String PARAM_REGEX = "Regex";
     @ConfigurationParameter(
@@ -108,11 +110,18 @@ public abstract class AbstractRecommendationWriter extends JCasAnnotator_ImplBas
                 recommendation.setRecommendationType(getRecommendationType(jCas, s.getBegin(), s.getEnd()));
                 recommendation.setStrength(getRecommendationStrength(sentence));
                 recommendation.setPolarity(getRecommendationPolarity(sentence));
+                // TODO
+                //recommendation.setRecommendationGroup();
 
                 writeRecommendationLine(recommendation);
             }
         });
         ++_nDocumentsProcessed;
+    }
+
+    private String getRecommendationGroup() {
+        // TODO
+        return null;
     }
 
     private String getRecommendationStrength(String sentence) {
@@ -137,28 +146,34 @@ public abstract class AbstractRecommendationWriter extends JCasAnnotator_ImplBas
     }
 
     private String getRecommendationType(JCas jCas, int beginIndex, int endIndex) {
-        StringBuilder recommendationTypeBuilder = new StringBuilder("");
+        Set<String> recommendationTypes = new HashSet<String>();
         List<Ontology> ontologies = Util.getOntologies(jCas);
-        int i = 0;
+        String sentence = jCas.getDocumentText().substring(beginIndex, endIndex);
         for (Ontology o : ontologies) {
-            if (o.getPreferredText() != null && o.getBegin() >= beginIndex && o.getEnd() <= endIndex) {
-                if (i > 0) {
-                    recommendationTypeBuilder.append("|");
+            if (o.getBegin() >= beginIndex && o.getEnd() <= endIndex) {
+                // Ontology span is w/i bounds of sentence
+                if (o.getPreferredText() != null &&
+                    o.getCodingScheme() != null && (o.getCodingScheme().equals("ICD10PCS") || o.getCodingScheme().equals("CPT"))) {
+                    // Ontology span w/i bounds of sentence and is a procedure code
+                    recommendationTypes.add(o.getPreferredText());
+                } else if (false) {
+                    // TODO: Add other criteria based on key words
                 }
-                recommendationTypeBuilder.append(o.getPreferredText());
-                ++i;
             }
         }
-        String recommendationType = recommendationTypeBuilder.toString();
-        return recommendationType;
+        String recommendationType = String.join("|", recommendationTypes);
+        return recommendationType == null ? "" : recommendationType;
     }
+
 
     private String getTimeframe(String sentence) {
         String timeframe = "";
         Matcher matcher = _timeframePattern.matcher(sentence.toLowerCase());
         if (matcher.find()) {
+            // Remove excess whitespace
             timeframe = sentence.substring(matcher.start(), matcher.end()).trim().toLowerCase().replaceAll("\\s+", " ");
-            String[] split = timeframe.split(" ");
+            // Split string to get the number and unit. Number: 1,2,3; unit: month,year,day, etc.
+            String[] split = timeframe.split(" |-(?!\\d)");
             if (split.length > 0) {
                 String number = split[0];
                 switch(number) {
@@ -202,6 +217,10 @@ public abstract class AbstractRecommendationWriter extends JCasAnnotator_ImplBas
                 split[0] = number;
                 timeframe = String.join(" ", split);
             }
+        }
+        // Remove last char if it is an s
+        if (timeframe.length() > 0 && timeframe.charAt(timeframe.length()-1) == 's') {
+            timeframe = timeframe.substring(0, timeframe.length() - 1);
         }
         return timeframe;
     }

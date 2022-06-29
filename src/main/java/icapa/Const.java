@@ -45,6 +45,7 @@ public class Const {
     public static final String SENTENCE_HEADER = "sentence";
     public static final String TIMEFRAME_HEADER = "timeframe";
     public static final String RECOMMENDATION_TYPE_HEADER = "recommendation_type";
+    public static final String RECOMMENDATION_GROUP_HEADER = "recommendation_group";
 
     public static final String PARAM_DRIVER_CLASS = "DriverClassName";
     public static final String PARAM_URL = "URL";

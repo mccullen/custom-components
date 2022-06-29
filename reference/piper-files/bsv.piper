@@ -1,0 +1,42 @@
+//reader icapa.cr.StressTestReader NDocuments=10 Text="CT CHEST\n\nHistory: "54 yo F with >50 PYH smoking, quit 3 years ago. Approaching age 55,\nmeets candidacy for lung cancer screening. Please eval"\n\nTechnique: CT without contrast from the lung apices through the upper abdomen\nwith coronal, sagittal, and axial MIP reformats. (DLP 95 mGy-cm).\n\nComparison: None.\n\nFINDINGS:\nExam limited by noncontrasted technique.\n\nThyroid: Bilateral thyroid nodules, the largest in the isthmus measuring 11 mm.\n\nLungs, Airways: Upper lobe predominant emphysema. \n\nWell-demarcated solid pulmonary nodule in the right lower lobe measuring 8.2 mm\nx 4.7 mm x 4.7 mm (axial series 2, image 317 and series 602, image 71). \n\nMultiple other bilateral sub-6 mm solid pulmonary nodules are seen (SE2, images\n95, 250, 312, 334, and 417). \n\nBilateral calcified granulomas. Central airways are patent without endobronchial\nmass or debris.\n\nPleura: No pneumothorax or pleural effusion.\n\nHeart, Great Vessels, Mediastinum: Heart and great vessels are unremarkable. No\npericardial effusion. Normal diameter of the aorta and main pulmonary artery.\nMultivessel coronary artery calcifications.\n\nVisualized Upper Abdomen: Small hiatal hernia. There are no focal abnormalities\nin the visualized liver, spleen, pancreas or kidneys. Small splenule. The\nvisualized adrenal glands are normal.\n\nVasculature: Mild atherosclerotic disease of the abdominal aorta and its major\nbranches. No aneurysmal dilation.  \n\nChest Wall, Axilla: No adenopathy by size criteria.\n\nBones: Multilevel degenerative disease. No lytic or blastic process.\n\nSoft Tissues: Calcifications in the bilateral breasts.\n\nIMPRESSION:\n\n1. Multiple solid pulmonary nodules, the largest, in the right upper lobe,\nmeasuring up to 8.2 mm in largest dimension. Other bilateral sub-6 mm solid\npulmonary nodules.\n\nLung-RADS Category 3: Probably benign. Probably benign finding(s) for which\nshort term follow up is suggested. \n\nRECOMMENDATION: Low dose nodule follow up chest CT in 6 months. \n\n2. Upper lobe predominant emphysema.\n\n3. Thyroid nodules. Recommend routine thyroid ultrasound.\n\nElectronically signed by resident: Dr. Jennifer Ficke \n 5/6/2021 14:33\n\nI Dr. ALEXANDER B GALIFIANAKIS have personally reviewed the stored images and\nagree with the resident's interpretation. \n\nElectronically Signed by: Dr. ALEXANDER B GALIFIANAKIS \n Department of Radiology \n Walter Reed National Military Medical Center"
+
+//reader FileTreeReader InputDirectory=./reference/tmp.txt
+reader icapa.cr.JdbcReader SqlStatement="SELECT * FROM playground.dbo.note" DocTextColName=note DocumentIdColumnName=note_id DriverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" URL="jdbc:sqlserver://localhost;integratedSecurity%3Dtrue;"
+
+// *** Default Clinical Pipeline (w/ BsvRegexSectionizer and SentenceDetectorAnnotatorBIO instead) ***
+// Replace SimpleSegmentAnnotator w/ BSVRegexSectionizer
+// Commenting out the simple segment annotator so we use the BSVRegexSectionizer instead
+//add SimpleSegmentAnnotator
+add BsvRegexSectionizer SectionsBsv=./reference/icapa-sections.bsv
+
+// Commenting out SentenceDetector to use SentenceDetectorAnnotatorBIO instead
+//add SentenceDetector
+add SentenceDetectorAnnotatorBIO classifierJarPath=/org/apache/ctakes/core/sentdetect/model.jar
+add TokenizerAnnotatorPTB
+
+// Add non-core annotators
+add ContextDependentTokenizerAnnotator
+addDescription POSTagger
+
+// Add Chunkers
+load ChunkerSubPipe.piper
+
+// Default fast dictionary lookup
+add DefaultJCasTermAnnotator
+
+// Add Cleartk Entity Attribute annotators
+load AttributeCleartkSubPipe.piper
+// *** End Default Clinical Pipeline ***
+
+// Set section ids on identified annotations (AnnotationVersion and AnnotationVersionPropKey are required, but we don't need them, so just set to junk values)
+add ExtractionPrepAnnotator AnnotationVersion=12345 AnnotationVersionPropKey=hello
+
+// Override tagged sections for templates
+add icapa.ae.RegexSegmentAnnotator StartRegex="CRITICAL RESULT COMMUNICATION" EndRegex="END CRITICAL RESULT COMMUNICATION" SegmentId="Critical_Result_Template"
+add icapa.ae.RegexSegmentAnnotator StartRegex="URGENT RESULT COMMUNICATION" EndRegex="END URGENT RESULT COMMUNICATION" SegmentId="Urgent_Result_Template"
+
+// Write results to file
+//add icapa.cc.LocalFileOntologyWriter KeepAll=false OutputFile=./rad-ontology.csv
+add icapa.cc.LocalFileOntologyWriter KeepAll=false OutputFile=./out/rad-ontology.csv
+
+add icapa.cc.FileRecommendationWriter OutputFile="./out/rad-recommendation.csv"

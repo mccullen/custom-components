@@ -144,6 +144,8 @@ public class Util {
     }
 
     public static AmazonS3 getS3Client(boolean prod) {
+        LOGGER.info("Getting S3 Client");
+        LOGGER.info("Prod: " + prod);
         AmazonS3 s3Client = null;
         if (prod) {
             s3Client = AmazonS3ClientBuilder.defaultClient();
@@ -446,6 +448,7 @@ public class Util {
         putInRow(row, Const.RECOMMENDATION_TYPE_HEADER, recommendation.getRecommendationType(), headerToIndex);
         putInRow(row, Const.POLARITY_HEADER, String.valueOf(recommendation.getPolarity()), headerToIndex);
         putInRow(row, Const.SENTENCE_HEADER, recommendation.getSentence(), headerToIndex);
+        putInRow(row, Const.RECOMMENDATION_GROUP_HEADER, recommendation.getRecommendationGroup(), headerToIndex);
         return row;
     }
 
@@ -800,7 +803,8 @@ public class Util {
             Const.TIMEFRAME_HEADER,
             Const.RECOMMENDATION_TYPE_HEADER,
             Const.POLARITY_HEADER,
-            Const.SENTENCE_HEADER
+            Const.SENTENCE_HEADER,
+            Const.RECOMMENDATION_GROUP_HEADER
         };
     }
 }

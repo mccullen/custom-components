@@ -1,8 +1,11 @@
 // Custom reader
-reader icapa.cr.S3BucketReader Bucket=analysis Test=true
+//reader icapa.cr.S3BucketReader Bucket=analysis Test=true
+reader icapa.cr.StressTestReader NDocuments=10
+//add icapa.ae.TimeAnnotator
 load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
-//add icapa.cc.S3FileOntologyWriter KeepAll=true Key=ontology Bucket=analysis
-add FileTreeXmiWriter OutputDirectory="./out/"
+//add icapa.cc.S3FileOntologyWriter KeepAll=true Key=ontology Bucket=analysis Prod=false
+add icapa.cc.S3KeysOntologyWriter KeepAll=true KeyPrefix=pre Bucket=analysis Prod=false
+//add FileTreeXmiWriter OutputDirectory="./out/"
 
 // RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\custom-components-repos\custom-components\reference\piper-files\s3.piper --key <key>
 
