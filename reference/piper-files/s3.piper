@@ -1,14 +1,20 @@
 // Custom reader
-reader icapa.cr.S3DelimiterReader Key=pyctakes_notes_in.mimiciii.top3.csv Bucket=analysis DocumentIdColumnName=note_id NoteColumnName=note DocumentIdColumnName=note_id
+//reader icapa.cr.S3DelimiterReader Key=pyctakes_notes_in.mimiciii.top3.csv Bucket=analysis DocumentIdColumnName=note_id NoteColumnName=note DocumentIdColumnName=note_id
+//reader icapa.cr.StressTestReader NDocuments=3 Text="Patient may have cancer. I recommend getting an exam. I also recommend another exam."
+reader icapa.cr.StressTestReader NDocuments=1000
+//reader icapa.cr.StressTestReader NDocuments=10 Text="Patient may have cancer."
 load ./resources/org/apache/ctakes/clinical/pipeline/DefaultFastPipeline.piper
-add icapa.cc.S3FileOntologyWriter KeepAll=true Key=ontology Bucket=analysis
+add icapa.cc.S3KeysRecommendationWriter KeyPrefix=recommendation Bucket=analysis Prod=false
+add icapa.cc.S3KeysOntologyWriter KeepAll=true KeyPrefix=ontology-6 Bucket=analysis Prod=false Size=10000
 
 // RUN COMMAND: bin/runPiperFile.bat -p C:\root\vdt\icapa\nlp\custom-components-repos\custom-components\reference\piper-files\s3.piper --key <key>
 
 // localstack start
 // aws configure (use any fake credentials and I used us-east-1 region)
 // aws --endpoint-url=http://localhost:4566 s3 mb s3://analysis
-// aws --endpoint-url=http://localhost:4566 s3 cp C:/root/vdt/icapa/nlp/test-data/notes/pyctakes_notes_in.mimiciii.top3.csv s3://analysis
+// aws --endpoint-url=http://localhost:4566 s3 ls s3://analysis/recommendation/
+// aws --endpoint-url=http://localhost:4566 s3 ls s3://analysis/ontology/
+// aws --endpoint-url=http://localhost:4566 s3 cp s3://analysis/ontology/0 -
+// aws --endpoint-url=http://localhost:4566 s3 cp s3://analysis/recommendation/0 -
 // Run the piper file...
 // aws --endpoint-url=http://localhost:4566 s3 cp s3://analysis C:/root/vdt/icapa/nlp/test-data/ --recursive
-

@@ -8,9 +8,7 @@ import icapa.cc.LocalFileOntologyWriter;
 import icapa.models.Recommendation;
 import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -20,6 +18,7 @@ public class FileRecommendationWriterService implements RecommendationWriterServ
 
     private String _outputFile;
     private ICSVWriter _csvWriter;
+    private Writer _writer;
     private boolean _append;
     private char _delimiter;
     private Map<String, Integer> _headerToIndex;
@@ -36,6 +35,7 @@ public class FileRecommendationWriterService implements RecommendationWriterServ
 
         return service;
     }
+
 
     private void init() {
         try {

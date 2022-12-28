@@ -5,6 +5,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import icapa.models.HeaderProperties;
 import icapa.models.Ontology;
 import icapa.models.Recommendation;
@@ -28,9 +29,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 import org.xml.sax.SAXException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.sql.Connection;
@@ -806,5 +805,13 @@ public class Util {
             Const.SENTENCE_HEADER,
             Const.RECOMMENDATION_GROUP_HEADER
         };
+    }
+
+    public static void writeOutputToS3(ByteArrayOutputStream byteArrayOutputStream, AmazonS3 s3Client, String bucket, String key) {
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(bytes));
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(bytes.length);
+        s3Client.putObject(bucket, key, inputStream, metadata);
     }
 }

@@ -2,11 +2,13 @@ package icapa.ae;
 
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation;
 import org.apache.ctakes.typesystem.type.textspan.Segment;
+import org.apache.ctakes.typesystem.type.textspan.Sentence;
 import org.apache.uima.UimaContext;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.util.*;
@@ -83,21 +85,6 @@ public class RegexSegmentAnnotator extends JCasAnnotator_ImplBase {
         Matcher startMatcher = _startPattern.matcher(documentText);
         Matcher endMatcher = _endPattern.matcher(documentText);
 
-        Comparator<Position> comparator = new Comparator<Position>() {
-            @Override
-            public int compare(Position o1, Position o2) {
-                int result = 0;
-                if (o1.equals(o2)) {
-                    result = 0;
-                } else if (o1._start < o2._start) {
-                    // Order based on start if start and end are different
-                    result = -1;
-                } else {
-                    result = 1;
-                }
-                return result;
-            }
-        };
 
         List<Position> tags = new ArrayList<>();
         // Add all positions to mark the start and end of each tagged section
@@ -121,28 +108,7 @@ public class RegexSegmentAnnotator extends JCasAnnotator_ImplBase {
             // There are tagged sections, so set the segmentId for all identified annotations that are FULLY
             // in between (inclusive) the start and end of the position index
             JCasUtil.select(jCas, IdentifiedAnnotation.class).forEach(ia -> {
-                // Get the position of the identified annotation
-                Position iaPosition = new Position(ia.getBegin(), ia.getEnd());
-
-                // Search the positions of the tagged sections and return the index of the matching section (where
-                // the start/end indexes are the same. If there is no such position (likely), then return the index where
-                // it would be inserted minus 1.
-                // We are going to reset this index so that it indexes to the first
-                // position which has a start that is on or before the start of the identified annotation
-                int index = Collections.binarySearch(tags, iaPosition, comparator); // -insert - 1
-                if (index < 0) { // if index would be 0, then it would return -1, if index would be  3, -4 would return
-                    index = Math.abs(index) - 1; // gets the index it would be
-                    // Now, you need to go to the previous position.
-                    // if it would be inserted at a position before all the tags, index would be 0 right now, meaning
-                    // this identified annotation is before any tag starts. So it is okay to skip over it in the
-                    // conditional below. If it starts after the first tag's start position (say, index = 1), then
-                    // you would need to check the the start/end of the tag before (index-1) that index to see
-                    // if it falls w/i its bounds. So, we are subtracting 1 here because we need to get the index
-                    // of the first possible tag which COULD contain this annotation. Recall our comparator compares
-                    // the start of the position, so the tag at the index just before the annotation would be inserted
-                    // would have a start < the start of the annotation.
-                    index = index - 1;
-                }
+                int index = getIndex(ia, tags);
                 if (index < tags.size() && index >= 0) {
                     Position tag = tags.get(index);
                     if (ia.getBegin() >= tag._start && ia.getEnd() <= tag._end) {
@@ -150,6 +116,56 @@ public class RegexSegmentAnnotator extends JCasAnnotator_ImplBase {
                     }
                 }
             });
+            JCasUtil.select(jCas, Sentence.class).forEach(ia -> {
+                int index = getIndex(ia, tags);
+                if (index < tags.size() && index >= 0) {
+                    Position tag = tags.get(index);
+                    if (ia.getBegin() >= tag._start && ia.getEnd() <= tag._end) {
+                        ia.setSegmentId(_segmentId);
+                    }
+                }
+            });
         }
+    }
+
+    private int getIndex(Annotation ia, List<Position> tags) {
+        Comparator<Position> comparator = new Comparator<Position>() {
+            @Override
+            public int compare(Position o1, Position o2) {
+                int result = 0;
+                if (o1.equals(o2)) {
+                    result = 0;
+                } else if (o1._start < o2._start) {
+                    // Order based on start if start and end are different
+                    result = -1;
+                } else {
+                    result = 1;
+                }
+                return result;
+            }
+        };
+        // Get the position of the identified annotation
+        Position iaPosition = new Position(ia.getBegin(), ia.getEnd());
+
+        // Search the positions of the tagged sections and return the index of the matching section (where
+        // the start/end indexes are the same. If there is no such position (likely), then return the index where
+        // it would be inserted minus 1.
+        // We are going to reset this index so that it indexes to the first
+        // position which has a start that is on or before the start of the identified annotation
+        int index = Collections.binarySearch(tags, iaPosition, comparator); // -insert - 1
+        if (index < 0) { // if index would be 0, then it would return -1, if index would be  3, -4 would return
+            index = Math.abs(index) - 1; // gets the index it would be
+            // Now, you need to go to the previous position.
+            // if it would be inserted at a position before all the tags, index would be 0 right now, meaning
+            // this identified annotation is before any tag starts. So it is okay to skip over it in the
+            // conditional below. If it starts after the first tag's start position (say, index = 1), then
+            // you would need to check the the start/end of the tag before (index-1) that index to see
+            // if it falls w/i its bounds. So, we are subtracting 1 here because we need to get the index
+            // of the first possible tag which COULD contain this annotation. Recall our comparator compares
+            // the start of the position, so the tag at the index just before the annotation would be inserted
+            // would have a start < the start of the annotation.
+            index = index - 1;
+        }
+        return index;
     }
 }

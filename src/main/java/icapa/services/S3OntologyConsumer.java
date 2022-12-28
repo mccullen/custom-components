@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 
-// TODO JRM
 public class S3OntologyConsumer implements OntologyConsumer {
     public static final Logger LOGGER = Logger.getLogger(S3OntologyConsumer.class.getName());
     private String _bucket;
@@ -18,6 +17,7 @@ public class S3OntologyConsumer implements OntologyConsumer {
     private boolean _append;
     private ByteArrayOutputStream _byteArrayOutputStream;
     private boolean _prod;
+    private int _size;
 
     public static S3OntologyConsumer from(String bucket, String key, char delimiter, boolean prod) {
         S3OntologyConsumer result = new S3OntologyConsumer();
@@ -44,7 +44,10 @@ public class S3OntologyConsumer implements OntologyConsumer {
 
     private void createBucketIfAbsent() {
         AmazonS3 s3Client = Util.getS3Client(_prod);
-        if (!s3Client.doesObjectExist(_bucket, _key) && !s3Client.doesBucketExistV2(_bucket)) {
+        // Only check if bucket exists. Do not worry about key until you actually begin writing b/c
+        // the S3KeysOntology writer will setKey later
+        //if (!s3Client.doesObjectExist(_bucket, _key) && !s3Client.doesBucketExistV2(_bucket)) {
+        if (!s3Client.doesBucketExistV2(_bucket)) {
             s3Client.createBucket(_bucket);
         }
     }
@@ -59,6 +62,14 @@ public class S3OntologyConsumer implements OntologyConsumer {
         _ontologyConsumer.insertOntologyIntoAnnotationTable(ontology);
     }
 
+    public void setKey(String key) {
+        this._key = key;
+    }
+
+    public ByteArrayOutputStream getByteArrayOutputStream() {
+        return _byteArrayOutputStream;
+    }
+
     @Override
     public void close() {
         LOGGER.info("Closing s3 ontology writer");
@@ -69,11 +80,8 @@ public class S3OntologyConsumer implements OntologyConsumer {
 
         //Alternative (less efficient) conversion strategy
         AmazonS3 s3Client = Util.getS3Client(_prod);
-        byte[] bytes = _byteArrayOutputStream.toByteArray();
-        InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(bytes));
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentLength(bytes.length);
-        s3Client.putObject(_bucket, _key, inputStream, metadata);
+        Util.writeOutputToS3(_byteArrayOutputStream, s3Client, _bucket, _key);
+
 
         /*
         // TODO: This may need to be refactored to work with large files. Maybe do a multipart upload somehow?

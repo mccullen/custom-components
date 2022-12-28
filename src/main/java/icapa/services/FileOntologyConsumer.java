@@ -51,12 +51,17 @@ public class FileOntologyConsumer implements OntologyConsumer {
     public void insertOntologyIntoAnnotationTable(Ontology ontology) {
         String[] row = Util.getOntologyAsStringArray(ontology, _headerToIndex);
         _csvWriter.writeNext(row, false);
+        try {
+            _csvWriter.flush();
+        } catch (IOException e) {
+            LOGGER.error("Error flushing csv writer.", e);
+        }
     }
 
     @Override
     public void close() {
         try {
-            _csvWriter.close();
+            _csvWriter.close(); // flushes results
         } catch (IOException e) {
             LOGGER.error("Error closing csv writer", e);
         }
