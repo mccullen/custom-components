@@ -808,10 +808,30 @@ public class Util {
     }
 
     public static void writeOutputToS3(ByteArrayOutputStream byteArrayOutputStream, AmazonS3 s3Client, String bucket, String key) {
-        byte[] bytes = byteArrayOutputStream.toByteArray();
-        InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(bytes));
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentLength(bytes.length);
-        s3Client.putObject(bucket, key, inputStream, metadata);
+        if (byteArrayOutputStream != null) {
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+            if (bytes != null && bytes.length > 0) {
+                InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(bytes));
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentLength(bytes.length);
+                s3Client.putObject(bucket, key, inputStream, metadata);
+                try {
+                    byteArrayOutputStream.close();
+                    inputStream.close();
+                } catch (IOException e) {
+                    LOGGER.error("Error closing byte array output stream or inputstream when writing to s3.");
+                }
+            }
+        }
+    }
+
+    public static String getUpdatedKey(String key, String keyPrefix, String documentId) {
+        String prev = key.substring(keyPrefix.length() + 1);
+        if (documentId != null) {
+            if (!documentId.equals(prev)) {
+                key += "-" + documentId;
+            }
+        }
+        return key;
     }
 }

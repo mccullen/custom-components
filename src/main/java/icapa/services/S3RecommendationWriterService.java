@@ -18,18 +18,14 @@ public class S3RecommendationWriterService implements RecommendationWriterServic
     private Map<String, Integer> _headerToIndex;
     private String[] _headers;
     private boolean _applyQuotesToAll = false;
-    private String _bucket;
-    private String _keyPrefix;
     private ByteArrayOutputStream _byteArrayOutputStream;
 
     public ByteArrayOutputStream getByteArrayOutputStream() {
         return _byteArrayOutputStream;
     }
 
-    public static S3RecommendationWriterService fromParams(String bucket, String keyPrefix, char delimiter, boolean append) {
+    public static S3RecommendationWriterService fromParams(char delimiter, boolean append) {
         S3RecommendationWriterService service = new S3RecommendationWriterService();
-        service._bucket = bucket;
-        service._keyPrefix  = keyPrefix;
         service._delimiter = delimiter;
         service.setWriter();
         service.init();

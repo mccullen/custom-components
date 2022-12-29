@@ -95,7 +95,7 @@ public class S3KeysOntologyWriter extends AbstractFileOntologyWriter {
                 _ontologyConsumer = S3OntologyConsumer.from(_bucket, null, getParams().getDelimiter(), _prod);
                 // Crate an AE from that consumer and then process it in accordance with the ontologyConsumer's logic
                 _ae = OntologyWriterService.fromParams(_ontologyConsumer, getParams().isKeepAll());
-                _ae.initialize(null);
+                _ae.initialize(null); // creates headers
 
                 // Reset key
                 _key = _keyPrefix + "/" + _documentId;
@@ -153,17 +153,12 @@ public class S3KeysOntologyWriter extends AbstractFileOntologyWriter {
     }
 
     private void setKey() {
-        String prev = _key.substring(_keyPrefix.length() + 1);
-        if (_documentId != null) {
-            if (!_documentId.equals(prev)) {
-                _key += "-" + _documentId;
-            }
-        }
+        _key = Util.getUpdatedKey(_key, _keyPrefix, _documentId);
         _ontologyConsumer.setKey(_key);
     }
 
     private void flush() {
-        if (_ae != null) {
+        if (_ae != null && _ontologyConsumer != null) {
             try {
                 setKey();
                 _ae.close(); // flush
