@@ -6,9 +6,11 @@ public class Const {
     // NOTE: Any time these headers are added, you should go to Util and update the following
     // - getOntologyConceptHeaders
     // - getOntologyAsStringArray
-    // - getHeaderPropertiesWithDocumentIdOverrideo
+    // - getHeaderPropertiesWithDocumentIdOverride
     // - getInsertQuery
     // - getOntologiesFromIdentifiedAnnotation
+    // - setOntologyProperties
+    // - JdbcOntologyConsumer.setParametersForPreparedStatement()
     public static final String IDENTIFIED_ANNOTATION_ADDRESS_HEADER = "identified_annotation_address";
     public static final String CODE_HEADER = "code";
     public static final String CONDITIONAL_HEADER = "conditional_flag";
