@@ -80,7 +80,8 @@ public class S3OntologyConsumer implements OntologyConsumer {
 
         //Alternative (less efficient) conversion strategy
         AmazonS3 s3Client = Util.getS3Client(_prod);
-        Util.writeOutputToS3(_byteArrayOutputStream, s3Client, _bucket, _key);
+        int minLen = String.join(",", Util.getOntologyConceptHeaders()).getBytes().length + 1;
+        Util.writeOutputToS3(_byteArrayOutputStream, s3Client, _bucket, _key, minLen);
 
 
         /*
