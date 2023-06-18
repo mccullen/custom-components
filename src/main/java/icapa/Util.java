@@ -807,10 +807,10 @@ public class Util {
         };
     }
 
-    public static void writeOutputToS3(ByteArrayOutputStream byteArrayOutputStream, AmazonS3 s3Client, String bucket, String key) {
+    public static void writeOutputToS3(ByteArrayOutputStream byteArrayOutputStream, AmazonS3 s3Client, String bucket, String key, int minLen) {
         if (byteArrayOutputStream != null) {
             byte[] bytes = byteArrayOutputStream.toByteArray();
-            if (bytes != null && bytes.length > 0) {
+            if (bytes != null && bytes.length > minLen) {
                 InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(bytes));
                 ObjectMetadata metadata = new ObjectMetadata();
                 metadata.setContentLength(bytes.length);

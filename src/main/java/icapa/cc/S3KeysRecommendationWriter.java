@@ -75,7 +75,7 @@ public class S3KeysRecommendationWriter extends AbstractRecommendationWriter {
         // TODO: Maybe update AbstractRecommendationWriter and RecommendationWriterService with a close method instead
         // to conform to "best practices". This is simpler for now though
         if (_recommendationWriter.getByteArrayOutputStream().size() > 0) {
-            Util.writeOutputToS3(_recommendationWriter.getByteArrayOutputStream(), s3Client, _bucket, key);
+            Util.writeOutputToS3(_recommendationWriter.getByteArrayOutputStream(), s3Client, _bucket, key, getMinLen());
             _recommendationWriter.getByteArrayOutputStream().reset();
         }
     }
@@ -109,6 +109,10 @@ public class S3KeysRecommendationWriter extends AbstractRecommendationWriter {
         }
     }
 
+    private int getMinLen() {
+        return String.join(",", Util.getRecommendationHeaders()).getBytes().length + 1;
+    }
+
     private void flush() {
         if (_recommendationWriter != null) {
             // Only flush if there is stuff in the writer. If there isn't (component is being destoryed and
@@ -116,7 +120,7 @@ public class S3KeysRecommendationWriter extends AbstractRecommendationWriter {
             // nothing to flush
             AmazonS3 s3Client = Util.getS3Client(_prod);
             _key = Util.getUpdatedKey(_key, _keyPrefix, _documentId);
-            Util.writeOutputToS3(_recommendationWriter.getByteArrayOutputStream(), s3Client, _bucket, _key);
+            Util.writeOutputToS3(_recommendationWriter.getByteArrayOutputStream(), s3Client, _bucket, _key, getMinLen());
             _recommendationWriter = null; // Force re-instantiating of this in next batch process
         }
     }
